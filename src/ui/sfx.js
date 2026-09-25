@@ -55,6 +55,8 @@ export const sfx = {
   gulp: () => play((b, t) => {
     for (let i = 0; i < 3; i++) tone(b, { freq: 500 - i * 60, to: 200, type: 'sine', dur: 0.09, vol: 0.12, at: t + i * 0.12 });
   }),
+  // La vieille pompe à main : pfff
+  pump: () => play((b, t) => noise(b, { dur: 0.14, vol: 0.12, type: 'bandpass', freq: 1800, to: 900, q: 1.5, at: t })),
   // Merguez : croc croc
   munch: () => play((b, t) => {
     for (let i = 0; i < 3; i++) noise(b, { dur: 0.06, vol: 0.14, type: 'lowpass', freq: 1400, at: t + i * 0.13 });

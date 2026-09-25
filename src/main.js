@@ -10,6 +10,11 @@ import TrainPhysique from './scenes/training/TrainPhysique.js';
 import TrainJongles from './scenes/training/TrainJongles.js';
 import TrainTechnique from './scenes/training/TrainTechnique.js';
 import TrainFinition from './scenes/training/TrainFinition.js';
+import TrainEtirements from './scenes/training/TrainEtirements.js';
+import TrainToro from './scenes/training/TrainToro.js';
+import TrainPlots from './scenes/training/TrainPlots.js';
+import TrainGonflage from './scenes/training/TrainGonflage.js';
+import TrainPenalty from './scenes/training/TrainPenalty.js';
 
 // Le jeu tourne en 360 × 640 : du pixel art en 180 × 320 affiché ×2,
 // pour que le texte reste lisible sur téléphone.
@@ -30,6 +35,11 @@ const config = {
     TrainJongles,
     TrainTechnique,
     TrainFinition,
+    TrainEtirements,
+    TrainToro,
+    TrainPlots,
+    TrainGonflage,
+    TrainPenalty,
     MatchScene,
     ResultScene,
   ],

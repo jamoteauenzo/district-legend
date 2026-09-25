@@ -89,7 +89,7 @@ export default class BaseTraining extends Phaser.Scene {
     return floatText(this, x, y, line, color, 11);
   }
 
-  finish(lines, coach) {
+  finish(lines, coach, extra = {}) {
     if (this.over) return;
     this.over = true;
     this.running = false;
@@ -104,6 +104,7 @@ export default class BaseTraining extends Phaser.Scene {
         lines,
         coach,
         legendeStart: this.legendeStart,
+        ...extra,
       }),
     );
   }

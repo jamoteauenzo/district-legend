@@ -23,7 +23,7 @@ Importe ce dépôt sur [vercel.com/new](https://vercel.com/new). Vercel détecte
 
 Dépose le fichier audio dans `public/audio/pecab.mp3`. Le jeu le détecte au lancement et l'utilise à chaque tampon PÉCAB. Sans fichier, un bruit de tampon le remplace.
 
-## Contenu de la v0.3
+## Contenu de la v0.4
 
 - Menu façon feuille de match
 - Choix du personnage (4 jouables + Tonton Gégé, secret)
@@ -40,3 +40,5 @@ Dépose le fichier audio dans `public/audio/pecab.mp3`. Le jeu le détecte au la
 - Circuit technique : coupelles, échelle de rythme, mini-cage et toit du club-house
 - Finition : centres du coach, volées, pieds dans le vide et parking
 - IA du match revue : postes, pressing, couverture, appels de balle, marquage et passes
+- Semaine 2, « Coupe de France » (début août) : étirements, toro, corvée des plots, gonflage des ballons, opposition du jeudi, tirs au but, puis le 1er tour de Coupe de France (séance de tirs au but en cas de nul)
+- Les ballons mal gonflés deviennent une excuse en match (« Le ballon est MOU arbitre ! »)

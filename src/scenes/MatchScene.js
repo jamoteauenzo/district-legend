@@ -8,7 +8,7 @@ import { pecab } from '../ui/pecab.js';
 import { sfx, crowdAmbience } from '../ui/sfx.js';
 import { music } from '../audio/music.js';
 import { muteButton } from '../ui/muteButton.js';
-import { advanceWeek, WEEK, currentStep } from '../data/schedule.js';
+import { advanceWeek } from '../data/schedule.js';
 import { C, CSS } from '../palette.js';
 
 // Terrain vu de dessus. L'équipe A (la tienne, en bleu) attaque vers le haut.
@@ -16,7 +16,48 @@ const W = 360;
 const H = 800;
 const PITCH = { left: 16, right: 344, top: 40, bottom: 760 };
 const GOAL = { left: 150, right: 210 };
-const MATCH_SECONDS = 120; // 2 minutes réelles = 90 minutes
+// Les différents matchs : amical, Coupe de France, opposition du jeudi.
+const MODES = {
+  friendly: {
+    banner: 'MATCH AMICAL',
+    sub: 'Objectif : gagne le match.',
+    home: 'ST-CLOU',
+    away: 'STE-GLUSE',
+    awayFull: 'Sainte-Gluse',
+    resultTitle: 'Match amical',
+    seconds: 120,
+    cards: true,
+    pickups: true,
+    opp: ['opp1', 'opp2', 'opp3', 'opp4', 'oppGK'],
+    ref: 'ref',
+  },
+  cup: {
+    banner: 'COUPE DE FRANCE',
+    sub: '1er tour. Objectif : qualifie-toi.',
+    home: 'ST-CLOU',
+    away: 'PRÉ-MOUILLÉ',
+    awayFull: 'Racing Pré-Mouillé',
+    resultTitle: 'Coupe de France, 1er tour',
+    seconds: 120,
+    cards: true,
+    pickups: true,
+    opp: ['cup1', 'cup2', 'cup3', 'cup4', 'cupGK'],
+    ref: 'ref',
+  },
+  opposition: {
+    banner: 'OPPOSITION DU JEUDI',
+    sub: 'Sans chasuble contre chasubles. Objectif : gagne.',
+    home: 'SANS',
+    away: 'CHASUBLES',
+    awayFull: 'Chasubles',
+    resultTitle: "L'opposition du jeudi",
+    seconds: 60,
+    cards: false,
+    pickups: false,
+    opp: ['bibJeanmi', 'bibEnzo', 'bib3', 'bib4', 'mateGK'],
+    ref: 'coach',
+  },
+};
 const SLIP_AT = 16; // secondes avant la glissade scriptée du premier match
 
 const CONTEST_LINES = [
@@ -44,6 +85,11 @@ export default class MatchScene extends Phaser.Scene {
     super('Match');
   }
 
+  init(data) {
+    this.mode = MODES[data?.mode] ? data.mode : 'friendly';
+    this.cfg = MODES[this.mode];
+  }
+
   create() {
     this.career = state.career;
     this.char = getCharacter(this.career.charId);
@@ -68,13 +114,14 @@ export default class MatchScene extends Phaser.Scene {
     this.makePlayer('mate1', 100, 620, 'A', 'field', 'def', 0.3);
     this.makePlayer('mate2', 260, 620, 'A', 'field', 'def', 0.7);
     this.makePlayer('mate3', 180, 440, 'A', 'field', 'att', 0.5);
-    this.oppGK = this.makePlayer('oppGK', 180, 55, 'B', 'gk');
-    this.makePlayer('opp1', 100, 180, 'B', 'field', 'def', 0.3);
-    this.makePlayer('opp2', 260, 180, 'B', 'field', 'def', 0.7);
-    this.makePlayer('opp3', 130, 300, 'B', 'field', 'mid', 0.4);
-    this.makePlayer('opp4', 220, 370, 'B', 'field', 'att', 0.6);
+    const o = this.cfg.opp;
+    this.oppGK = this.makePlayer(o[4], 180, 55, 'B', 'gk');
+    this.makePlayer(o[0], 100, 180, 'B', 'field', 'def', 0.3);
+    this.makePlayer(o[1], 260, 180, 'B', 'field', 'def', 0.7);
+    this.makePlayer(o[2], 130, 300, 'B', 'field', 'mid', 0.4);
+    this.makePlayer(o[3], 220, 370, 'B', 'field', 'att', 0.6);
 
-    this.referee = this.add.image(230, 420, 'ref').setScale(2);
+    this.referee = this.add.image(230, 420, this.cfg.ref).setScale(2);
     this.referee.facing = new Phaser.Math.Vector2(0, 1);
 
     this.ball = this.add.image(180, 400, 'ball').setScale(2).setDepth(5);
@@ -95,7 +142,7 @@ export default class MatchScene extends Phaser.Scene {
     this.createHud();
     this.controls = new Controls(this, { onA: () => this.pressA(), onB: () => this.pressB() });
 
-    this.banner('MATCH AMICAL', 'Objectif : gagne le match.');
+    this.banner(this.cfg.banner, this.cfg.sub);
     sfx.whistle(this);
     music.play('match');
     crowdAmbience.start();
@@ -208,8 +255,8 @@ export default class MatchScene extends Phaser.Scene {
   }
 
   updateHud() {
-    const minute = Math.min(90, Math.floor((this.elapsed / MATCH_SECONDS) * 90));
-    this.scoreText.setText(`ST-CLOU ${this.score.A} - ${this.score.B} STE-GLUSE`);
+    const minute = Math.min(90, Math.floor((this.elapsed / this.cfg.seconds) * 90));
+    this.scoreText.setText(`${this.cfg.home} ${this.score.A} - ${this.score.B} ${this.cfg.away}`);
     this.timeText.setText(`${minute}'`);
     const cards = this.stats.red ? 'ROUGE' : this.stats.yellow ? 'JAUNE' : '';
     this.cardText.setText(cards).setColor(this.stats.red ? CSS.red : CSS.yellow);
@@ -274,7 +321,7 @@ export default class MatchScene extends Phaser.Scene {
     }
 
     this.elapsed += dt;
-    if (this.elapsed >= MATCH_SECONDS) return this.endMatch();
+    if (this.elapsed >= this.cfg.seconds) return this.endMatch();
 
     this.checkSlipScript();
     if (this.cutscene) return;
@@ -283,7 +330,7 @@ export default class MatchScene extends Phaser.Scene {
     this.updateAI(dt);
     this.updateBall(dt);
     this.updateReferee(dt);
-    this.updatePickups();
+    if (this.cfg.pickups) this.updatePickups();
     this.checkRecruiter();
     this.updateHud();
 
@@ -429,6 +476,13 @@ export default class MatchScene extends Phaser.Scene {
     if (this.carrier === opp) this.carrier = null;
     this.legende(20, 'Tacle en retard');
 
+    if (!this.cfg.cards) {
+      sfx.whistle(this);
+      this.targetBonus(opp);
+      floatText(this, this.referee.x, this.referee.y - 24, 'DOUCEMENT !', CSS.red, 12);
+      this.wait(0.9, () => this.freeKick(opp));
+      return;
+    }
     const red = 0.08 + s.tacle * 0.03 + (masse ? 0.1 : 0);
     const yellow = 0.35 + s.tacle * 0.05 + (masse ? 0.15 : 0);
     const r = Math.random();
@@ -446,7 +500,37 @@ export default class MatchScene extends Phaser.Scene {
     this.giveBall(taker);
   }
 
+  // Opposition du jeudi : tacler Jean-Mi ou le neveu du président, ça compte double.
+  targetBonus(opp) {
+    const key = opp.texture.key;
+    if (key === 'bibJeanmi') {
+      this.stats.revenge = (this.stats.revenge ?? 0) + 1;
+      this.legende(30, 'Sur Jean-Mi !');
+      floatText(this, opp.x, opp.y - 30, 'DE MON TEMPS ON TACLAIT PAS !', CSS.cream, 10);
+      if (this.stats.revenge === 1) pecab(this);
+    } else if (key === 'bibEnzo') {
+      this.stats.revenge = (this.stats.revenge ?? 0) + 1;
+      this.career.relations.president -= 1;
+      this.legende(30, 'Sur le neveu du président !');
+      floatText(this, opp.x, opp.y - 30, 'JE VAIS LE DIRE À TONTON !', CSS.cream, 10);
+      if (this.stats.revenge === 1) pecab(this);
+    }
+  }
+
   tackleOnReferee() {
+    if (!this.cfg.cards) {
+      // En opposition, l'« arbitre » c'est le coach
+      this.referee.setAngle(90);
+      this.legende(50, 'TACLE SUR LE COACH');
+      floatText(this, this.referee.x, this.referee.y - 30, 'DEHORS ! DOUCHE !', CSS.red, 13);
+      sfx.laugh(this);
+      pecab(this);
+      this.sentOff = true;
+      this.stats.red = true;
+      this.stats.sentOffMinute = Math.floor((this.elapsed / this.cfg.seconds) * 90);
+      this.wait(3, () => this.endMatch());
+      return;
+    }
     this.career.flags.tacleArbitre = true;
     this.career.relations.district -= 2;
     this.referee.setAngle(90);
@@ -474,7 +558,7 @@ export default class MatchScene extends Phaser.Scene {
     if (this.sentOff) return;
     this.sentOff = true;
     this.stats.red = true;
-    this.stats.sentOffMinute = Math.floor((this.elapsed / MATCH_SECONDS) * 90);
+    this.stats.sentOffMinute = Math.floor((this.elapsed / this.cfg.seconds) * 90);
     this.showCard('cardRed');
     if (this.carrier === this.user) this.carrier = null;
     this.user.setAngle(0);
@@ -495,8 +579,15 @@ export default class MatchScene extends Phaser.Scene {
     u.contestUntil = now + 600;
     u.contestReadyAt = now + 800;
     this.stats.contestations++;
-    floatText(this, u.x, u.y - 30, Phaser.Utils.Array.GetRandom(CONTEST_LINES), CSS.cream, 11);
-    this.legende(10);
+    // Les ballons mal gonflés du jeudi deviennent une excuse en or
+    const mou = (this.career.flags.ballonsMous ?? 0) > 0 && Math.random() < 0.35;
+    const line = mou ? 'Le ballon est MOU arbitre !' : Phaser.Utils.Array.GetRandom(CONTEST_LINES);
+    floatText(this, u.x, u.y - 30, line, CSS.cream, 11);
+    this.legende(mou ? 15 : 10, mou ? 'Ballon mou' : null);
+    if (!this.cfg.cards) {
+      floatText(this, this.referee.x, this.referee.y - 24, 'Arrête de râler !', CSS.cream, 10);
+      return;
+    }
     this.annoyance++;
     floatText(this, this.referee.x, this.referee.y - 24, '!'.repeat(Math.min(this.annoyance, 4)), CSS.red, 14);
     if (this.annoyance >= 4) {
@@ -876,7 +967,7 @@ export default class MatchScene extends Phaser.Scene {
       sfx.cheer(this, true);
       this.cheer(['MDRRR', 'LÉGENDE', 'WOUF']);
     } else {
-      this.banner('BUT', 'Pour Sainte-Gluse.');
+      this.banner('BUT', `Pour ${this.cfg.awayFull}.`);
       sfx.boo(this);
     }
     sfx.whistle(this);
@@ -983,7 +1074,7 @@ export default class MatchScene extends Phaser.Scene {
   // --------------------------------------- La glissade scriptée (le déclic)
 
   checkSlipScript() {
-    if (this.career.flags.slipSeen || this.sentOff || this.elapsed < SLIP_AT) return;
+    if (this.mode !== 'friendly' || this.career.flags.slipSeen || this.sentOff || this.elapsed < SLIP_AT) return;
     const u = this.user;
     this.cutscene = { phase: 'ready', t: 0 };
     u.setAngle(0);
@@ -1047,9 +1138,18 @@ export default class MatchScene extends Phaser.Scene {
     this.over = true;
     music.stop();
     sfx.whistle(this, 3);
-    if (WEEK[currentStep()]?.scene === 'Match') advanceWeek();
-    save();
     const st = this.stats;
+    // Coupe : match nul = séance de tirs au but
+    if (this.mode === 'cup' && this.score.A === this.score.B && !st.red) {
+      save();
+      this.time.delayedCall(900, () =>
+        this.scene.start('TrainPenalty', { mode: 'cup', score: { ...this.score }, legendeStart: this.legendeStart }),
+      );
+      return;
+    }
+    if (this.mode === 'cup') this.career.flags.coupe1 = this.score.A > this.score.B ? 'qualifié' : 'éliminé';
+    advanceWeek();
+    save();
     const lines = [
       ['Distance parcourue', `${Math.round(st.distance / 3)} m`],
       ['Contestations', st.contestations],
@@ -1060,11 +1160,12 @@ export default class MatchScene extends Phaser.Scene {
       ['Contre son camp', st.ownGoals],
       ['Buts', st.goals],
     ];
+    if (this.mode === 'opposition') lines.splice(4, 3, ['Tacles sur Jean-Mi ou le neveu', st.revenge ?? 0]);
     this.time.delayedCall(900, () =>
       this.scene.start('Result', {
-        title: 'Match amical',
+        title: this.cfg.resultTitle,
         subtitle: 'Match',
-        official: `Saint-Clou ${this.score.A} - ${this.score.B} Sainte-Gluse`,
+        official: `${this.cfg.home === 'SANS' ? 'Sans chasuble' : 'Saint-Clou'} ${this.score.A} - ${this.score.B} ${this.cfg.awayFull}`,
         lines,
         coach: this.coachLine(st),
         legendeStart: this.legendeStart,
@@ -1074,6 +1175,14 @@ export default class MatchScene extends Phaser.Scene {
   }
 
   coachLine(st) {
+    if (this.mode === 'opposition') {
+      if (st.revenge) return 'Jean-Mi : « Dimanche, on en reparle. »';
+      return 'Coach Gérard : « Bon. On garde la même équipe pour dimanche. »';
+    }
+    if (this.mode === 'cup') {
+      if (this.score.A > this.score.B) return 'Le président : « Le 2e tour ! On va être dans le journal ! »';
+      return 'Le président : « Éliminés au 1er tour. Comme chaque année. La tradition est respectée. »';
+    }
     if (st.red) return "Le président : « Viens, je t'offre un Ricard. »";
     if (st.goals >= 2) return 'Coach Gérard : « Hmm. Pas mal. » (il soupire)';
     if (st.ownGoals) return "Le vestiaire : « On t'en reparlera toute ta vie. »";

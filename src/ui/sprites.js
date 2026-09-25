@@ -78,6 +78,21 @@ export function makeTextures(scene) {
   player(scene, 'ref', { hair: 0x6b4a2f, skin: C.skinLight, moustache: true, jersey: C.outline, number: C.yellow, shorts: C.outline, socks: C.outline });
   player(scene, 'recruiter', { hair: C.outline, skin: C.skinLight, glasses: true, jersey: 0x2b2b2b, number: 0x2b2b2b, shorts: 0x3a3a5a, socks: 0x3a3a5a });
 
+  // Coupe de France : Racing Club Pré-Mouillé, en rouge et noir
+  const cup = { jersey: C.red, shorts: C.outline, socks: C.red, number: C.outline };
+  player(scene, 'cup1', { hair: C.outline, skin: C.skinLight, ...cup });
+  player(scene, 'cup2', { hair: 0x3b2a1e, skin: C.skinMid, ...cup });
+  player(scene, 'cup3', { hair: C.yellow, skin: C.skinLight, bide: true, ...cup });
+  player(scene, 'cup4', { hair: C.outline, skin: C.skinDark, ...cup });
+  player(scene, 'cupGK', { hair: 0x6b4a2f, skin: C.skinLight, jersey: C.yellow, shorts: C.outline, socks: C.yellow });
+
+  // Opposition du jeudi : les chasubles jaunes (dont Jean-Mi et Enzo)
+  const bib = { jersey: C.yellow, number: C.yellow, shorts: C.cream, socks: C.blue };
+  player(scene, 'bibJeanmi', { hair: 0x9a9a9a, skin: C.skinLight, bide: true, ...bib });
+  player(scene, 'bibEnzo', { hair: 0x3b2a1e, skin: C.skinLight, ...bib });
+  player(scene, 'bib3', { hair: C.outline, skin: C.skinDark, ...bib });
+  player(scene, 'bib4', { hair: 0xb5562b, skin: C.skinMid, ...bib });
+
   player(scene, 'coach', { hair: 0x9a9a9a, skin: C.skinLight, moustache: true, bide: true, jersey: C.navy, number: C.cream, shorts: C.navy, socks: C.navy });
 
   paint(scene, 'coupelle', ['.OOOO.', 'OOOOOO'], { O: 0xf07a1e });
