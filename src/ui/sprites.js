@@ -78,6 +78,11 @@ export function makeTextures(scene) {
   player(scene, 'ref', { hair: 0x6b4a2f, skin: C.skinLight, moustache: true, jersey: C.outline, number: C.yellow, shorts: C.outline, socks: C.outline });
   player(scene, 'recruiter', { hair: C.outline, skin: C.skinLight, glasses: true, jersey: 0x2b2b2b, number: 0x2b2b2b, shorts: 0x3a3a5a, socks: 0x3a3a5a });
 
+  player(scene, 'coach', { hair: 0x9a9a9a, skin: C.skinLight, moustache: true, bide: true, jersey: C.navy, number: C.cream, shorts: C.navy, socks: C.navy });
+
+  paint(scene, 'coupelle', ['.OOOO.', 'OOOOOO'], { O: 0xf07a1e });
+  paint(scene, 'plot', ['..O..', '..O..', '.OWO.', '.OOO.', 'OOOOO'], { O: 0xf07a1e, W: C.cream });
+  paint(scene, 'phone', ['KK', 'BB', 'BB'], { K: C.outline, B: 0x5aa0e6 });
   paint(scene, 'ball', ['.WW.', 'WWWW', 'WWKW', '.WW.'], { W: C.cream, K: C.outline });
   paint(scene, 'merguez', ['.RRRRRR.', 'RRRRRRRR', '.RRRRRR.'], { R: 0x8e3b24 });
   paint(scene, 'canette', ['.SS.', 'RRRR', 'RWWR', 'RRRR', 'RRRR', '.SS.'], { S: 0xbbbbbb, R: C.red, W: C.cream });

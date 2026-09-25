@@ -8,6 +8,7 @@ import { pecab } from '../ui/pecab.js';
 import { sfx, crowdAmbience } from '../ui/sfx.js';
 import { music } from '../audio/music.js';
 import { muteButton } from '../ui/muteButton.js';
+import { advanceWeek, WEEK, currentStep } from '../data/schedule.js';
 import { C, CSS } from '../palette.js';
 
 // Terrain vu de dessus. L'équipe A (la tienne, en bleu) attaque vers le haut.
@@ -61,16 +62,17 @@ export default class MatchScene extends Phaser.Scene {
     this.drawPitch();
 
     this.players = [];
-    this.user = this.makePlayer(`p_${this.char.id}`, 180, 520, 'A', 'user');
+    // Postes : lane = couloir (0 gauche → 1 droite), baseDepth = hauteur de base
+    this.user = this.makePlayer(`p_${this.char.id}`, 180, 520, 'A', 'user', 'mid', 0.5);
     this.mateGK = this.makePlayer('mateGK', 180, 745, 'A', 'gk');
-    this.makePlayer('mate1', 90, 580, 'A', 'field');
-    this.makePlayer('mate2', 270, 580, 'A', 'field');
-    this.makePlayer('mate3', 180, 330, 'A', 'field');
+    this.makePlayer('mate1', 100, 620, 'A', 'field', 'def', 0.3);
+    this.makePlayer('mate2', 260, 620, 'A', 'field', 'def', 0.7);
+    this.makePlayer('mate3', 180, 440, 'A', 'field', 'att', 0.5);
     this.oppGK = this.makePlayer('oppGK', 180, 55, 'B', 'gk');
-    this.makePlayer('opp1', 100, 230, 'B', 'field');
-    this.makePlayer('opp2', 260, 230, 'B', 'field');
-    this.makePlayer('opp3', 120, 440, 'B', 'field');
-    this.makePlayer('opp4', 240, 440, 'B', 'field');
+    this.makePlayer('opp1', 100, 180, 'B', 'field', 'def', 0.3);
+    this.makePlayer('opp2', 260, 180, 'B', 'field', 'def', 0.7);
+    this.makePlayer('opp3', 130, 300, 'B', 'field', 'mid', 0.4);
+    this.makePlayer('opp4', 220, 370, 'B', 'field', 'att', 0.6);
 
     this.referee = this.add.image(230, 420, 'ref').setScale(2);
     this.referee.facing = new Phaser.Math.Vector2(0, 1);
@@ -164,7 +166,7 @@ export default class MatchScene extends Phaser.Scene {
     this.dog = this.add.image(350, 300, 'dog').setScale(2).setDepth(3);
   }
 
-  makePlayer(key, x, y, team, role) {
+  makePlayer(key, x, y, team, role, pos = null, lane = 0.5) {
     const p = this.add.image(x, y, key).setScale(2).setDepth(4);
     p.team = team;
     p.role = role;
@@ -177,6 +179,16 @@ export default class MatchScene extends Phaser.Scene {
     p.recoverUntil = 0;
     p.contestUntil = 0;
     p.contestReadyAt = 0;
+    p.pos = pos;
+    p.lane = lane;
+    p.baseDepth = { def: 0.2, mid: 0.42, att: 0.62 }[pos] ?? 0;
+    p.maxDepth = { def: 0.55, mid: 0.78, att: 0.92 }[pos] ?? 1;
+    p.runSpeed = Phaser.Math.Between(56, 70);
+    p.chaseSpeed = Phaser.Math.Between(80, 92);
+    p.vel = new Phaser.Math.Vector2();
+    p.nextThink = 0;
+    p.target = null;
+    p.chasing = false;
     this.players.push(p);
     return p;
   }
@@ -322,6 +334,7 @@ export default class MatchScene extends Phaser.Scene {
       u.y += dy;
       this.stats.distance += Math.hypot(dx, dy);
       if (v.x) u.setFlipX(v.x < 0);
+      this.bob(u, dt, speed);
     }
     this.clampToPitch(u);
   }
@@ -494,22 +507,57 @@ export default class MatchScene extends Phaser.Scene {
   }
 
   // --------------------------------------------------------- Les autres
+  // Chaque joueur a un poste (défenseur, milieu, attaquant). Il « réfléchit »
+  // toutes les 0,25 à 0,6 s pour choisir où aller, puis s'y déplace avec de
+  // l'inertie : ça évite les allers-retours robotiques.
+
+  // 0 = sa propre ligne de but, 1 = le but adverse
+  teamDepth(team, y) {
+    const t = (y - PITCH.top) / (PITCH.bottom - PITCH.top);
+    return team === 'A' ? 1 - t : t;
+  }
+
+  depthToY(team, d) {
+    const t = team === 'A' ? 1 - d : d;
+    return PITCH.top + t * (PITCH.bottom - PITCH.top);
+  }
+
+  isActive(p) {
+    return !(p === this.user && this.sentOff) && this.time.now >= p.stunUntil;
+  }
+
+  nearestOpponent(p, pos = p) {
+    let best = null;
+    let bestD = Infinity;
+    for (const q of this.players) {
+      if (q.team === p.team || q.role === 'gk' || !this.isActive(q)) continue;
+      const d = dist(q, pos);
+      if (d < bestD) {
+        bestD = d;
+        best = q;
+      }
+    }
+    return best;
+  }
 
   updateAI(dt) {
-    const now = this.time.now;
     const ball = this.ball;
-    const chaser = {};
+    // Classement des joueurs de champ par distance au ballon, pour savoir
+    // qui presse et qui couvre. Le joueur humain compte dans son équipe.
+    const ranking = {};
     for (const team of ['A', 'B']) {
-      const candidates = this.players.filter((p) => p.team === team && p.role === 'field' && now > p.stunUntil);
-      candidates.sort((a, b) => dist(feet(a), ball) - dist(feet(b), ball));
-      chaser[team] = candidates[0];
+      const list = this.players.filter((p) => p.team === team && p.role !== 'gk' && this.isActive(p));
+      list.sort((a, b) => dist(feet(a), ball) - dist(feet(b), ball));
+      ranking[team] = list;
     }
 
     for (const p of this.players) {
       if (p === this.user) continue;
-      if (now < p.stunUntil) continue;
+      if (this.time.now < p.stunUntil) {
+        p.vel.set(0, 0);
+        continue;
+      }
       if (p.angle !== 0) p.setAngle(0);
-
       if (p.role === 'gk') {
         this.updateKeeper(p, dt);
         continue;
@@ -518,60 +566,187 @@ export default class MatchScene extends Phaser.Scene {
         this.updateCarrier(p, dt);
         continue;
       }
-
-      const ownTeamHasBall = this.carrier && this.carrier.team === p.team;
-      const chase = !ownTeamHasBall && chaser[p.team] === p && (p.team === 'B' || dist(p, ball) < 150);
-      if (chase) this.moveToward(p, ball.x, ball.y - 10, 82, dt);
-      else {
-        const tx = p.home.x + (ball.x - 180) * 0.3;
-        const ty = Phaser.Math.Clamp(p.home.y + (ball.y - 400) * 0.45, PITCH.top + 30, PITCH.bottom - 30);
-        this.moveToward(p, tx, ty, 60, dt);
+      if (this.elapsed >= p.nextThink || !p.target) {
+        p.nextThink = this.elapsed + Phaser.Math.FloatBetween(0.25, 0.6);
+        p.target = this.think(p, ranking[p.team].indexOf(p));
       }
+      if (p.chasing) this.steer(p, ball.x, ball.y - 10, p.chaseSpeed, dt);
+      else this.steer(p, p.target.x, p.target.y, p.runSpeed, dt);
     }
   }
 
-  moveToward(p, tx, ty, speed, dt) {
+  think(p, rank) {
+    const ball = this.ball;
+    const attacking = this.carrier && this.carrier.team === p.team;
+    p.chasing = false;
+
+    if (!attacking) {
+      // Le plus proche presse le ballon, le deuxième couvre devant son but.
+      const chaseRange = p.team === 'A' ? 220 : 400;
+      if (rank === 0 && dist(p, ball) < chaseRange) {
+        p.chasing = true;
+        return { x: ball.x, y: ball.y };
+      }
+      if (rank === 1) {
+        const gy = this.depthToY(p.team, 0);
+        const d = Math.hypot(180 - ball.x, gy - ball.y) || 1;
+        if (!this.carrier && dist(p, ball) < 50) {
+          p.chasing = true;
+          return { x: ball.x, y: ball.y };
+        }
+        return this.clampTarget(ball.x + ((180 - ball.x) / d) * 60, ball.y + ((gy - ball.y) / d) * 60);
+      }
+    }
+
+    // Position de base selon le poste, qui suit le jeu sans le coller.
+    const prog = this.teamDepth(p.team, ball.y);
+    const depth = Phaser.Math.Clamp(p.baseDepth + (prog - 0.5) * 0.45 + (attacking ? 0.1 : -0.05), 0.06, p.maxDepth);
+    let x = PITCH.left + p.lane * (PITCH.right - PITCH.left) + (ball.x - 180) * 0.3;
+    let y = this.depthToY(p.team, depth);
+
+    if (attacking) {
+      // Appel de balle : s'écarter du défenseur le plus proche.
+      const opp = this.nearestOpponent(p, { x, y });
+      if (opp) {
+        const d = dist(opp, { x, y });
+        if (d < 40) {
+          x += ((x - opp.x) / (d || 1)) * (40 - d);
+          y += ((y - opp.y) / (d || 1)) * (40 - d);
+        }
+      }
+    } else if (p.pos === 'def' || p.pos === 'mid') {
+      // Marquage : se placer entre l'attaquant adverse le plus proche et son but.
+      const threat = this.nearestOpponent(p, { x, y });
+      if (threat && dist(threat, { x, y }) < 90) {
+        const toGoal = Math.sign(this.depthToY(p.team, 0) - threat.y);
+        const w = p.pos === 'def' ? 0.65 : 0.4;
+        x = x * (1 - w) + threat.x * w;
+        y = y * (1 - w) + (threat.y + toGoal * 18) * w;
+      }
+    }
+    return this.clampTarget(x + Phaser.Math.Between(-8, 8), y + Phaser.Math.Between(-8, 8));
+  }
+
+  clampTarget(x, y) {
+    return {
+      x: Phaser.Math.Clamp(x, PITCH.left + 12, PITCH.right - 12),
+      y: Phaser.Math.Clamp(y, PITCH.top + 20, PITCH.bottom - 20),
+    };
+  }
+
+  // Déplacement avec inertie et ralentissement à l'arrivée.
+  steer(p, tx, ty, maxSpeed, dt) {
     const dx = tx - p.x;
     const dy = ty - p.y;
     const d = Math.hypot(dx, dy);
-    if (d < 2) return;
-    const step = Math.min(d, speed * dt);
-    p.x += (dx / d) * step;
-    p.y += (dy / d) * step;
-    p.facing.set(dx / d, dy / d);
-    if (Math.abs(dx) > 1) p.setFlipX(dx < 0);
+    let wantX = 0;
+    let wantY = 0;
+    if (d > 3) {
+      const sp = maxSpeed * Math.min(1, d / 40);
+      wantX = (dx / d) * sp;
+      wantY = (dy / d) * sp;
+    }
+    // Ne pas se coller à un coéquipier
+    for (const q of this.players) {
+      if (q === p || q.team !== p.team) continue;
+      const e = dist(p, q);
+      if (e > 0 && e < 24) {
+        wantX += ((p.x - q.x) / e) * 30;
+        wantY += ((p.y - q.y) / e) * 30;
+      }
+    }
+    const k = Math.min(1, 5 * dt);
+    p.vel.x += (wantX - p.vel.x) * k;
+    p.vel.y += (wantY - p.vel.y) * k;
+    p.x += p.vel.x * dt;
+    p.y += p.vel.y * dt;
+    const sp = Math.hypot(p.vel.x, p.vel.y);
+    if (sp > 12) {
+      p.facing.set(p.vel.x / sp, p.vel.y / sp);
+      if (Math.abs(p.vel.x) > 5) p.setFlipX(p.vel.x < 0);
+      this.bob(p, dt, sp);
+    }
     this.clampToPitch(p);
+  }
+
+  // Petit dandinement quand on court.
+  bob(p, dt, speed) {
+    p.bobT = (p.bobT ?? 0) + dt * speed * 0.22;
+    p.setAngle(Math.sin(p.bobT) * 5);
   }
 
   updateCarrier(p, dt) {
     const held = this.elapsed - p.holdStart;
-    if (p.team === 'B') {
-      const tx = 180 + Math.sin(this.elapsed * 2 + p.home.x) * 50;
-      this.moveToward(p, tx, PITCH.bottom, 72, dt);
-      if (p.y > PITCH.bottom - 170 || held > 4) this.kick(p, 180 + Phaser.Math.Between(-40, 40), PITCH.bottom + 20, 300);
-      return;
+    const goalY = this.depthToY(p.team, 1);
+    const toGoal = Math.hypot(180 - p.x, goalY - p.y);
+
+    // Avancer vers le but en contournant le défenseur le plus proche.
+    const opp = this.nearestOpponent(p);
+    const od = opp ? dist(opp, p) : 999;
+    let tx = 180 + (p.x - 180) * 0.7;
+    if (opp && od < 55) tx = p.x + (p.x < opp.x ? -70 : 70);
+    this.steer(p, tx, goalY, 72, dt);
+
+    if (held < 0.5 || this.elapsed < p.nextThink) return;
+    p.nextThink = this.elapsed + 0.3;
+
+    if (toGoal < 150) return this.aiShoot(p, goalY);
+    if (od < 30 || held > 2.6 || Math.random() < 0.12) {
+      const mate = this.bestPassTarget(p);
+      if (mate) return this.aiPass(p, mate);
+      if (held > 3.5) this.aiShoot(p, goalY);
     }
-    this.moveToward(p, p.x + (180 - p.x) * 0.2, PITCH.top, 70, dt);
-    if (held < 1.2) return;
-    if (p.y < PITCH.top + 170) this.kick(p, 180 + Phaser.Math.Between(-35, 35), PITCH.top - 20, 300);
-    else if (!this.sentOff) this.kick(p, this.user.x, this.user.y + 10, 230);
-    else {
-      const other = this.players.find((q) => q.team === 'A' && q.role === 'field' && q !== p && q !== this.user);
-      this.kick(p, other.x, other.y + 10, 230);
+  }
+
+  // Le coéquipier le plus intéressant : démarqué, plutôt devant, pas trop loin.
+  bestPassTarget(p) {
+    let best = null;
+    let bestScore = -Infinity;
+    for (const m of this.players) {
+      if (m === p || m.team !== p.team || m.role === 'gk' || !this.isActive(m)) continue;
+      const d = dist(p, m);
+      if (d < 40 || d > 210) continue;
+      const opp = this.nearestOpponent(m);
+      const open = opp ? dist(opp, m) : 99;
+      if (open < 22) continue;
+      const gain = this.teamDepth(p.team, m.y) - this.teamDepth(p.team, p.y);
+      let score = gain * 220 + Math.min(open, 60) - Math.abs(d - 110) * 0.3;
+      if (m === this.user) score += 30; // on fait jouer le joueur humain
+      if (score > bestScore) {
+        bestScore = score;
+        best = m;
+      }
     }
+    return best;
+  }
+
+  aiPass(p, m) {
+    // On vise un peu devant le receveur
+    const lead = m === this.user ? this.controls.vector.clone().scale(35) : m.vel.clone().scale(0.35);
+    const tx = m.x + lead.x;
+    const ty = m.y + 10 + lead.y;
+    const d = Math.hypot(tx - p.x, ty - p.y);
+    this.kick(p, tx, ty, Phaser.Math.Clamp(150 + d * 0.6, 170, 250));
+  }
+
+  aiShoot(p, goalY) {
+    this.kick(p, 180 + Phaser.Math.Between(-40, 40), goalY + (p.team === 'A' ? -20 : 20), 300);
   }
 
   updateKeeper(p, dt) {
     if (this.carrier === p) {
       if (this.elapsed - p.holdStart > 1) {
-        const mates = this.players.filter((q) => q.team === p.team && q.role === 'field' && !(q === this.user && this.sentOff));
-        const m = Phaser.Utils.Array.GetRandom(mates);
-        this.kick(p, m.x, m.y + 10, 240);
+        const m = this.bestPassTarget(p);
+        if (m) this.aiPass(p, m);
+        else this.kick(p, Phaser.Math.Between(80, 280), this.depthToY(p.team, 0.55), 240);
       }
       return;
     }
+    // Suit le ballon sur sa ligne et sort un peu quand il approche.
+    const close = this.teamDepth(p.team, this.ball.y) < 0.2;
     const tx = Phaser.Math.Clamp(this.ball.x, GOAL.left - 6, GOAL.right + 6);
-    this.moveToward(p, tx, p.home.y, 65, dt);
+    const ty = p.home.y + (close ? (p.team === 'A' ? -14 : 14) : 0);
+    this.steer(p, tx, ty, 70, dt);
   }
 
   updateReferee(dt) {
@@ -596,6 +771,7 @@ export default class MatchScene extends Phaser.Scene {
     }
     this.carrier = p;
     p.holdStart = this.elapsed;
+    p.nextThink = this.elapsed + 0.4;
     b.vx = b.vy = 0;
   }
 
@@ -713,6 +889,8 @@ export default class MatchScene extends Phaser.Scene {
       p.x = p.home.x;
       p.y = p.home.y;
       p.setAngle(0);
+      p.vel.set(0, 0);
+      p.target = null;
     }
     this.ball.x = 180;
     this.ball.y = 400;
@@ -869,13 +1047,37 @@ export default class MatchScene extends Phaser.Scene {
     this.over = true;
     music.stop();
     sfx.whistle(this, 3);
+    if (WEEK[currentStep()]?.scene === 'Match') advanceWeek();
     save();
+    const st = this.stats;
+    const lines = [
+      ['Distance parcourue', `${Math.round(st.distance / 3)} m`],
+      ['Contestations', st.contestations],
+      ['Fautes', st.fouls],
+      ['Cartons', st.red ? `Rouge (${st.sentOffMinute}')` : st.yellow ? 'Jaune' : 'Aucun'],
+      ['Merguez & co', st.pickups],
+      ['Ballons dans le parking', st.parking],
+      ['Contre son camp', st.ownGoals],
+      ['Buts', st.goals],
+    ];
     this.time.delayedCall(900, () =>
       this.scene.start('Result', {
-        score: this.score,
-        stats: this.stats,
+        title: 'Match amical',
+        subtitle: 'Match',
+        official: `Saint-Clou ${this.score.A} - ${this.score.B} Sainte-Gluse`,
+        lines,
+        coach: this.coachLine(st),
         legendeStart: this.legendeStart,
+        reporter: true,
       }),
     );
+  }
+
+  coachLine(st) {
+    if (st.red) return "Le président : « Viens, je t'offre un Ricard. »";
+    if (st.goals >= 2) return 'Coach Gérard : « Hmm. Pas mal. » (il soupire)';
+    if (st.ownGoals) return "Le vestiaire : « On t'en reparlera toute ta vie. »";
+    if (st.contestations >= 5) return 'M. Loiseau : « Je te connais depuis les U11, toi. »';
+    return 'Coach Gérard : « On joue simple, les gars. SIMPLE. »';
   }
 }

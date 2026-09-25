@@ -107,7 +107,7 @@ export default class CharacterSelectScene extends Phaser.Scene {
       () => {
         newCareer(c.id);
         save();
-        this.scene.start('Match');
+        this.scene.start('Programme');
       },
       { disabled: locked, fill: C.yellow },
     );

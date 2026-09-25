@@ -24,6 +24,21 @@ const SONGS = {
     bassPattern: [0, 12, 0, 12, 0, 12, 0, 12],
     drums: 'k.h.s.h.k.h.s.hh',
   },
+  // Thème des entraînements : sportif, un peu cheap, façon émission du dimanche.
+  training: {
+    bpm: 116,
+    lead: { wave: 'square', vol: 0.04 },
+    bass: { wave: 'triangle', vol: 0.11 },
+    melody: [
+      [67, _, 71, _, 74, _, 71, _],
+      [72, _, 76, _, 74, 72, 71, _],
+      [69, _, 72, _, 76, _, 74, _],
+      [71, 69, 67, _, 62, _, _, _],
+    ],
+    roots: [43, 48, 45, 50],
+    bassPattern: [0, _, 12, _, 0, 12, _, 12],
+    drums: 'k.h.s.h.k.k.s.h.',
+  },
   // Thème du menu : plus posé, un dimanche matin sur le parking du stade.
   menu: {
     bpm: 96,

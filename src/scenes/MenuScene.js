@@ -47,7 +47,7 @@ export default class MenuScene extends Phaser.Scene {
       48,
       'CONTINUER',
       () => {
-        this.scene.start('Match');
+        this.scene.start('Programme');
       },
       { disabled: !state.career },
     );
@@ -55,7 +55,7 @@ export default class MenuScene extends Phaser.Scene {
     txt(this, 180, 470, 'Visa de l\'arbitre :', 11, CSS.grey);
     txt(this, 180, 492, '~ M. Loiseau ~', 14, CSS.outline);
 
-    txt(this, 180, 612, 'v0.2 · prototype', 10, CSS.grey);
+    txt(this, 180, 612, 'v0.3 · prototype', 10, CSS.grey);
 
     muteButton(this, 338, 22);
     music.play('menu');

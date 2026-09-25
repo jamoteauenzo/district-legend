@@ -22,7 +22,7 @@ export function newCareer(charId) {
     relations: { coach: 0, vestiaire: 0, president: 0, famille: 0, district: 0 },
     flags: {},
     chapter: 1,
-    level: '1.6',
+    step: 0,
   };
   return state.career;
 }

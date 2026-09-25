@@ -5,6 +5,11 @@ import MenuScene from './scenes/MenuScene.js';
 import CharacterSelectScene from './scenes/CharacterSelectScene.js';
 import MatchScene from './scenes/MatchScene.js';
 import ResultScene from './scenes/ResultScene.js';
+import ProgrammeScene from './scenes/ProgrammeScene.js';
+import TrainPhysique from './scenes/training/TrainPhysique.js';
+import TrainJongles from './scenes/training/TrainJongles.js';
+import TrainTechnique from './scenes/training/TrainTechnique.js';
+import TrainFinition from './scenes/training/TrainFinition.js';
 
 // Le jeu tourne en 360 × 640 : du pixel art en 180 × 320 affiché ×2,
 // pour que le texte reste lisible sur téléphone.
@@ -16,7 +21,18 @@ const config = {
   pixelArt: true,
   backgroundColor: '#1E2438',
   scale: { mode: Phaser.Scale.FIT, autoCenter: Phaser.Scale.CENTER_BOTH },
-  scene: [BootScene, MenuScene, CharacterSelectScene, MatchScene, ResultScene],
+  scene: [
+    BootScene,
+    MenuScene,
+    CharacterSelectScene,
+    ProgrammeScene,
+    TrainPhysique,
+    TrainJongles,
+    TrainTechnique,
+    TrainFinition,
+    MatchScene,
+    ResultScene,
+  ],
 };
 
 // L'audio PÉCAB original est optionnel : on vérifie qu'il a bien été déposé.
