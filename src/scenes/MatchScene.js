@@ -1169,7 +1169,8 @@ export default class MatchScene extends Phaser.Scene {
         lines,
         coach: this.coachLine(st),
         legendeStart: this.legendeStart,
-        reporter: true,
+        reporter: this.mode !== 'opposition',
+        interview: { red: st.red },
       }),
     );
   }

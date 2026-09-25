@@ -15,7 +15,7 @@ export default class ResultScene extends Phaser.Scene {
     super('Result');
   }
 
-  create({ title, subtitle, official, lines, coach, legendeStart, reporter }) {
+  create({ title, subtitle, official, lines, coach, legendeStart, reporter, interview }) {
     const career = state.career;
     const g = this.add.graphics();
     g.fillStyle(C.cream, 1);
@@ -56,6 +56,6 @@ export default class ResultScene extends Phaser.Scene {
     music.jingle();
     this.time.delayedCall(2500, () => music.play('menu'));
 
-    button(this, 180, 606, 240, 44, 'CONTINUER', () => this.scene.start('Programme'), { size: 14 });
+    button(this, 180, 606, 240, 44, 'CONTINUER', () => (reporter ? this.scene.start('Interview', interview ?? {}) : this.scene.start('Programme')), { size: 14 });
   }
 }
