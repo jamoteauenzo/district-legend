@@ -23,7 +23,7 @@ Importe ce dépôt sur [vercel.com/new](https://vercel.com/new). Vercel détecte
 
 Dépose le fichier audio dans `public/audio/pecab.mp3`. Le jeu le détecte au lancement et l'utilise à chaque tampon PÉCAB. Sans fichier, un bruit de tampon le remplace.
 
-## Contenu de la v0.5
+## Contenu de la v0.6
 
 - Menu façon feuille de match
 - Choix du personnage (4 jouables + Tonton Gégé, secret)
@@ -43,3 +43,4 @@ Dépose le fichier audio dans `public/audio/pecab.mp3`. Le jeu le détecte au la
 - Semaine 2, « Coupe de France » (début août) : étirements, toro, corvée des plots, gonflage des ballons, opposition du jeudi, tirs au but, puis le 1er tour de Coupe de France (séance de tirs au but en cas de nul)
 - Les ballons mal gonflés deviennent une excuse en match (« Le ballon est MOU arbitre ! »)
 - Interview du Reporter après chaque match officiel, façon story : une question, une réponse en 3 morceaux, un nombre de vues, et le PÉCAB quand la réponse est énorme mais crédible (règle jamais expliquée)
+- Cartes de décision façon Reigns (glisser à gauche ou à droite) : l'arrivée au vestiaire (métier, bizutage, surnom), le samedi soir, la veille de la Coupe (brassard, loto, Léa…). Relations visibles, choix verrouillés selon les stats, drapeaux pour la suite de l'histoire

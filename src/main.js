@@ -7,6 +7,7 @@ import MatchScene from './scenes/MatchScene.js';
 import ResultScene from './scenes/ResultScene.js';
 import ProgrammeScene from './scenes/ProgrammeScene.js';
 import InterviewScene from './scenes/InterviewScene.js';
+import CardsScene from './scenes/CardsScene.js';
 import TrainPhysique from './scenes/training/TrainPhysique.js';
 import TrainJongles from './scenes/training/TrainJongles.js';
 import TrainTechnique from './scenes/training/TrainTechnique.js';
@@ -44,6 +45,7 @@ const config = {
     MatchScene,
     ResultScene,
     InterviewScene,
+    CardsScene,
   ],
 };
 

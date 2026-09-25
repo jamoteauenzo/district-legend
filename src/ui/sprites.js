@@ -45,6 +45,13 @@ function player(scene, key, look) {
   if (look.moustache) rows[4] = '...MMMM...';
   if (look.glasses) rows[3] = '..EEEEEE..';
   if (look.bide) rows[9] = '.JJJJJJJJ.';
+  if (look.longHair) {
+    rows[2] = '.HHSSSSHH.';
+    rows[3] = '.HSESSESH.';
+    rows[4] = '.HHSSSSHH.';
+    rows[5] = '.HH.SS.HH.';
+  }
+  if (look.headband) rows[1] = '..BBBBBB..';
   paint(scene, key, rows, {
     H: look.hair,
     M: look.hair,
@@ -55,6 +62,7 @@ function player(scene, key, look) {
     P: look.shorts,
     W: look.socks,
     K: C.outline,
+    B: C.cream,
   });
 }
 
@@ -92,6 +100,14 @@ export function makeTextures(scene) {
   player(scene, 'bibEnzo', { hair: 0x3b2a1e, skin: C.skinLight, ...bib });
   player(scene, 'bib3', { hair: C.outline, skin: C.skinDark, ...bib });
   player(scene, 'bib4', { hair: 0xb5562b, skin: C.skinMid, ...bib });
+
+  // Les personnages des cartes de décision
+  player(scene, 'president', { hair: C.skinLight, skin: C.skinLight, bald: true, bide: true, jersey: C.red, number: C.cream, shorts: 0x3a3a5a, socks: C.outline });
+  player(scene, 'jeanmi', { hair: 0x9a9a9a, skin: C.skinLight, headband: true, bide: true, jersey: C.blue, number: C.cream, shorts: C.cream, socks: C.blue });
+  player(scene, 'mere', { hair: 0x6b4a2f, skin: C.skinLight, longHair: true, jersey: 0x8e5b9e, number: 0x8e5b9e, shorts: 0x3a3a5a, socks: C.outline });
+  player(scene, 'lea', { hair: C.yellow, skin: C.skinLight, longHair: true, jersey: C.salmon, number: C.salmon, shorts: 0x3a3a5a, socks: C.cream });
+  player(scene, 'patron', { hair: C.outline, skin: C.skinMid, moustache: true, jersey: 0xf07a1e, number: C.cream, shorts: C.navy, socks: C.outline });
+  player(scene, 'pote', { hair: C.outline, skin: C.skinDark, jersey: C.outline, number: C.red, shorts: C.outline, socks: C.cream });
 
   player(scene, 'coach', { hair: 0x9a9a9a, skin: C.skinLight, moustache: true, bide: true, jersey: C.navy, number: C.cream, shorts: C.navy, socks: C.navy });
 
