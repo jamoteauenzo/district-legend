@@ -2,7 +2,8 @@ import Phaser from 'phaser';
 import { state } from '../state.js';
 import { txt, button } from '../ui/text.js';
 import { C, CSS } from '../palette.js';
-import { sfx } from '../ui/sfx.js';
+import { music } from '../audio/music.js';
+import { muteButton } from '../ui/muteButton.js';
 
 // Menu principal façon feuille de match.
 export default class MenuScene extends Phaser.Scene {
@@ -36,7 +37,6 @@ export default class MenuScene extends Phaser.Scene {
     txt(this, 180, 244, 'Ta carrière pro est derrière toi.', 13, CSS.outline);
 
     button(this, 180, 320, 240, 48, 'NOUVELLE CARRIÈRE', () => {
-      sfx.select(this);
       this.scene.start('CharacterSelect');
     });
     button(
@@ -47,7 +47,6 @@ export default class MenuScene extends Phaser.Scene {
       48,
       'CONTINUER',
       () => {
-        sfx.select(this);
         this.scene.start('Match');
       },
       { disabled: !state.career },
@@ -56,7 +55,10 @@ export default class MenuScene extends Phaser.Scene {
     txt(this, 180, 470, 'Visa de l\'arbitre :', 11, CSS.grey);
     txt(this, 180, 492, '~ M. Loiseau ~', 14, CSS.outline);
 
-    txt(this, 180, 612, 'v0.1 · prototype', 10, CSS.grey);
+    txt(this, 180, 612, 'v0.2 · prototype', 10, CSS.grey);
+
+    muteButton(this, 338, 22);
+    music.play('menu');
 
     // Kaiser, le chien du terrain
     const dog = this.add.image(-20, 570, 'dog').setScale(3);

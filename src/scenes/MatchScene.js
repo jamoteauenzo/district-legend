@@ -5,7 +5,9 @@ import { txt, floatText } from '../ui/text.js';
 import { Controls } from '../ui/controls.js';
 import { Mug } from '../ui/mug.js';
 import { pecab } from '../ui/pecab.js';
-import { sfx } from '../ui/sfx.js';
+import { sfx, crowdAmbience } from '../ui/sfx.js';
+import { music } from '../audio/music.js';
+import { muteButton } from '../ui/muteButton.js';
 import { C, CSS } from '../palette.js';
 
 // Terrain vu de dessus. L'équipe A (la tienne, en bleu) attaque vers le haut.
@@ -93,6 +95,9 @@ export default class MatchScene extends Phaser.Scene {
 
     this.banner('MATCH AMICAL', 'Objectif : gagne le match.');
     sfx.whistle(this);
+    music.play('match');
+    crowdAmbience.start();
+    this.events.once('shutdown', () => crowdAmbience.stop());
   }
 
   // ---------------------------------------------------------------- Décor
@@ -183,10 +188,11 @@ export default class MatchScene extends Phaser.Scene {
     fix(this.add.rectangle(0, 0, 360, 40, C.outline, 0.85).setOrigin(0));
     this.scoreText = fix(txt(this, 10, 13, '', 13, CSS.cream, { ox: 0, bold: true }), 101);
     this.timeText = fix(txt(this, 10, 30, '', 11, CSS.chalk, { ox: 0 }), 101);
-    this.cardText = fix(txt(this, 268, 13, '', 11, CSS.yellow, { bold: true }), 101);
+    this.cardText = fix(txt(this, 250, 13, '', 11, CSS.yellow, { bold: true }), 101);
     this.objective = fix(txt(this, 180, 31, 'OBJECTIF : GAGNE LE MATCH', 9, CSS.cream, { stroke: CSS.outline }), 101);
     this.mug = new Mug(this, 334, 20).setScrollFactor(0).setDepth(101);
     this.mug.setValue(this.career.legende, false);
+    muteButton(this, 298, 20);
   }
 
   updateHud() {
@@ -402,6 +408,8 @@ export default class MatchScene extends Phaser.Scene {
 
     // Faute
     this.stats.fouls++;
+    sfx.thud(this);
+    sfx.ooh(this);
     opp.stunUntil = this.time.now + 1300;
     opp.setAngle(90);
     if (masse) opp.x += this.user.facing.x * 26;
@@ -444,6 +452,7 @@ export default class MatchScene extends Phaser.Scene {
   giveYellow() {
     this.stats.yellow++;
     this.showCard('cardYellow');
+    sfx.ooh(this);
     this.legende(50, 'Carton jaune');
     if (this.stats.yellow >= 2) this.time.delayedCall(700, () => this.giveRed());
   }
@@ -460,6 +469,7 @@ export default class MatchScene extends Phaser.Scene {
       this.legende(150, 'CARTON ROUGE');
       pecab(this);
       sfx.bark(this);
+      sfx.cheer(this, true);
       this.cheer(['BRAVOOO', 'LÉGENDE', 'WOUF WOUF', 'Ricard offert !']);
     });
     this.wait(3.5, () => this.endMatch());
@@ -673,8 +683,10 @@ export default class MatchScene extends Phaser.Scene {
       gainNiveau(8);
       this.banner('BUT', '...');
       this.cheer(['...', 'bof', '*tousse*']);
+      sfx.boo(this);
     } else if (team === 'A') {
       this.banner('BUT', 'Pour Saint-Clou.');
+      sfx.cheer(this);
       if (this.lastPass && this.elapsed - this.lastPass.at < 4) {
         this.legende(-10, 'Passe décisive');
         gainNiveau(5);
@@ -684,9 +696,12 @@ export default class MatchScene extends Phaser.Scene {
       this.banner('CSC !', 'Contre son camp.');
       this.legende(80, 'CONTRE SON CAMP');
       pecab(this);
+      sfx.laugh(this);
+      sfx.cheer(this, true);
       this.cheer(['MDRRR', 'LÉGENDE', 'WOUF']);
     } else {
       this.banner('BUT', 'Pour Sainte-Gluse.');
+      sfx.boo(this);
     }
     sfx.whistle(this);
     this.wait(2, () => this.kickoff(team === 'A' ? 'B' : 'A'));
@@ -715,6 +730,7 @@ export default class MatchScene extends Phaser.Scene {
       this.stats.parking++;
       this.legende(30, 'Dans le parking !');
       sfx.alarm(this);
+      sfx.laugh(this);
       floatText(this, Phaser.Math.Clamp(b.x, 60, 300), Phaser.Math.Clamp(b.y, 60, 740), 'WIIOU WIIOU', CSS.red, 13);
     }
     b.vx = b.vy = 0;
@@ -763,6 +779,8 @@ export default class MatchScene extends Phaser.Scene {
         this.stats.pickups++;
         this.slowUntil = this.time.now + 10000;
         this.legende(15, pk.def.label);
+        if (pk.def.key === 'merguez') sfx.munch(this);
+        else sfx.gulp(this);
         pk.img.destroy();
         return false;
       }
@@ -777,6 +795,7 @@ export default class MatchScene extends Phaser.Scene {
     const y = Phaser.Math.Clamp(this.user.y, 100, 700);
     this.recruiter = this.add.image(390, y, 'recruiter').setScale(2).setDepth(3).setFlipX(true);
     this.tweens.add({ targets: this.recruiter, x: 350, duration: 1500 });
+    sfx.ominous(this);
     const note = txt(this, 180, 70, 'Un homme en lunettes de soleil vous regarde.', 10, CSS.cream, { stroke: CSS.outline })
       .setScrollFactor(0)
       .setDepth(120);
@@ -827,6 +846,7 @@ export default class MatchScene extends Phaser.Scene {
       this.career.flags.slipSeen = true;
       this.cheer(['HAHAHAHA', 'MDRRR', 'OH LE LOOOSER', 'WOUF WOUF']);
       sfx.bark(this);
+      sfx.laugh(this);
       this.legende(50);
       pecab(this);
     });
@@ -847,6 +867,7 @@ export default class MatchScene extends Phaser.Scene {
   endMatch() {
     if (this.over) return;
     this.over = true;
+    music.stop();
     sfx.whistle(this, 3);
     save();
     this.time.delayedCall(900, () =>

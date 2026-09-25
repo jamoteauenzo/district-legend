@@ -1,6 +1,7 @@
 import { txt } from './text.js';
 import { sfx } from './sfx.js';
 import { CSS } from '../palette.js';
+import { audio } from '../audio/engine.js';
 
 // Le tampon PÉCAB. Joue l'audio original s'il a été déposé dans
 // public/audio/pecab.mp3, sinon un bruit de tampon.
@@ -29,6 +30,7 @@ export function pecab(scene) {
     },
   });
 
+  audio.duck(1.4);
   if (scene.cache.audio.exists('pecab')) scene.sound.play('pecab');
   else scene.time.delayedCall(170, () => sfx.stamp(scene));
 }

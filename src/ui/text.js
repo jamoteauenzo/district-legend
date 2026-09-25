@@ -1,4 +1,5 @@
 import { CSS } from '../palette.js';
+import { sfx } from './sfx.js';
 
 export const FONT = '"Pixelify Sans", monospace';
 
@@ -52,6 +53,7 @@ export function button(scene, x, y, w, h, label, onClick, opts = {}) {
   bg.on('pointerout', () => bg.setScale(1));
   bg.on('pointerup', () => {
     bg.setScale(1);
+    sfx.select();
     onClick();
   });
   return { bg, t };

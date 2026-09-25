@@ -4,6 +4,8 @@ import { txt, button } from '../ui/text.js';
 import { Mug } from '../ui/mug.js';
 import { C, CSS } from '../palette.js';
 import { sfx } from '../ui/sfx.js';
+import { music } from '../audio/music.js';
+import { muteButton } from '../ui/muteButton.js';
 
 // L'écran de fin de match : le score officiel, que personne ne regarde,
 // et les vraies stats.
@@ -54,6 +56,11 @@ export default class ResultScene extends Phaser.Scene {
 
     const reporter = txt(this, 180, 566, 'Le Reporter s\'approche avec son téléphone...', 12, CSS.cream);
     this.tweens.add({ targets: reporter, alpha: 0.3, yoyo: true, repeat: -1, duration: 700 });
+
+    muteButton(this, 338, 22);
+    music.stop();
+    music.jingle();
+    this.time.delayedCall(2500, () => music.play('menu'));
 
     button(this, 180, 606, 240, 44, 'RETOUR AU VESTIAIRE', () => this.scene.start('Menu'), { size: 14 });
   }

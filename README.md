@@ -23,7 +23,7 @@ Importe ce dépôt sur [vercel.com/new](https://vercel.com/new). Vercel détecte
 
 Dépose le fichier audio dans `public/audio/pecab.mp3`. Le jeu le détecte au lancement et l'utilise à chaque tampon PÉCAB. Sans fichier, un bruit de tampon le remplace.
 
-## Contenu de la v0.1
+## Contenu de la v0.2
 
 - Menu façon feuille de match
 - Choix du personnage (4 jouables + Tonton Gégé, secret)
@@ -31,3 +31,6 @@ Dépose le fichier audio dans `public/audio/pecab.mp3`. Le jeu le détecte au la
 - La glissade scriptée devant le but vide (le déclic) et le tampon PÉCAB
 - Écran de fin de match avec les stats absurdes et la chope Légende
 - Sauvegarde automatique sur le téléphone
+- Musique chiptune jouée en direct : thème du menu et « Hymne du District » en match, fanfare de fin de match
+- Bruitages : sifflet, frappe, glissade, impact, public (murmure, « ooh », rires, huées, ovation), glou-glou, merguez, alarme de voiture, Kaiser, recruteur
+- Bouton pour couper le son (retenu d'une partie à l'autre)

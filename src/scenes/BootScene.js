@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import { makeTextures } from '../ui/sprites.js';
+import { audio } from '../audio/engine.js';
 
 export default class BootScene extends Phaser.Scene {
   constructor() {
@@ -12,6 +13,7 @@ export default class BootScene extends Phaser.Scene {
 
   create() {
     makeTextures(this);
+    audio.init(this.game);
     this.scene.start('Menu');
   }
 }

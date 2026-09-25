@@ -4,6 +4,8 @@ import { state, newCareer, save } from '../state.js';
 import { txt, button } from '../ui/text.js';
 import { C, CSS } from '../palette.js';
 import { sfx } from '../ui/sfx.js';
+import { music } from '../audio/music.js';
+import { muteButton } from '../ui/muteButton.js';
 
 export default class CharacterSelectScene extends Phaser.Scene {
   constructor() {
@@ -26,15 +28,19 @@ export default class CharacterSelectScene extends Phaser.Scene {
     this.input.on('pointerup', (p) => {
       if (this.swipeX === undefined) return;
       const dx = p.x - this.swipeX;
-      if (Math.abs(dx) > 50 && p.y > 80 && p.y < 540) this.shift(dx < 0 ? 1 : -1);
+      if (Math.abs(dx) > 50 && p.y > 80 && p.y < 540) {
+        sfx.select();
+        this.shift(dx < 0 ? 1 : -1);
+      }
       this.swipeX = undefined;
     });
 
+    muteButton(this, 338, 22);
+    music.play('menu');
     this.render();
   }
 
   shift(d) {
-    sfx.select(this);
     this.index = Phaser.Math.Wrap(this.index + d, 0, CHARACTERS.length);
     this.render();
   }
@@ -99,7 +105,6 @@ export default class CharacterSelectScene extends Phaser.Scene {
       52,
       'SIGNER LA LICENCE',
       () => {
-        sfx.select(this);
         newCareer(c.id);
         save();
         this.scene.start('Match');
