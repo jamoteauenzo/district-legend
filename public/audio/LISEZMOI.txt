@@ -1,0 +1,2 @@
+Dépose ici le fichier pecab.mp3 (audio original du « PÉCAB »).
+Sans ce fichier, le jeu joue un bruit de tampon à la place.
