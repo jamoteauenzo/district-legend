@@ -44,6 +44,19 @@ const MODES = {
     opp: ['cup1', 'cup2', 'cup3', 'cup4', 'cupGK'],
     ref: 'ref',
   },
+  anciens: {
+    banner: 'JEUNES CONTRE ANCIENS',
+    sub: 'La fête du club. Objectif : marque contre les Anciens.',
+    home: 'JEUNES',
+    away: 'ANCIENS',
+    awayFull: 'Les Anciens',
+    resultTitle: 'Le match des Anciens',
+    seconds: 90,
+    cards: true,
+    pickups: true,
+    opp: ['anc1', 'anc2', 'anc3', 'ancJeanmi', 'ancGK'],
+    ref: 'ref',
+  },
   opposition: {
     banner: 'OPPOSITION DU JEUDI',
     sub: 'Sans chasuble contre chasubles. Objectif : gagne.',
@@ -119,7 +132,8 @@ export default class MatchScene extends Phaser.Scene {
     this.makePlayer(o[0], 100, 180, 'B', 'field', 'def', 0.3);
     this.makePlayer(o[1], 260, 180, 'B', 'field', 'def', 0.7);
     this.makePlayer(o[2], 130, 300, 'B', 'field', 'mid', 0.4);
-    this.makePlayer(o[3], 220, 370, 'B', 'field', 'att', 0.6);
+    const last = this.makePlayer(o[3], 220, 370, 'B', 'field', 'att', 0.6);
+    if (this.mode === 'anciens') this.setupBoss(last);
 
     this.referee = this.add.image(230, 420, this.cfg.ref).setScale(2);
     this.referee.facing = new Phaser.Math.Vector2(0, 1);
@@ -251,6 +265,7 @@ export default class MatchScene extends Phaser.Scene {
     this.objective = fix(txt(this, 180, 31, 'OBJECTIF : GAGNE LE MATCH', 9, CSS.cream, { stroke: CSS.outline }), 101);
     this.mug = new Mug(this, 334, 20).setScrollFactor(0).setDepth(101);
     this.mug.setValue(this.career.legende, false);
+    if (this.aura) this.createAuraHud();
     muteButton(this, 298, 20);
   }
 
@@ -280,6 +295,7 @@ export default class MatchScene extends Phaser.Scene {
 
   // La Légende n'affiche jamais de chiffre : seulement la chope et un mot.
   legende(n, label) {
+    if (this.aura && n > 0) this.aura.me += n;
     gainLegende(n);
     this.mug.setValue(this.career.legende);
     if (n > 0) sfx.gain(this);
@@ -331,6 +347,7 @@ export default class MatchScene extends Phaser.Scene {
     this.updateBall(dt);
     this.updateReferee(dt);
     if (this.cfg.pickups) this.updatePickups();
+    if (this.aura) this.updateBoss(dt);
     this.checkRecruiter();
     this.updateHud();
 
@@ -597,6 +614,62 @@ export default class MatchScene extends Phaser.Scene {
     }
   }
 
+  // ------------------------------------------------ Boss : Jean-Mi
+  // Pendant le match des Anciens, Jean-Mi te marque et une jauge d'aura
+  // vous oppose : chaque exploit « district » te fait gagner de l'aura,
+  // et Jean-Mi fait son show de son côté.
+
+  setupBoss(jm) {
+    const f = this.career.flags;
+    jm.marker = true;
+    jm.chaseSpeed += 6;
+    this.jeanmi = jm;
+    // Plus dur si tu lui as piqué sa place ou le brassard, plus facile s'il t'apprécie
+    this.bossMult = f.jeanmiHostile || f.capitaine ? 1.4 : f.jeanmiAllie || f.jeanmiRespect ? 0.7 : 1;
+    this.aura = { me: 0, him: 0 };
+    this.nextAuraEvent = 5;
+  }
+
+  createAuraHud() {
+    const fix = (o, d = 100) => o.setScrollFactor(0).setDepth(d);
+    fix(this.add.rectangle(0, 40, 360, 22, C.outline, 0.7).setOrigin(0));
+    fix(txt(this, 10, 51, 'TOI', 10, CSS.cream, { ox: 0, bold: true }), 101);
+    fix(txt(this, 350, 51, 'JEAN-MI', 10, CSS.yellow, { ox: 1, bold: true }), 101);
+    fix(txt(this, 180, 70, "DUEL D'AURA", 8, CSS.cream, { stroke: CSS.outline }), 101);
+    this.auraGfx = fix(this.add.graphics(), 101);
+    this.drawAura();
+  }
+
+  drawAura() {
+    const g = this.auraGfx;
+    const { me, him } = this.aura;
+    const r = me + him === 0 ? 0.5 : me / (me + him);
+    g.clear();
+    g.fillStyle(C.yellow, 1);
+    g.fillRect(40, 46, 240, 10);
+    g.fillStyle(C.blue, 1);
+    g.fillRect(40, 46, 240 * r, 10);
+    g.lineStyle(2, C.cream, 1);
+    g.strokeRect(40, 46, 240, 10);
+    g.fillStyle(C.cream, 1);
+    g.fillRect(40 + 240 * r - 1, 43, 3, 16);
+  }
+
+  updateBoss() {
+    if (this.elapsed > this.nextAuraEvent) {
+      this.nextAuraEvent = this.elapsed + Phaser.Math.FloatBetween(6, 9);
+      const friendly = this.bossMult < 1;
+      const events = friendly
+        ? ['*te fait un clin d\'œil*', 'Jean-Mi raconte 1998 à l\'arbitre', 'Jean-Mi conteste (mollement)']
+        : ['Jean-Mi conteste', 'Jean-Mi réclame un penalty', '*claquage imaginaire*', 'Jean-Mi raconte 1998 à l\'arbitre', 'Jean-Mi insulte le poteau'];
+      const pts = Math.round(Phaser.Math.Between(15, 30) * this.bossMult);
+      this.aura.him += pts;
+      floatText(this, this.jeanmi.x, this.jeanmi.y - 26, Phaser.Utils.Array.GetRandom(events), CSS.yellow, 10);
+      sfx.ooh(this);
+    }
+    this.drawAura();
+  }
+
   // --------------------------------------------------------- Les autres
   // Chaque joueur a un poste (défenseur, milieu, attaquant). Il « réfléchit »
   // toutes les 0,25 à 0,6 s pour choisir où aller, puis s'y déplace avec de
@@ -670,6 +743,15 @@ export default class MatchScene extends Phaser.Scene {
     const ball = this.ball;
     const attacking = this.carrier && this.carrier.team === p.team;
     p.chasing = false;
+
+    // Jean-Mi colle le joueur (marquage à la culotte), côté but
+    if (p.marker && !attacking && !this.sentOff) {
+      if (this.carrier === this.user) {
+        p.chasing = true;
+        return { x: this.user.x, y: this.user.y };
+      }
+      return this.clampTarget(this.user.x + 6, this.user.y - 18);
+    }
 
     if (!attacking) {
       // Le plus proche presse le ballon, le deuxième couvre devant son but.
@@ -1139,6 +1221,15 @@ export default class MatchScene extends Phaser.Scene {
     music.stop();
     sfx.whistle(this, 3);
     const st = this.stats;
+    // Match des Anciens : direction la buvette pour le duel de chambrage
+    if (this.mode === 'anciens') {
+      save();
+      this.banner('FIN DU MATCH', 'Jean-Mi : « On règle ça à la buvette. »');
+      this.time.delayedCall(2200, () =>
+        this.scene.start('Duel', { auraWin: this.aura.me > this.aura.him, score: { ...this.score } }),
+      );
+      return;
+    }
     // Coupe : match nul = séance de tirs au but
     if (this.mode === 'cup' && this.score.A === this.score.B && !st.red) {
       save();

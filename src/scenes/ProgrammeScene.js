@@ -65,7 +65,8 @@ export default class ProgrammeScene extends Phaser.Scene {
     if (!done) {
       const next = week.steps[step];
       const isMatch = next.scene === 'Match' && next.data?.mode !== 'opposition';
-      button(this, 180, 566, 280, 50, isMatch ? 'JOUER LE MATCH' : 'Y ALLER', () => this.scene.start(next.scene, next.data ?? {}), { fill: C.yellow });
+      const isBoss = next.data?.mode === 'anciens';
+      button(this, 180, 566, 280, 50, isBoss ? 'AFFRONTER JEAN-MI' : isMatch ? 'JOUER LE MATCH' : 'Y ALLER', () => this.scene.start(next.scene, next.data ?? {}), { fill: C.yellow });
     } else if (hasNextWeek()) {
       button(this, 180, 566, 280, 50, 'SEMAINE SUIVANTE', () => {
         nextWeek();
@@ -73,7 +74,7 @@ export default class ProgrammeScene extends Phaser.Scene {
         this.scene.restart();
       }, { fill: C.yellow });
     } else {
-      txt(this, 180, 520, 'Fin du mois d\'août. La suite arrive bientôt.', 12, CSS.outline);
+      txt(this, 180, 520, 'Fin du chapitre 1. Le chapitre 2 arrive bientôt.', 12, CSS.outline);
       button(this, 180, 566, 280, 46, 'REFAIRE LA SEMAINE', () => {
         restartWeek();
         save();

@@ -30,6 +30,13 @@ export const WEEKS = [
       { scene: 'Match', data: { mode: 'cup' }, jour: 'DIMANCHE 15H', titre: 'Coupe de France, 1er tour' },
     ],
   },
+  {
+    titre: 'Semaine 3 · La fête du club',
+    date: 'Fin août',
+    steps: [
+      { scene: 'Match', data: { mode: 'anciens' }, jour: 'SAMEDI 14H', titre: 'BOSS : Jeunes contre Anciens, puis Jean-Mi à la buvette' },
+    ],
+  },
 ];
 
 export function currentWeek() {

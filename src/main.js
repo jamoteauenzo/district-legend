@@ -8,6 +8,8 @@ import ResultScene from './scenes/ResultScene.js';
 import ProgrammeScene from './scenes/ProgrammeScene.js';
 import InterviewScene from './scenes/InterviewScene.js';
 import CardsScene from './scenes/CardsScene.js';
+import DuelScene from './scenes/DuelScene.js';
+import ChapterEndScene from './scenes/ChapterEndScene.js';
 import TrainPhysique from './scenes/training/TrainPhysique.js';
 import TrainJongles from './scenes/training/TrainJongles.js';
 import TrainTechnique from './scenes/training/TrainTechnique.js';
@@ -46,6 +48,8 @@ const config = {
     ResultScene,
     InterviewScene,
     CardsScene,
+    DuelScene,
+    ChapterEndScene,
   ],
 };
 

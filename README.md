@@ -23,7 +23,7 @@ Importe ce dépôt sur [vercel.com/new](https://vercel.com/new). Vercel détecte
 
 Dépose le fichier audio dans `public/audio/pecab.mp3`. Le jeu le détecte au lancement et l'utilise à chaque tampon PÉCAB. Sans fichier, un bruit de tampon le remplace.
 
-## Contenu de la v0.6
+## Contenu de la v0.7
 
 - Menu façon feuille de match
 - Choix du personnage (4 jouables + Tonton Gégé, secret)
@@ -44,3 +44,5 @@ Dépose le fichier audio dans `public/audio/pecab.mp3`. Le jeu le détecte au la
 - Les ballons mal gonflés deviennent une excuse en match (« Le ballon est MOU arbitre ! »)
 - Interview du Reporter après chaque match officiel, façon story : une question, une réponse en 3 morceaux, un nombre de vues, et le PÉCAB quand la réponse est énorme mais crédible (règle jamais expliquée)
 - Cartes de décision façon Reigns (glisser à gauche ou à droite) : l'arrivée au vestiaire (métier, bizutage, surnom), le samedi soir, la veille de la Coupe (brassard, loto, Léa…). Relations visibles, choix verrouillés selon les stats, drapeaux pour la suite de l'histoire
+- Semaine 3, la fête du club : le BOSS Jean-Mi. Match Jeunes contre Anciens (Jean-Mi te marque, duel d'aura), puis duel de chambrage au tour par tour à la buvette (vanne sur l'âge > anecdote de gloire > vanne sur le physique > vanne sur l'âge)
+- Fin du chapitre 1 : article de L'Écho de Grandcour qui résume ta carrière, et Tonton Gégé débloqué

@@ -94,6 +94,14 @@ export function makeTextures(scene) {
   player(scene, 'cup4', { hair: C.outline, skin: C.skinDark, ...cup });
   player(scene, 'cupGK', { hair: 0x6b4a2f, skin: C.skinLight, jersey: C.yellow, shorts: C.outline, socks: C.yellow });
 
+  // Les Anciens : maillots de 1998, crème à numéro rouge
+  const anc = { jersey: C.cream, number: C.red, shorts: C.red, socks: C.cream };
+  player(scene, 'ancJeanmi', { hair: 0x9a9a9a, skin: C.skinLight, headband: true, bide: true, ...anc });
+  player(scene, 'anc1', { hair: 0x9a9a9a, skin: C.skinMid, moustache: true, bide: true, ...anc });
+  player(scene, 'anc2', { hair: C.skinLight, skin: C.skinLight, bald: true, bide: true, ...anc });
+  player(scene, 'anc3', { hair: 0xe8e4d4, skin: C.skinDark, ...anc });
+  player(scene, 'ancGK', { hair: 0x9a9a9a, skin: C.skinLight, moustache: true, bide: true, jersey: C.outline, shorts: C.outline, socks: C.outline });
+
   // Opposition du jeudi : les chasubles jaunes (dont Jean-Mi et Enzo)
   const bib = { jersey: C.yellow, number: C.yellow, shorts: C.cream, socks: C.blue };
   player(scene, 'bibJeanmi', { hair: 0x9a9a9a, skin: C.skinLight, bide: true, ...bib });
