@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Mono:wght@500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400;1,6..72,600&display=swap" rel="stylesheet">
+<script src="./characters.js"></script>
+<style>
+body{margin:0;background:#D6CDB8;font-family:'Newsreader',serif;color:#151515}
+a{color:#E1341E}
+a:hover{color:#2446B0}
+</style>
+</helmet>
+<section style="padding:64px;display:flex;flex-direction:column;gap:48px;width:1760px;box-sizing:border-box">
+
+  <div style="background:#EDE5D3;padding:36px 48px 28px;display:flex;flex-direction:column;gap:10px;box-shadow:0 2px 0 rgba(0,0,0,.08)">
+    <div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:2px solid #151515;padding-bottom:8px;font:600 13px 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.06em"><div>District Legend · Direction 1c retenue</div><div>Cahier spécial n° 2 · 29 septembre 2026</div></div>
+    <div style="font:96px/1 'Anton',sans-serif;letter-spacing:.01em;text-transform:uppercase">L'Écho de Grandcour</div>
+    <div style="display:flex;gap:40px;align-items:flex-start;border-top:4px solid #151515;padding-top:14px">
+      <div style="font:40px/1.05 'Anton',sans-serif;text-transform:uppercase;flex:none;width:520px;color:#E1341E">Les gueules du district</div>
+      <p style="margin:0;font:19px/1.5 'Newsreader',serif;text-wrap:pretty;max-width:900px">17 personnages construits à partir d'un même gabarit vectoriel : 12 calques nommés, 5 expressions, un maillot recoloriable. Tous les dessins de ce cahier sont générés par <b>characters.js</b>, le fichier livré au jeu. Les exports SVG et PNG se trouvent dans <b>exports/</b>.</p>
+    </div>
+  </div>
+
+  <div data-screen-label="01 Règles de construction" style="background:#EDE5D3;padding:40px 48px;display:flex;flex-direction:column;gap:32px">
+    <div style="display:flex;align-items:baseline;gap:20px;border-bottom:3px solid #151515;padding-bottom:10px"><div style="font:28px 'Anton';color:#E1341E">01</div><div style="font:44px/1 'Anton';text-transform:uppercase">Règles de construction</div></div>
+    <div style="display:grid;grid-template-columns:440px minmax(0,1fr);gap:48px">
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="font:600 13px 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.06em">Gabarit 240 × 320 · Kevin</div>
+        <div style="position:relative;width:420px;height:535px;background:#E4DAC4">
+          <dl-char c="kevin" e="neutre" style="position:absolute;inset:0"></dl-char>
+          <sc-if value="{{ guides }}" hint-placeholder-val="{{ true }}">
+            <div style="position:absolute;inset:0;pointer-events:none">
+              <div style="position:absolute;left:0;right:0;top:73px;border-top:2px dashed #E1341E"></div>
+              <div style="position:absolute;right:6px;top:52px;font:600 12px 'IBM Plex Mono';color:#E1341E">SOMMET TÊTE</div>
+              <div style="position:absolute;left:0;right:0;top:175px;border-top:2px dashed #2446B0"></div>
+              <div style="position:absolute;right:6px;top:155px;font:600 12px 'IBM Plex Mono';color:#2446B0">LIGNE DES YEUX · CY</div>
+              <div style="position:absolute;left:0;right:0;top:239px;border-top:2px dashed #2446B0"></div>
+              <div style="position:absolute;right:6px;top:219px;font:600 12px 'IBM Plex Mono';color:#2446B0">BOUCHE · CY + 0,58 H</div>
+              <div style="position:absolute;left:0;right:0;top:293px;border-top:2px dashed #E1341E"></div>
+              <div style="position:absolute;right:6px;top:273px;font:600 12px 'IBM Plex Mono';color:#E1341E">ÉPAULES · T</div>
+              <div style="position:absolute;left:0;right:0;top:505px;border-top:2px dashed #E1341E"></div>
+              <div style="position:absolute;right:6px;top:485px;font:600 12px 'IBM Plex Mono';color:#E1341E">DÉCHIRURE · Y 306</div>
+            </div>
+          </sc-if>
+        </div>
+        <div style="font:16px/1.5 'Newsreader';text-wrap:pretty">La tête occupe 40 à 45 % de la hauteur. Le reste varie selon quatre réglages seulement : la largeur des épaules (80 à 118), le bide (0 à 28), la forme de la tête (largeur, hauteur, carrure, bajoues) et la coiffure. Le bas du buste est toujours déchiré à 306.</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:28px;min-width:0">
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="font:600 13px 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.06em">Pile de calques · de l'arrière vers l'avant · Coach Gérard</div>
+          <div style="display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px">
+            <sc-for list="{{ layers }}" as="l" hint-placeholder-count="12">
+              <div style="display:flex;flex-direction:column;gap:4px">
+                <div style="height:150px;background:#E4DAC4"><dl-char c="coach" e="gueule" only="{{ l.name }}" style="width:100%;height:100%"></dl-char></div>
+                <div style="display:flex;gap:6px;align-items:baseline"><div style="font:16px 'Anton';color:#E1341E">{{ l.num }}</div><div style="font:600 12px 'IBM Plex Mono'">{{ l.name }}</div></div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="font:15px/1.5 'Newsreader';text-wrap:pretty">Chaque calque est un groupe SVG nommé (<span style="font-family:'IBM Plex Mono';font-size:13px">&lt;g id="bouche"&gt;</span>). Pour animer, on ne remplace que <b>yeux</b>, <b>sourcils</b> et <b>bouche</b> ; la <b>tête</b> se penche ou rebondit d'un bloc. Le <b>maillot</b> prend une seule couleur d'équipe et une couleur de liseré. Les <b>ombres</b> sont décalées de 1,5 px : c'est le défaut de repérage.</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="font:600 13px 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.06em">Expressions · trois pièces changent</div>
+          <div style="display:grid;grid-template-columns:110px repeat(5,minmax(0,1fr));gap:8px;align-items:center">
+            <div></div>
+            <sc-for list="{{ exprHead }}" as="h" hint-placeholder-count="5"><div style="font:18px 'Anton';text-transform:uppercase">{{ h }}</div></sc-for>
+            <sc-for list="{{ matrix }}" as="row" hint-placeholder-count="4">
+              <div style="font:600 12px 'IBM Plex Mono';text-transform:uppercase">{{ row.label }}</div>
+              <sc-for list="{{ row.cells }}" as="cell" hint-placeholder-count="5">
+                <div style="height:118px;background:#E4DAC4"><dl-char c="jeanmi" e="{{ cell.e }}" only="{{ cell.only }}" crop="face" cut="{{ cell.cut }}" style="width:100%;height:100%"></dl-char></div>
+              </sc-for>
+            </sc-for>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;font:14px/1.45 'Newsreader'">
+            <div><b>Neutre.</b> Yeux ovales avec point de lumière, sourcils à plat, bouche en trait. Variantes par perso : paupière mi-close (Fred, Dylan, Léa, Jordan).</div>
+            <div><b>Fier.</b> Paupières mi-closes, un sourcil levé, sourire en coin asymétrique.</div>
+            <div><b>Gueule.</b> Sourcils à 24° vers le nez, bouche trapèze ouverte avec dents et langue rouge. Jordan et le recruteur serrent les dents.</div>
+            <div><b>Choqué.</b> Yeux blancs ronds avec une petite pupille, sourcils levés de 9 px, bouche en O.</div>
+            <div><b>Mort de rire.</b> Yeux en arcs fermés, larme bleue, bouche en D grande ouverte.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;border-top:2px solid #151515;padding-top:24px">
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="font:600 13px 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.06em">La découpe collée · 3 passes</div>
+        <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px">
+          <div style="display:flex;flex-direction:column;gap:6px"><div style="height:250px;background:#7E9B45;padding:10px;box-sizing:border-box"><dl-char c="president" e="fier" cut="0" style="width:100%;height:100%"></dl-char></div><div style="font:14px/1.4 'Newsreader'"><b>1. Aplats.</b> Formes plates, sans contour, 4 encres + papier.</div></div>
+          <div style="display:flex;flex-direction:column;gap:6px"><div style="height:250px;background:#7E9B45;padding:10px;box-sizing:border-box"><dl-char c="president" e="fier" cut="bord" style="width:100%;height:100%"></dl-char></div><div style="font:14px/1.4 'Newsreader'"><b>2. Bord blanc.</b> Dilatation de 5 px, bord irrégulier de 9 px (bruit fixé par personnage).</div></div>
+          <div style="display:flex;flex-direction:column;gap:6px"><div style="height:250px;background:#7E9B45;padding:10px;box-sizing:border-box"><div style="width:100%;height:100%;transform:rotate(-3deg)"><dl-char c="president" e="fier" style="width:100%;height:100%"></dl-char></div></div><div style="font:14px/1.4 'Newsreader'"><b>3. Collage.</b> Ombre portée de 4/5 px à 30 %, grain papier, rotation entre −4° et +4°.</div></div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="font:600 13px 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.06em">Couleurs dérivées pour les personnages</div>
+        <div style="display:grid;grid-template-columns:110px minmax(0,1fr);gap:12px 16px;align-items:center">
+          <div style="font:600 12px 'IBM Plex Mono'">PEAUX</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap"><sc-for list="{{ skins }}" as="s" hint-placeholder-count="6"><div style="display:flex;flex-direction:column;gap:3px;align-items:center"><div style="{{ s.st }}"></div><div style="font:500 11px 'IBM Plex Mono'">{{ s.c }}</div></div></sc-for></div>
+          <div style="font:600 12px 'IBM Plex Mono'">CHEVEUX</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap"><sc-for list="{{ hairs }}" as="s" hint-placeholder-count="7"><div style="display:flex;flex-direction:column;gap:3px;align-items:center"><div style="{{ s.st }}"></div><div style="font:500 11px 'IBM Plex Mono'">{{ s.c }}</div></div></sc-for></div>
+          <div style="font:600 12px 'IBM Plex Mono'">HORS ÉQUIPES</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap"><sc-for list="{{ extras }}" as="s" hint-placeholder-count="5"><div style="display:flex;flex-direction:column;gap:3px;align-items:center"><div style="{{ s.st }}"></div><div style="font:500 11px 'IBM Plex Mono'">{{ s.l }}</div></div></sc-for></div>
+        </div>
+        <div style="font:14px/1.45 'Newsreader';text-wrap:pretty">Toutes les ombres se font avec le noir d'imprimerie à 13–30 % d'opacité, jamais avec une teinte nouvelle. L'orange chantier et le vert gardien sont des mélanges des encres rouge + jaune et vert + noir.</div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px;border-top:2px solid #151515;padding-top:24px">
+      <div style="font:600 13px 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.06em">Ombres chinoises · même échelle · chaque personnage doit se reconnaître en noir</div>
+      <div style="display:flex;gap:0;align-items:flex-end;background:#E4DAC4;padding:20px 12px 10px">
+        <sc-for list="{{ lineup }}" as="p" hint-placeholder-count="17">
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;min-width:0">
+            <div style="width:100%;height:150px"><dl-char c="{{ p.id }}" e="neutre" sil="1" style="width:100%;height:100%"></dl-char></div>
+            <div style="font:12px 'Anton';text-transform:uppercase;white-space:nowrap">{{ p.nom }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <div data-screen-label="02 Planches personnages" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:32px">
+    <sc-for list="{{ planches }}" as="p" hint-placeholder-count="4">
+      <div style="background:#EDE5D3;padding:28px 32px;display:flex;flex-direction:column;gap:18px">
+        <div style="display:flex;align-items:flex-end;gap:16px;border-bottom:3px solid #151515;padding-bottom:10px">
+          <div style="font:26px 'Anton';color:#E1341E">{{ p.num }}</div>
+          <div style="font:46px/0.95 'Anton';text-transform:uppercase">{{ p.nom }}</div>
+          <div style="font:italic 22px 'Newsreader';flex:1">{{ p.surnom }}</div>
+          <div style="{{ p.tagSt }}">{{ p.type }}</div>
+        </div>
+        <div style="display:flex;justify-content:space-between;gap:24px;align-items:baseline">
+          <div style="font:600 13px 'IBM Plex Mono';text-transform:uppercase;letter-spacing:.04em">{{ p.role }}</div>
+          <sc-if value="{{ p.quote }}" hint-placeholder-val="{{ false }}"><div style="font:italic 18px 'Newsreader';color:#E1341E;text-align:right">« {{ p.quote }} »</div></sc-if>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px">
+          <sc-for list="{{ p.ex }}" as="x" hint-placeholder-count="5">
+            <div style="display:flex;flex-direction:column;gap:6px;align-items:center">
+              <div style="{{ x.st }}"><dl-char c="{{ x.id }}" e="{{ x.e }}" style="width:100%;height:100%"></dl-char></div>
+              <div style="font:14px 'Anton';text-transform:uppercase">{{ x.lab }}</div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display:grid;grid-template-columns:96px 150px minmax(0,1fr);gap:20px;border-top:2px solid #151515;padding-top:14px;align-items:start">
+          <div style="display:flex;flex-direction:column;gap:4px"><div style="height:122px"><dl-char c="{{ p.id }}" e="neutre" sil="1" style="width:100%;height:100%"></dl-char></div><div style="font:600 11px 'IBM Plex Mono';text-transform:uppercase">Silhouette</div></div>
+          <div style="display:flex;flex-direction:column;gap:4px">
+            <sc-if value="{{ p.pitch }}" hint-placeholder-val="{{ true }}">
+              <div style="display:flex;gap:8px;align-items:flex-end;background:#7E9B45;padding:8px"><dl-top c="{{ p.id }}" style="width:44px;height:44px;flex:none"></dl-top><dl-top c="{{ p.id }}" style="width:88px;height:88px;flex:none"></dl-top></div>
+              <div style="font:600 11px 'IBM Plex Mono';text-transform:uppercase">En match · 44 px et ×2</div>
+            </sc-if>
+            <sc-if value="{{ p.offPitch }}" hint-placeholder-val="{{ false }}">
+              <div style="height:104px;border:2px dashed #151515;display:flex;align-items:center;justify-content:center;font:italic 14px 'Newsreader';text-align:center;padding:8px;box-sizing:border-box">Pas sur le terrain</div>
+            </sc-if>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;gap:6px"><sc-for list="{{ p.pal }}" as="s" hint-placeholder-count="4"><div style="display:flex;flex-direction:column;gap:3px"><div style="{{ s.st }}"></div><div style="font:500 10px 'IBM Plex Mono'">{{ s.c }}</div></div></sc-for></div>
+            <div style="font:15px/1.45 'Newsreader';text-wrap:pretty">{{ p.acc }}</div>
+          </div>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+
+  <div data-screen-label="03 Gabarit de dialogue" style="background:#EDE5D3;padding:40px 48px;display:flex;flex-direction:column;gap:28px">
+    <div style="display:flex;align-items:baseline;gap:20px;border-bottom:3px solid #151515;padding-bottom:10px"><div style="font:28px 'Anton';color:#E1341E">03</div><div style="font:44px/1 'Anton';text-transform:uppercase">La scène de dialogue</div></div>
+    <div style="display:flex;gap:48px;align-items:flex-start">
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="font:600 13px 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.06em">Gabarit 360 × 640 · par-dessus le jeu</div>
+        <div style="width:360px;height:640px;border-radius:24px;overflow:hidden;box-shadow:0 20px 40px rgba(0,0,0,.25);background:#151515">
+          <div ref="{{ tpl.screen }}" style="position:relative;width:360px;height:640px;overflow:hidden;background:#7E9B45">
+            <svg width="360" height="640" viewBox="0 0 360 640" style="position:absolute;inset:0;display:block">
+              <rect y="160" width="360" height="80" fill="#8BA851"></rect><rect y="320" width="360" height="80" fill="#8BA851"></rect><rect y="480" width="360" height="80" fill="#8BA851"></rect>
+              <g fill="none" stroke="#EDE5D3" stroke-width="3" stroke-dasharray="40 6 14 9 64 4 24 8"><path d="M22 60 V640 M338 60 V640 M22 340 H338"></path><circle cx="180" cy="340" r="54"></circle></g>
+              <rect x="0" y="50" width="180" height="24" fill="#EDE5D3"></rect><text x="90" y="68" text-anchor="middle" font-family="Anton" font-size="14" fill="#151515">BOUCHERIE MOREL</text>
+              <rect x="180" y="50" width="180" height="24" fill="#E1341E"></rect><text x="270" y="68" text-anchor="middle" font-family="Anton" font-size="14" fill="#EDE5D3">LE BALTO</text>
+            </svg>
+            <dl-top c="kevin" kit="#F2C94C" trim="#151515" style="position:absolute;left:70px;top:200px;width:44px;height:44px"></dl-top>
+            <dl-top c="jordan" kit="#F2C94C" trim="#151515" style="position:absolute;left:150px;top:280px;width:44px;height:44px"></dl-top>
+            <dl-top c="dylan" kit="#F2C94C" trim="#151515" style="position:absolute;left:250px;top:230px;width:44px;height:44px"></dl-top>
+            <dl-top c="gege" kit="#F2C94C" trim="#151515" style="position:absolute;left:110px;top:400px;width:44px;height:44px"></dl-top>
+            <div style="position:absolute;top:0;left:0;right:0;height:50px;background:#EDE5D3;border-bottom:3px solid #151515;display:flex;align-items:center;gap:8px;padding:0 12px;box-sizing:border-box"><div style="font:17px 'Anton';flex:1">ENTRAÎNEMENT · MARDI</div><div style="font:17px 'Anton';background:#E1341E;color:#EDE5D3;padding:2px 7px">19:04</div></div>
+            <div ref="{{ tpl.veil }}" style="position:absolute;top:50px;left:0;right:0;height:420px;background:rgba(21,21,21,.3)"></div>
+            <sc-if value="{{ guides }}" hint-placeholder-val="{{ true }}">
+              <div style="position:absolute;left:0;right:0;top:470px;bottom:0;background:repeating-linear-gradient(45deg,rgba(225,52,30,.14) 0 8px,transparent 8px 16px);border-top:2px dashed #E1341E"></div>
+              <div style="position:absolute;left:10px;top:476px;font:600 11px 'IBM Plex Mono';color:#EDE5D3;background:#E1341E;padding:2px 6px">ZONE COMMANDES · JAMAIS COUVERTE</div>
+            </sc-if>
+            <div ref="{{ tpl.char }}" style="position:absolute;right:-50px;top:150px;width:250px;height:320px;transform:rotate(-2deg)"><dl-char c="coach" e="{{ tpl.expr }}" style="width:100%;height:100%"></dl-char></div>
+            <div ref="{{ tpl.name }}" style="position:absolute;right:92px;top:436px;background:#151515;color:#EDE5D3;font:20px 'Anton';padding:4px 12px;transform:rotate(-3deg);letter-spacing:.02em">COACH GÉRARD</div>
+            <div ref="{{ tpl.bubble }}" style="position:absolute;left:14px;top:90px;width:206px;transform-origin:85% 100%">
+              <sc-if value="{{ tpl.isNormale }}" hint-placeholder-val="{{ true }}">
+                <div style="position:relative;background:#FFFFFF;padding:14px 16px;box-shadow:3px 4px 0 rgba(21,21,21,.3);transform:rotate(-2deg);font:italic 19px/1.25 'Newsreader';text-wrap:pretty">{{ tpl.text }}<svg width="30" height="26" viewBox="0 0 30 26" style="position:absolute;right:26px;bottom:-24px;display:block"><path d="M0 0 L30 0 L26 26Z" fill="#FFFFFF"></path></svg></div>
+              </sc-if>
+              <sc-if value="{{ tpl.isGueule }}" hint-placeholder-val="{{ false }}">
+                <div style="position:relative;padding:30px 24px 32px;transform:rotate(-4deg)">
+                  <svg viewBox="0 0 220 120" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;display:block"><polygon points="4,34 32,26 20,4 62,18 86,0 106,16 142,2 152,20 192,6 186,30 218,28 202,52 220,72 196,78 212,106 176,96 190,120 136,104 110,118 92,102 56,114 52,96 14,106 26,82 0,68 20,52" fill="#E1341E"></polygon></svg>
+                  <div style="position:relative;font:34px/0.95 'Anton';color:#EDE5D3;text-transform:uppercase;text-align:center">{{ tpl.text }}</div>
+                </div>
+              </sc-if>
+              <sc-if value="{{ tpl.isPensee }}" hint-placeholder-val="{{ false }}">
+                <div style="position:relative">
+                  <div style="background:#FFFFFF;border-radius:48px;padding:18px 22px;font:italic 17px/1.25 'Newsreader';color:#3A3A3A;box-shadow:3px 4px 0 rgba(21,21,21,.3);text-align:center;text-wrap:pretty">{{ tpl.text }}</div>
+                  <div style="position:absolute;right:40px;bottom:-22px;width:18px;height:18px;border-radius:50%;background:#FFFFFF"></div>
+                  <div style="position:absolute;right:22px;bottom:-40px;width:10px;height:10px;border-radius:50%;background:#FFFFFF"></div>
+                </div>
+              </sc-if>
+              <sc-if value="{{ tpl.isMurmure }}" hint-placeholder-val="{{ false }}">
+                <div style="position:relative;background:#EDE5D3;border:2px dashed #151515;border-radius:14px;padding:10px 14px;font:italic 15px/1.3 'Newsreader';color:#4A4A4A;transform:rotate(1deg);text-wrap:pretty">{{ tpl.text }}<div style="position:absolute;right:30px;bottom:-16px;width:14px;height:14px;border-right:2px dashed #151515;border-bottom:2px dashed #151515;background:#EDE5D3;transform:rotate(45deg)"></div></div>
+              </sc-if>
+            </div>
+            <div style="position:absolute;left:20px;bottom:26px;width:112px;height:112px;border-radius:50%;border:3px dashed #EDE5D3;display:flex;align-items:center;justify-content:center"><div style="width:48px;height:48px;border-radius:50%;background:#EDE5D3;box-shadow:3px 3px 0 #151515;transform:translate(10px,-8px)"></div></div>
+            <div style="position:absolute;right:112px;bottom:92px;width:66px;height:66px;border-radius:50%;background:#2446B0;box-shadow:3px 3px 0 #151515;display:flex;align-items:center;justify-content:center;font:15px 'Anton';color:#EDE5D3">SPRINT</div>
+            <div onClick="{{ tpl.play }}" style="position:absolute;right:18px;bottom:30px;width:88px;height:88px;border-radius:50%;background:#E1341E;box-shadow:4px 4px 0 #151515;display:flex;align-items:center;justify-content:center;font:16px 'Anton';color:#EDE5D3;cursor:pointer" style-active="transform:translate(3px,3px);box-shadow:1px 1px 0 #151515">SUITE</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <sc-for list="{{ tpl.variants }}" as="v" hint-placeholder-count="4"><div onClick="{{ v.pick }}" style="{{ v.st }}">{{ v.label }}</div></sc-for>
+          <div onClick="{{ tpl.play }}" style="border:2px solid #151515;background:#151515;color:#EDE5D3;padding:6px 12px;font:15px 'Anton';cursor:pointer">REJOUER ↻</div>
+        </div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:24px;min-width:0">
+        <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px">
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="height:150px;background:#7E9B45;display:flex;align-items:center;justify-content:center;padding:16px;box-sizing:border-box"><div style="position:relative;background:#FFFFFF;padding:12px 14px;box-shadow:3px 4px 0 rgba(21,21,21,.3);transform:rotate(-2deg);font:italic 17px/1.25 'Newsreader'">On joue simple, les gars. SIMPLE.<svg width="24" height="20" viewBox="0 0 30 26" style="position:absolute;right:20px;bottom:-19px;display:block"><path d="M0 0 L30 0 L26 26Z" fill="#FFFFFF"></path></svg></div></div>
+            <div style="font:20px 'Anton';text-transform:uppercase">Normale</div>
+            <div style="font:14px/1.45 'Newsreader'">Papier blanc, ombre portée, rotation de −2°. Newsreader italique 19 px, 4 lignes maximum. La pointe va vers la bouche.</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="height:150px;background:#7E9B45;display:flex;align-items:center;justify-content:center;padding:10px;box-sizing:border-box"><div style="position:relative;padding:26px 22px 28px;transform:rotate(-4deg)"><svg viewBox="0 0 220 120" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;display:block"><polygon points="4,34 32,26 20,4 62,18 86,0 106,16 142,2 152,20 192,6 186,30 218,28 202,52 220,72 196,78 212,106 176,96 190,120 136,104 110,118 92,102 56,114 52,96 14,106 26,82 0,68 20,52" fill="#E1341E"></polygon></svg><div style="position:relative;font:26px/0.95 'Anton';color:#EDE5D3;text-align:center">ON NE MARCHE PAS !</div></div></div>
+            <div style="font:20px 'Anton';text-transform:uppercase">Qui gueule</div>
+            <div style="font:14px/1.45 'Newsreader'">Éclat rouge sans pointe. Le texte passe en Anton majuscule, couleur papier, 34 px. L'écran tremble de 3 px à l'arrivée.</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="height:150px;background:#7E9B45;display:flex;align-items:center;justify-content:center;padding:16px;box-sizing:border-box"><div style="position:relative"><div style="background:#FFFFFF;border-radius:40px;padding:14px 18px;font:italic 16px/1.25 'Newsreader';color:#3A3A3A;box-shadow:3px 4px 0 rgba(21,21,21,.3);text-align:center">Il me reste 3 % de batterie…</div><div style="position:absolute;right:32px;bottom:-18px;width:14px;height:14px;border-radius:50%;background:#FFFFFF"></div><div style="position:absolute;right:18px;bottom:-32px;width:8px;height:8px;border-radius:50%;background:#FFFFFF"></div></div></div>
+            <div style="font:20px 'Anton';text-transform:uppercase">Pensée</div>
+            <div style="font:14px/1.45 'Newsreader'">Bulle très arrondie, deux ronds en guise de pointe, texte gris foncé. Le personnage ne bouge pas la bouche.</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="height:150px;background:#7E9B45;display:flex;align-items:center;justify-content:center;padding:16px;box-sizing:border-box"><div style="position:relative;background:#EDE5D3;border:2px dashed #151515;border-radius:14px;padding:10px 14px;font:italic 14px/1.3 'Newsreader';color:#4A4A4A">Le recruteur de R3 est là. Fais pas le con.</div></div>
+            <div style="font:20px 'Anton';text-transform:uppercase">Murmure</div>
+            <div style="font:14px/1.45 'Newsreader'">Fond papier, bord en pointillés, texte plus petit (15 px). Utilisé pour les apartés et les conseils louches.</div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;border-top:2px solid #151515;padding-top:18px;font:15px/1.5 'Newsreader'">
+          <div><b style="font:17px 'Anton';text-transform:uppercase;display:block;margin-bottom:4px">Placement</b>Le personnage fait 250 × 320 px, il entre par la droite (ou la gauche s'il répond) et déborde du cadre de 50 px. Son bas s'arrête à 470 px : les 170 px du bas restent aux commandes.</div>
+          <div><b style="font:17px 'Anton';text-transform:uppercase;display:block;margin-bottom:4px">Le jeu en dessous</b>Le jeu se met en pause et un voile noir à 30 % recouvre uniquement le terrain, entre le score et la zone des commandes. Le bouton d'action devient SUITE.</div>
+          <div><b style="font:17px 'Anton';text-transform:uppercase;display:block;margin-bottom:4px">Nom</b>Bandeau noir en Anton 20 px, collé à −3° sur le bas de la découpe. Il arrive comme un tampon, après le personnage.</div>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:14px;border-top:2px solid #151515;padding-top:22px">
+      <div style="font:600 13px 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.06em">Entrée et sortie · 900 ms en tout, lecture comprise hors durée</div>
+      <div style="display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px">
+        <sc-for list="{{ story }}" as="s" hint-placeholder-count="6">
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="position:relative;height:220px;background:#7E9B45;overflow:hidden">
+              <div style="{{ s.veil }}"></div>
+              <div style="{{ s.charSt }}"><dl-char c="coach" e="{{ s.e }}" style="width:100%;height:100%"></dl-char></div>
+              <div style="{{ s.nameSt }}">COACH GÉRARD</div>
+              <div style="{{ s.bubSt }}">On joue simple.</div>
+            </div>
+            <div style="display:flex;gap:8px;align-items:baseline"><div style="font:18px 'Anton';color:#E1341E">{{ s.t }}</div><div style="font:15px 'Anton';text-transform:uppercase">{{ s.title }}</div></div>
+            <div style="font:14px/1.4 'Newsreader'">{{ s.desc }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <div data-screen-label="04 Intégrations" style="background:#EDE5D3;padding:40px 48px;display:flex;flex-direction:column;gap:28px">
+    <div style="display:flex;align-items:baseline;gap:20px;border-bottom:3px solid #151515;padding-bottom:10px"><div style="font:28px 'Anton';color:#E1341E">04</div><div style="font:44px/1 'Anton';text-transform:uppercase">Trois intégrations</div></div>
+    <div style="display:flex;gap:48px;align-items:flex-start;flex-wrap:wrap">
+
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="font:600 13px 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.06em">A · Le 30/30 · le coach gueule</div>
+        <div style="width:360px;height:640px;border-radius:24px;overflow:hidden;box-shadow:0 20px 40px rgba(0,0,0,.25);background:#151515">
+          <div ref="{{ co.screen }}" style="position:relative;width:360px;height:640px;overflow:hidden;background:#7E9B45">
+            <svg width="360" height="640" viewBox="0 0 360 640" style="position:absolute;inset:0;display:block">
+              <rect y="160" width="360" height="80" fill="#8BA851"></rect><rect y="320" width="360" height="80" fill="#8BA851"></rect><rect y="480" width="360" height="80" fill="#8BA851"></rect>
+              <g fill="none" stroke="#EDE5D3" stroke-width="3" stroke-dasharray="40 6 14 9 64 4 24 8"><path d="M22 60 V640 M338 60 V640 M22 340 H338"></path><circle cx="180" cy="340" r="54"></circle></g>
+              <g fill="#E1341E"><path d="M40 140 l7 -12 l7 12Z"></path><path d="M40 430 l7 -12 l7 12Z"></path><path d="M306 140 l7 -12 l7 12Z"></path><path d="M306 430 l7 -12 l7 12Z"></path></g>
+              <path d="M50 150 V420 M312 150 V420" stroke="#EDE5D3" stroke-width="2" stroke-dasharray="4 8" opacity=".7"></path>
+              <rect x="0" y="50" width="180" height="24" fill="#EDE5D3"></rect><text x="90" y="68" text-anchor="middle" font-family="Anton" font-size="14" fill="#151515">GARAGE DUPUIS</text>
+              <rect x="180" y="50" width="180" height="24" fill="#2446B0"></rect><text x="270" y="68" text-anchor="middle" font-family="Anton" font-size="14" fill="#EDE5D3">BOUCHERIE MOREL</text>
+            </svg>
+            <dl-top c="kevin" kit="#F2C94C" trim="#151515" style="position:absolute;left:28px;top:190px;width:44px;height:44px"></dl-top>
+            <dl-top c="jordan" kit="#F2C94C" trim="#151515" style="position:absolute;left:28px;top:300px;width:44px;height:44px"></dl-top>
+            <dl-top c="dylan" kit="#F2C94C" trim="#151515" style="position:absolute;left:290px;top:250px;width:44px;height:44px"></dl-top>
+            <dl-top c="gege" kit="#F2C94C" trim="#151515" style="position:absolute;left:150px;top:300px;width:44px;height:44px"></dl-top>
+            <dl-top c="matheo" kit="#F2C94C" trim="#151515" style="position:absolute;left:180px;top:380px;width:44px;height:44px"></dl-top>
+            <div style="position:absolute;top:0;left:0;right:0;height:50px;background:#EDE5D3;border-bottom:3px solid #151515;display:flex;align-items:center;gap:8px;padding:0 12px;box-sizing:border-box"><div style="font:17px 'Anton';flex:1">30/30 · SÉRIE 4 / 10</div><div style="font:17px 'Anton';background:#E1341E;color:#EDE5D3;padding:2px 7px">0:18</div></div>
+            <div style="position:absolute;top:84px;left:10px;background:#151515;color:#EDE5D3;padding:3px 10px;font:italic 15px 'Newsreader'">Objectif : fais les 10 allers-retours</div>
+            <div ref="{{ co.veil }}" style="position:absolute;top:50px;left:0;right:0;height:420px;background:rgba(21,21,21,.3)"></div>
+            <div ref="{{ co.char }}" style="position:absolute;right:-50px;top:150px;width:250px;height:320px;transform:rotate(-2deg)"><dl-char c="coach" e="gueule" style="width:100%;height:100%"></dl-char></div>
+            <div ref="{{ co.name }}" style="position:absolute;right:92px;top:436px;background:#151515;color:#EDE5D3;font:20px 'Anton';padding:4px 12px;transform:rotate(-3deg)">COACH GÉRARD</div>
+            <div ref="{{ co.bubble }}" style="position:absolute;left:10px;top:118px;width:212px;transform-origin:85% 100%">
+              <div style="position:relative;padding:30px 24px 32px;transform:rotate(-4deg)"><svg viewBox="0 0 220 120" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;display:block"><polygon points="4,34 32,26 20,4 62,18 86,0 106,16 142,2 152,20 192,6 186,30 218,28 202,52 220,72 196,78 212,106 176,96 190,120 136,104 110,118 92,102 56,114 52,96 14,106 26,82 0,68 20,52" fill="#E1341E"></polygon></svg><div style="position:relative;font:34px/0.95 'Anton';color:#EDE5D3;text-align:center">ON NE MARCHE PAS !</div></div>
+            </div>
+            <div style="position:absolute;left:20px;bottom:26px;width:112px;height:112px;border-radius:50%;border:3px dashed #EDE5D3;display:flex;align-items:center;justify-content:center"><div style="width:48px;height:48px;border-radius:50%;background:#EDE5D3;box-shadow:3px 3px 0 #151515;transform:translate(0,-18px)"></div></div>
+            <div style="position:absolute;right:112px;bottom:92px;width:66px;height:66px;border-radius:50%;background:#2446B0;box-shadow:3px 3px 0 #151515;display:flex;align-items:center;justify-content:center;font:15px 'Anton';color:#EDE5D3">SPRINT</div>
+            <div onClick="{{ co.play }}" style="position:absolute;right:18px;bottom:30px;width:88px;height:88px;border-radius:50%;background:#E1341E;box-shadow:4px 4px 0 #151515;display:flex;align-items:center;justify-content:center;font:16px 'Anton';color:#EDE5D3;cursor:pointer" style-active="transform:translate(3px,3px);box-shadow:1px 1px 0 #151515">MARCHER</div>
+          </div>
+        </div>
+        <div style="font:14px/1.45 'Newsreader';max-width:360px">Appuie sur MARCHER : le coach relève les yeux de son téléphone et surgit.</div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="font:600 13px 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.06em">B · Carte de décision · le brassard</div>
+        <div style="position:relative;width:360px;height:640px;border-radius:24px;overflow:hidden;box-shadow:0 20px 40px rgba(0,0,0,.25);background:#EDE5D3">
+          <div style="position:absolute;top:0;left:14px;right:14px;display:flex;justify-content:space-between;align-items:baseline;border-bottom:2px solid #151515;padding:12px 0 6px"><div style="font:15px 'Anton'">L'ÉCHO DE GRANDCOUR</div><div style="font:italic 12px 'Newsreader'">Semaine 3 · jeudi</div></div>
+          <div style="position:absolute;top:50px;left:14px;right:14px;display:flex;justify-content:space-between">
+            <sc-for list="{{ card.gauges }}" as="g" hint-placeholder-count="5">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:4px;width:62px">
+                <div style="position:relative;width:26px;height:44px;background:#D8CDB4;overflow:hidden"><div style="{{ g.fill }}"></div></div>
+                <div style="font:12px 'Anton';letter-spacing:.03em;text-transform:uppercase">{{ g.label }}</div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="position:absolute;top:122px;left:22px;right:22px;font:italic 19px/1.25 'Newsreader';min-height:72px;text-wrap:pretty">« {{ card.cur.text }} »</div>
+          <div ref="{{ card.ref }}" onPointerDown="{{ card.down }}" onPointerMove="{{ card.move }}" onPointerUp="{{ card.up }}" onPointerCancel="{{ card.up }}" style="position:absolute;top:226px;left:52px;width:256px;height:290px;touch-action:none;cursor:grab;transform-origin:50% 130%">
+            <div style="position:absolute;inset:0;transform:rotate(-1.5deg);background:#FFFFFF;box-shadow:4px 5px 0 rgba(21,21,21,.25)">
+              <div style="position:absolute;top:8px;left:8px;right:8px;height:228px;background:#F0A28A"></div>
+              <div style="position:absolute;left:-14px;right:-14px;top:-52px;height:290px;pointer-events:none"><dl-char c="{{ card.cur.id }}" e="{{ card.cur.e }}" style="width:100%;height:100%"></dl-char></div>
+              <div style="position:absolute;left:8px;right:8px;bottom:8px;height:46px;background:#151515;color:#EDE5D3;display:flex;align-items:center;justify-content:center;font:22px 'Anton';text-transform:uppercase">{{ card.cur.who }}</div>
+            </div>
+            <div ref="{{ card.lRef }}" style="position:absolute;top:30px;right:-18px;opacity:0;transform:rotate(9deg);border:3px solid #151515;color:#151515;background:#EDE5D3;font:20px 'Anton';padding:2px 10px;text-transform:uppercase;pointer-events:none">{{ card.cur.left }}</div>
+            <div ref="{{ card.rRef }}" style="position:absolute;top:30px;left:-18px;opacity:0;transform:rotate(-9deg);border:3px solid #E1341E;color:#E1341E;background:#EDE5D3;font:20px 'Anton';padding:2px 10px;text-transform:uppercase;pointer-events:none">{{ card.cur.right }}</div>
+          </div>
+          <div style="position:absolute;top:532px;left:0;right:0;text-align:center;font:italic 15px 'Newsreader'">{{ card.cur.role }}</div>
+          <div style="position:absolute;bottom:20px;left:14px;right:14px;border-top:2px solid #151515;padding-top:8px;display:flex;justify-content:space-between;font:14px 'Anton'"><div>OBJECTIF</div><div style="color:#E1341E">SOIS UN JOUEUR EXEMPLAIRE</div></div>
+        </div>
+        <div style="display:flex;gap:8px;width:360px">
+          <div onClick="{{ card.swipeL }}" style="flex:1;border:2px solid #151515;padding:6px 10px;font:15px 'Newsreader';cursor:pointer;background:#FFFFFF">← {{ card.cur.left }}</div>
+          <div onClick="{{ card.swipeR }}" style="flex:1;border:2px solid #151515;padding:6px 10px;font:15px 'Newsreader';cursor:pointer;background:#FFFFFF;text-align:right">{{ card.cur.right }} →</div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="font:600 13px 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.06em">C · Duel de chambrage · buvette, 23 h</div>
+        <div style="width:360px;height:640px;border-radius:24px;overflow:hidden;box-shadow:0 20px 40px rgba(0,0,0,.25);background:#151515">
+          <div ref="{{ duel.screen }}" style="position:relative;width:360px;height:640px;overflow:hidden;background:#1F1D1A">
+            <svg width="360" height="640" viewBox="0 0 360 640" style="position:absolute;inset:0;display:block">
+              <rect x="0" y="210" width="360" height="300" fill="#2B2824"></rect>
+              <rect x="0" y="210" width="360" height="12" fill="#3A3630"></rect>
+              <rect x="40" y="250" width="120" height="70" fill="#F2C94C" opacity=".85"></rect>
+              <path d="M40 285 H160 M100 250 V320" stroke="#2B2824" stroke-width="4"></path>
+              <rect x="190" y="232" width="140" height="30" fill="#EDE5D3"></rect>
+              <text x="260" y="254" text-anchor="middle" font-family="Anton" font-size="20" fill="#151515">BUVETTE</text>
+              <rect x="0" y="470" width="360" height="40" fill="#9C7A4E"></rect>
+              <rect x="0" y="470" width="360" height="6" fill="#B89468"></rect>
+              <path d="M-10 30 Q90 80 180 40 Q270 5 370 50" fill="none" stroke="#4A4540" stroke-width="2"></path>
+              <g><circle cx="20" cy="42" r="6" fill="#F2C94C"></circle><circle cx="55" cy="56" r="6" fill="#E1341E"></circle><circle cx="92" cy="62" r="6" fill="#EDE5D3"></circle><circle cx="130" cy="56" r="6" fill="#F2C94C"></circle><circle cx="168" cy="44" r="6" fill="#2446B0"></circle><circle cx="206" cy="32" r="6" fill="#E1341E"></circle><circle cx="244" cy="26" r="6" fill="#F2C94C"></circle><circle cx="282" cy="28" r="6" fill="#EDE5D3"></circle><circle cx="320" cy="36" r="6" fill="#E1341E"></circle><circle cx="352" cy="45" r="6" fill="#F2C94C"></circle></g>
+              <g opacity=".22"><circle cx="20" cy="42" r="16" fill="#F2C94C"></circle><circle cx="130" cy="56" r="16" fill="#F2C94C"></circle><circle cx="244" cy="26" r="16" fill="#F2C94C"></circle><circle cx="352" cy="45" r="16" fill="#F2C94C"></circle></g>
+            </svg>
+            <div style="position:absolute;top:84px;left:14px;width:170px;background:#EDE5D3;padding:6px 10px 8px;transform:rotate(-1.5deg);box-shadow:3px 4px 0 rgba(0,0,0,.4)">
+              <div style="display:flex;justify-content:space-between;align-items:baseline"><div style="font:18px 'Anton'">JEAN-MI</div><div style="font:600 11px 'IBM Plex Mono'">EGO</div></div>
+              <div style="height:10px;background:#D8CDB4;margin-top:4px"><div style="{{ duel.barJ }}"></div></div>
+            </div>
+            <div ref="{{ duel.jRef }}" style="position:absolute;right:-24px;top:70px;width:210px;height:268px;transform:rotate(3deg)"><dl-char c="jeanmi" e="{{ duel.jE }}" style="width:100%;height:100%"></dl-char></div>
+            <div style="position:absolute;left:14px;top:160px;width:170px;background:#FFFFFF;padding:10px 12px;box-shadow:3px 4px 0 rgba(0,0,0,.4);transform:rotate(-2deg);font:italic 16px/1.25 'Newsreader';text-wrap:pretty">{{ duel.line }}<svg width="22" height="18" viewBox="0 0 30 26" style="position:absolute;right:-18px;top:14px;display:block"><path d="M0 0 L30 8 L0 22Z" fill="#FFFFFF"></path></svg></div>
+            <div style="position:absolute;left:-34px;top:262px;width:200px;height:255px;transform:rotate(-3deg) scaleX(-1)"><dl-char c="kevin" e="{{ duel.kE }}" style="width:100%;height:100%"></dl-char></div>
+            <div style="position:absolute;top:400px;right:14px;width:160px;background:#EDE5D3;padding:6px 10px 8px;transform:rotate(1.5deg);box-shadow:3px 4px 0 rgba(0,0,0,.4)">
+              <div style="display:flex;justify-content:space-between;align-items:baseline"><div style="font:18px 'Anton'">KEVIN</div><div style="font:600 11px 'IBM Plex Mono'">EGO</div></div>
+              <div style="height:10px;background:#D8CDB4;margin-top:4px"><div style="height:100%;width:82%;background:#2446B0"></div></div>
+            </div>
+            <div style="position:absolute;left:0;right:0;bottom:0;height:130px;background:#EDE5D3;border-top:3px solid #151515;padding:10px 12px;box-sizing:border-box;display:flex;flex-direction:column;gap:8px">
+              <div style="font:14px 'Anton';color:#E1341E">À TOI DE CHAMBRER</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;flex:1">
+                <sc-for list="{{ duel.attacks }}" as="a" hint-placeholder-count="4">
+                  <div onClick="{{ a.hit }}" style="background:#FFFFFF;box-shadow:2px 3px 0 #151515;display:flex;align-items:center;justify-content:center;font:italic 15px 'Newsreader';cursor:pointer;text-align:center;padding:0 6px" style-active="transform:translate(2px,2px);box-shadow:0 1px 0 #151515">{{ a.label }}</div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="font:14px/1.45 'Newsreader';max-width:360px">Choisis une vanne : Jean-Mi encaisse, son ego baisse et sa réplique change. Le joueur apparaît en miroir en bas à gauche, façon combat Pokémon.</div>
+      </div>
+    </div>
+  </div>
+
+  <div data-screen-label="05 En match" style="background:#EDE5D3;padding:40px 48px;display:flex;flex-direction:column;gap:24px">
+    <div style="display:flex;align-items:baseline;gap:20px;border-bottom:3px solid #151515;padding-bottom:10px"><div style="font:28px 'Anton';color:#E1341E">05</div><div style="font:44px/1 'Anton';text-transform:uppercase">En match · vue de dessus</div></div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="font:600 13px 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.06em">Taille réelle · 44 px</div>
+      <div style="display:flex;gap:18px;background:#7E9B45;padding:18px 20px;flex-wrap:wrap">
+        <sc-for list="{{ pitch }}" as="p" hint-placeholder-count="12">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:6px;width:72px"><dl-top c="{{ p.id }}" style="width:44px;height:44px"></dl-top><div style="font:12px 'Anton';color:#EDE5D3;text-transform:uppercase;text-align:center">{{ p.nom }}</div></div>
+        </sc-for>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="font:600 13px 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.06em">Agrandi ×3 · les repères qui survivent à 44 px</div>
+      <div style="display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px">
+        <sc-for list="{{ pitch }}" as="p" hint-placeholder-count="12">
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <div style="background:#8BA851;display:flex;justify-content:center;padding:10px 0"><dl-top c="{{ p.id }}" style="width:132px;height:132px"></dl-top></div>
+            <div style="font:16px 'Anton';text-transform:uppercase">{{ p.nom }}</div>
+            <div style="font:14px/1.4 'Newsreader'">{{ p.cue }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;border-top:2px solid #151515;padding-top:20px">
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="font:600 13px 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.06em">Recoloriage · Gégé dans les 5 tenues</div>
+        <div style="display:flex;gap:16px;background:#7E9B45;padding:16px 20px">
+          <sc-for list="{{ kits }}" as="k" hint-placeholder-count="5">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex:1"><dl-top c="gege" kit="{{ k.kit }}" trim="{{ k.trim }}" style="width:66px;height:66px"></dl-top><div style="font:12px 'Anton';color:#EDE5D3;text-transform:uppercase;text-align:center">{{ k.nom }}</div></div>
+          </sc-for>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;font:15px/1.5 'Newsreader';text-wrap:pretty">
+        <div style="font:600 13px 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.06em">Cohérence avec les portraits</div>
+        <div>Vu de dessus, on ne garde que ce qui se voit de haut : la couleur du maillot, la largeur des épaules, le bide qui dépasse vers l'avant, le dessus du crâne (coiffure ou chapeau) et un accessoire au maximum. Les pieds dépassent sous le corps ; ceux de Mathéo sont dorés.</div>
+        <div>Même encre, même ombre portée pleine décalée (2 px, 30 %), pas de contour. Le liseré du col est la seule ligne claire : il donne le sens du joueur.</div>
+      </div>
+    </div>
+  </div>
+
+  <div data-screen-label="06 Exports" style="background:#EDE5D3;padding:40px 48px;display:flex;flex-direction:column;gap:20px">
+    <div style="display:flex;align-items:baseline;gap:20px;border-bottom:3px solid #151515;padding-bottom:10px"><div style="font:28px 'Anton';color:#E1341E">06</div><div style="font:44px/1 'Anton';text-transform:uppercase">Exports</div></div>
+    <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px;font:15px/1.5 'Newsreader'">
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="font:18px 'Anton';text-transform:uppercase">Arborescence</div>
+        <div style="font:500 13px/1.7 'IBM Plex Mono';background:#E4DAC4;padding:14px 16px;white-space:pre">exports/
+  svg/portraits/{perso}_{expr}.svg
+  svg/match/{perso}.svg
+  png/portraits/x2/{perso}_{expr}.png
+  png/portraits/x3/{perso}_{expr}.png
+  png/match/x2/{perso}.png
+  png/match/x3/{perso}.png
+characters.js</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="font:18px 'Anton';text-transform:uppercase">Tailles</div>
+        <div>Portraits : SVG sur une base 264 × 336 (le buste et sa marge de découpe), PNG en 528 × 672 (@2x) et 792 × 1008 (@3x). Match : base 40 × 40, PNG en 80 et 120 px.</div>
+        <div>Expressions : <span style="font-family:'IBM Plex Mono';font-size:13px">neutre, fier, gueule, choque, rire</span>.</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="font:18px 'Anton';text-transform:uppercase">Dans Phaser</div>
+        <div>Les PNG servent tels quels pour les dialogues. Pour animer les calques (clignement, bouche qui parle, tête qui rebondit), <b>characters.js</b> génère n'importe quel calque seul via <span style="font-family:'IBM Plex Mono';font-size:13px">DL.portrait(id, expr, {only:'bouche'})</span> : on le charge en texture SVG au démarrage. Le maillot se recolore avec <span style="font-family:'IBM Plex Mono';font-size:13px">{kit, trim}</span>.</div>
+      </div>
+    </div>
+  </div>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;showGuides&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Affichage&quot;},&quot;tilt&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Affichage&quot;}}">
+const EXPR = ['neutre', 'fier', 'gueule', 'choque', 'rire'];
+const LAB = { def: ['Neutre', 'Fier', 'Gueule', 'Choqué', 'Mort de rire'], reporter: ['Filme', 'Like', 'Secoue', 'Choqué', 'Rigole'], kaiser: ['Assis', 'Content', 'Aboie', 'Alerte', 'Langue'] };
+const ROT = [-3, 2, -1.5, 3, -2];
+const P = [
+  { id: 'kevin', nom: 'Kevin', surnom: '« La Fusée »', type: 'Jouable', role: 'Ailier · 18 ans · l\'ancien espoir', acc: 'Blond, fin, trop propre sur lui. Mèche plaquée, maillot impeccable. Son neutre est déjà arrogant : un sourcil levé, un demi-sourire.', pitch: true },
+  { id: 'jordan', nom: 'Jordan', surnom: '« Le Frigo »', type: 'Jouable', role: 'Défenseur central · 18 ans · 1m92', acc: 'Crâne rasé, cou de taureau, tête carrée. Épaules au maximum de la grille. Regard calme de videur : paupières mi-closes au neutre, dents serrées quand il s\'énerve.', pitch: true },
+  { id: 'dylan', nom: 'Dylan', surnom: '« Le Roi de la Nuit »', type: 'Jouable', role: 'Milieu · 18 ans · DJ le samedi', acc: 'Banane brune, cernes, barbe de trois jours, chaîne en or. Sourire en coin de charmeur, même au neutre.', pitch: true },
+  { id: 'matheo', nom: 'Mathéo', surnom: '« Le Pistonné »', type: 'Jouable', role: 'Attaquant · 18 ans · fils du président', acc: 'Boucles rousses, taches de rousseur, joues rondes et roses de gosse gâté. Crampons dorés, visibles en match.', pitch: true },
+  { id: 'gege', nom: 'Tonton Gégé', surnom: 'Secret', type: 'Jouable', role: '52 ans · licencié depuis 1991', acc: 'Bob jaune et bleu, grosse moustache grise, nez rouge, bide légendaire. Genouillère en match.', pitch: true },
+  { id: 'coach', nom: 'Coach Gérard', surnom: '60 ans', type: 'PNJ', role: 'Entraîneur · diplôme de 1994', quote: 'On joue simple, les gars. SIMPLE.', acc: 'Casquette, survêtement marine trop grand, sifflet, moustache grise, bide. Le téléphone ne quitte jamais sa main.', pitch: true },
+  { id: 'president', nom: 'Roland', surnom: 'Le président', type: 'PNJ', role: 'Président · tient la buvette', quote: 'C\'est pas moi qui paye les ballons.', acc: 'Chauve, gros bide, polo rouge du club, sacoche banane, clés du club-house. Un Ricard toujours à la main.', pitch: true },
+  { id: 'jeanmi', nom: 'Jean-Mi', surnom: 'Boss du chapitre 1', type: 'PNJ', role: 'Capitaine · 38 ans', quote: 'De mon temps…', acc: 'Bandeau éponge blanc, cheveux gris, barbe grise, brassard, bide. Genouillères en match.', pitch: true },
+  { id: 'fred', nom: 'Fred', surnom: 'Le gardien', type: 'PNJ', role: 'Gardien · toujours en retard', acc: 'Cheveux en bataille, paupières lourdes, gants troués. Il porte un jogging sous le short en match.', pitch: true },
+  { id: 'loiseau', nom: 'M. Loiseau', surnom: 'L\'arbitre', type: 'PNJ', role: 'Arbitre bénévole', acc: 'Visage long, raie sur le côté, moustache fine, nez pointu de fonctionnaire. Le carton jaune est déjà dans sa main.', pitch: true },
+  { id: 'recruteur', nom: 'Le recruteur', surnom: 'R3', type: 'PNJ', role: 'Le seul vrai danger', acc: 'Lunettes de soleil, cheveux plaqués, doudoune sans manches, carnet. Il ne sourit jamais : quand il est fier ou qu\'il rit, il garde la bouche fermée.', pitch: true },
+  { id: 'kaiser', nom: 'Kaiser', surnom: 'Le chien du terrain', type: 'PNJ', role: 'Toujours au mauvais endroit', acc: 'Bâtard marron, tache sur l\'œil, une oreille qui tombe, collier rouge. Il exprime tout avec les oreilles.', pitch: true },
+  { id: 'lea', nom: 'Léa', surnom: 'La copine potentielle', type: 'PNJ', role: 'Pas impressionnée par le foot', acc: 'Cheveux longs blonds, créoles. Par défaut, paupières mi-closes et petite moue.', pitch: false },
+  { id: 'mere', nom: 'La mère', surnom: 'Famille', type: 'PNJ', role: 'Bienveillante et culpabilisante', quote: 'Il y a le gigot', acc: 'Carré bouclé, joues roses, cardigan saumon, collier.', pitch: false },
+  { id: 'patron', nom: 'Le patron', surnom: 'Artisan', type: 'PNJ', role: 'Le boulot, lundi 7 h', acc: 'Moustache, tête carrée, tee-shirt orange de chantier, crayon sur l\'oreille.', pitch: false },
+  { id: 'momo', nom: 'Momo', surnom: 'La salle', type: 'PNJ', role: 'Le pote de la salle de muscu', acc: 'Dégradé, barbe courte, tee-shirt noir moulant, épaules au maximum de la grille.', pitch: false },
+  { id: 'reporter', nom: 'Le Reporter', surnom: 'Sans visage', type: 'PNJ', role: 'Filme en story', acc: 'Une main, un téléphone, une manche noire. Les 5 états jouent sur l\'inclinaison du téléphone, l\'écran et les traits de mouvement.', pitch: false },
+];
+const LAYERS = ['cheveux_arriere', 'corps', 'maillot', 'ombres', 'tete', 'cheveux', 'yeux', 'sourcils', 'nez', 'bouche', 'moustache', 'accessoires'];
+const CUES = { kevin: 'Banane blonde vers l\'avant', jordan: 'Le plus large, crâne ras', dylan: 'Banane brune', matheo: 'Couronne de boucles rousses, pieds dorés', gege: 'Bob jaune, bide qui dépasse', coach: 'Casquette marine, bras longs, téléphone', president: 'Crâne brillant, gros bide, verre', jeanmi: 'Anneau blanc du bandeau, brassard', fred: 'Vert gardien, gants clairs', loiseau: 'Noir, carton jaune levé', recruteur: 'Tout noir, lunettes', kaiser: 'Le seul sans maillot' };
+const VARIANTS = [
+  { k: 'normale', label: 'Normale', e: 'neutre', text: 'On joue simple, les gars. SIMPLE.' },
+  { k: 'gueule', label: 'Qui gueule', e: 'gueule', text: 'ON NE MARCHE PAS !' },
+  { k: 'pensee', label: 'Pensée', e: 'fier', text: 'Il me reste 3 % de batterie…' },
+  { k: 'murmure', label: 'Murmure', e: 'fier', text: 'Le recruteur de R3 est au bord du terrain. Fais pas le con.' },
+];
+const CARDS = [
+  { id: 'president', e: 'fier', who: 'Le président', role: 'Roland · il tient la buvette', text: 'Le brassard, il est pour toi. Par contre dimanche, tu me tiens la buvette.', left: 'Laisse-le à Jean-Mi', right: 'Je prends', fxL: [0, 1, -2, 0, 0], fxR: [-1, -2, 2, -1, 2] },
+  { id: 'jeanmi', e: 'gueule', who: 'Jean-Mi', role: 'Capitaine depuis 2004', text: 'Le brassard ? À toi ? T\'as même pas le permis !', left: 'Pardon Jean-Mi', right: 'Fallait pas vieillir', fxL: [0, 1, 0, 0, -1], fxR: [0, -2, 0, 0, 2] },
+  { id: 'mere', e: 'neutre', who: 'La mère', role: 'Famille', text: 'Capitaine ? Ton père va être fier. Il y a le gigot dimanche, hein.', left: 'Je viendrai', right: 'Y\'a 3e mi-temps', fxL: [0, -1, 0, 2, -1], fxR: [0, 2, 0, -2, 2] },
+];
+const GL = ['Coach', 'Vestiaire', 'Président', 'Famille', 'District'];
+const DUEL = [
+  { label: 'Ton but de 2004', line: 'Ce but-là, petit, il est encadré au club-house.', ego: 0 },
+  { label: 'Le bandeau éponge', line: 'Le bandeau, c\'est pour la sueur. Tu connais pas, toi.', ego: 14 },
+  { label: 'Tes genoux', line: 'Mes genoux… ils ont fait la Coupe du district 98 !', ego: 18 },
+  { label: 'L\'heure du coucher', line: 'Il est 23 h et je suis encore debout. Respecte.', ego: 12 },
+];
+const SW = (c, sz) => ({ width: (sz || 40) + 'px', height: (sz || 40) + 'px', background: c, boxShadow: c.toUpperCase() === '#EDE5D3' || c.toUpperCase() === '#FFFFFF' ? 'inset 0 0 0 1.5px #151515' : 'none' });
+
+class Component extends DCLogic {
+  constructor(p) {
+    super(p);
+    const mk = () => ({ screen: React.createRef(), veil: React.createRef(), char: React.createRef(), name: React.createRef(), bubble: React.createRef() });
+    this.A = { tpl: mk(), co: mk() };
+    this.cardRef = React.createRef(); this.lRef = React.createRef(); this.rRef = React.createRef(); this.jRef = React.createRef(); this.dScreen = React.createRef();
+    this.state = { variant: 'normale', ci: 0, g: [5, 5, 5, 5, 5], ego: 100, di: -1, hitE: null, dl: !!window.DL };
+  }
+  componentDidMount() {
+    if (!window.DL) { this.t = setInterval(() => { if (window.DL) { clearInterval(this.t); this.setState({ dl: true }); } }, 100); }
+    setTimeout(() => { this.enter('tpl'); this.enter('co'); }, 400);
+  }
+  componentWillUnmount() { clearInterval(this.t); }
+  enter(k) {
+    const r = this.A[k]; const c = r.char.current, n = r.name.current, b = r.bubble.current, v = r.veil.current, s = r.screen.current;
+    if (!c || !c.animate) return;
+    v && v.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 150, fill: 'both' });
+    c.animate([{ transform: 'translateX(120%) rotate(10deg)' }, { transform: 'translateX(-6%) rotate(-6deg)', offset: .6 }, { transform: 'translateX(0) rotate(-2deg)' }], { duration: 320, easing: 'cubic-bezier(.2,.8,.3,1)', fill: 'both' });
+    n && n.animate([{ opacity: 0, transform: 'rotate(-3deg) scale(1.8)' }, { opacity: 1, transform: 'rotate(-3deg) scale(.94)', offset: .7 }, { opacity: 1, transform: 'rotate(-3deg) scale(1)' }], { duration: 200, delay: 260, fill: 'both' });
+    b && b.animate([{ opacity: 0, transform: 'scale(.5)' }, { opacity: 1, transform: 'scale(1.07)', offset: .7 }, { opacity: 1, transform: 'scale(1)' }], { duration: 260, delay: 380, fill: 'both', easing: 'ease-out' });
+    const amp = (k === 'co' || this.state.variant === 'gueule') ? 3 : 1.5;
+    setTimeout(() => s && s.animate && s.animate([{ transform: 'none' }, { transform: `translate(${-amp}px,${amp}px)` }, { transform: `translate(${amp}px,${-amp}px)` }, { transform: 'none' }], { duration: 180 }), 280);
+  }
+  exit(k, then) {
+    const r = this.A[k]; const c = r.char.current, n = r.name.current, b = r.bubble.current, v = r.veil.current;
+    if (!c || !c.animate) return then && then();
+    b && b.animate([{ opacity: 1, transform: 'scale(1)' }, { opacity: 0, transform: 'scale(.8)' }], { duration: 120, fill: 'both' });
+    n && n.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 120, fill: 'both' });
+    c.animate([{ transform: 'translateX(0) rotate(-2deg)' }, { transform: 'translateX(120%) rotate(8deg)' }], { duration: 220, delay: 100, easing: 'ease-in', fill: 'both' });
+    v && v.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 200, delay: 140, fill: 'both' });
+    setTimeout(() => then && then(), 520);
+  }
+  replay(k) { this.exit(k, () => this.enter(k)); }
+  setX(dx) {
+    const el = this.cardRef.current; if (el) el.style.transform = `translateX(${dx}px) rotate(${dx / 16}deg)`;
+    const cl = v => Math.max(0, Math.min(1, v));
+    if (this.lRef.current) this.lRef.current.style.opacity = cl(-dx / 70);
+    if (this.rRef.current) this.rRef.current.style.opacity = cl(dx / 70);
+  }
+  commit(dir) {
+    if (this.busy) return; this.busy = true;
+    const el = this.cardRef.current; if (el) el.style.transition = 'transform .28s ease-in';
+    this.setX(dir * 440);
+    setTimeout(() => {
+      this.setState(st => { const c = CARDS[st.ci], fx = dir > 0 ? c.fxR : c.fxL; return { ci: (st.ci + 1) % CARDS.length, g: st.g.map((v, k) => Math.max(0, Math.min(10, v + fx[k]))) }; });
+      if (el) { el.style.transition = 'none'; this.setX(0); el.style.transform = 'scale(.85)'; requestAnimationFrame(() => requestAnimationFrame(() => { el.style.transition = 'transform .3s cubic-bezier(.3,1.5,.5,1)'; el.style.transform = 'none'; })); }
+      this.busy = false;
+    }, 290);
+  }
+  hit(i) {
+    const a = DUEL[i];
+    this.setState(s => ({ di: i, ego: Math.max(0, s.ego - a.ego), hitE: a.ego ? 'choque' : 'rire' }));
+    const j = this.jRef.current;
+    if (j && j.animate && a.ego) j.animate([{ transform: 'rotate(3deg)' }, { transform: 'translateX(14px) rotate(9deg)' }, { transform: 'translateX(-6px) rotate(0deg)' }, { transform: 'rotate(3deg)' }], { duration: 380, easing: 'ease-out' });
+    clearTimeout(this.ht); this.ht = setTimeout(() => this.setState({ hitE: null }), 1300);
+    if (this.state.ego - a.ego <= 0) setTimeout(() => this.setState({ ego: 100, di: -1 }), 2200);
+  }
+  renderVals() {
+    const DL = window.DL, guides = this.props.showGuides ?? true, tilt = this.props.tilt ?? true;
+    const pal = id => { if (!DL) return []; const c = DL.CHARS[id]; return [...new Set([c.skin, c.hair, c.body.kit, c.body.trim, c.body.inner].filter(Boolean))].map(x => ({ c: x.toUpperCase(), st: SW(x, 34) })); };
+    const planches = P.map((p, i) => {
+      const lab = LAB[p.id] || LAB.def;
+      return {
+        ...p, num: String(i + 1).padStart(2, '0'), quote: p.quote || '', offPitch: !p.pitch, pal: pal(p.id),
+        tagSt: { font: "14px 'Anton'", letterSpacing: '.04em', textTransform: 'uppercase', padding: '3px 9px', background: p.type === 'Jouable' ? '#2446B0' : '#151515', color: '#EDE5D3' },
+        ex: EXPR.map((e, j) => ({ e, id: p.id, lab: lab[j], st: { width: '100%', height: '186px', transform: tilt ? `rotate(${ROT[(j + i) % 5]}deg)` : 'none' } })),
+      };
+    });
+    const v = VARIANTS.find(x => x.k === this.state.variant);
+    const vis = ['normale', 'gueule', 'pensee', 'murmure'].reduce((o, k) => (o['is' + k[0].toUpperCase() + k.slice(1)] = this.state.variant === k, o), {});
+    const sframe = (charX, rot, nameO, nameS, bubO, bubS, veil, e) => ({
+      e,
+      veil: { position: 'absolute', inset: 0, background: 'rgba(21,21,21,.3)', opacity: veil },
+      charSt: { position: 'absolute', right: '-30px', top: '30px', width: '150px', height: '192px', transform: `translateX(${charX}%) rotate(${rot}deg)` },
+      nameSt: { position: 'absolute', right: '54px', top: '190px', background: '#151515', color: '#EDE5D3', font: "11px 'Anton'", padding: '2px 6px', opacity: nameO, transform: `rotate(-3deg) scale(${nameS})` },
+      bubSt: { position: 'absolute', left: '10px', top: '44px', background: '#FFFFFF', padding: '6px 8px', font: "italic 13px 'Newsreader'", boxShadow: '2px 3px 0 rgba(21,21,21,.3)', opacity: bubO, transform: `rotate(-2deg) scale(${bubS})`, transformOrigin: '90% 100%' },
+    });
+    const story = [
+      { t: '0', title: 'Pause', desc: 'Le jeu se fige, le voile tombe en 150 ms sur le terrain.', ...sframe(120, 10, 0, 1, 0, 1, 1, 'neutre') },
+      { t: '190', title: 'Le collage', desc: 'Il glisse depuis le bord et dépasse de −6° avant de se poser.', ...sframe(-6, -6, 0, 1, 0, 1, 1, 'neutre') },
+      { t: '320', title: 'Posé', desc: 'Il s\'arrête à −2°, puis un léger rebond de la tête.', ...sframe(0, -2, 0, 1, 0, 1, 1, 'neutre') },
+      { t: '460', title: 'Tampon', desc: 'Le nom arrive à ×1,8 et s\'écrase ; l\'écran tremble de 2 px.', ...sframe(0, -2, 1, 1.15, 0, 1, 1, 'neutre') },
+      { t: '640', title: 'Bulle', desc: 'La bulle part de sa pointe : ×0,5 → ×1,07 → ×1.', ...sframe(0, -2, 1, 1, 1, 1, 1, 'fier') },
+      { t: '+320', title: 'Sortie', desc: 'Au tap : bulle et nom partent en 120 ms, le collage ressort en 220 ms.', ...sframe(110, 8, 0, 1, 0, .8, .4, 'fier') },
+    ];
+    const cur = CARDS[this.state.ci];
+    const jE = this.state.hitE || 'fier';
+    return {
+      guides,
+      layers: LAYERS.map((l, i) => ({ name: l, num: String(i + 1).padStart(2, '0') })),
+      exprHead: LAB.def,
+      matrix: [['Yeux', 'yeux'], ['Sourcils', 'sourcils'], ['Bouche', 'bouche'], ['Composé', '']].map(([label, only]) => ({ label, cells: EXPR.map(e => ({ e, only, cut: only ? '1' : '0' })) })),
+      skins: ['#F6D2B4', '#F3CBA8', '#E9B794', '#D9A27E', '#B97A52', '#7A4A2E'].map(c => ({ c, st: SW(c) })),
+      hairs: ['#F2C94C', '#D9602B', '#9C7A4E', '#6B4A2A', '#2A1E16', '#B9B2A4', '#151515'].map(c => ({ c, st: SW(c) })),
+      extras: [['#1D2747', 'Marine coach'], ['#EC7A2E', 'Orange chantier'], ['#3F5A26', 'Vert gardien'], ['#F4E7A8', 'Pastis'], ['#8A8A8A', 'Doudoune']].map(([c, l]) => ({ c, l, st: SW(c) })),
+      lineup: P.map(p => ({ id: p.id, nom: p.nom.replace('Tonton ', '').replace('Coach ', '').replace('Le ', '').replace('La ', '') })),
+      planches,
+      tpl: {
+        ...this.A.tpl, ...vis, expr: v.e, text: v.text, play: () => this.replay('tpl'),
+        variants: VARIANTS.map(x => ({ label: x.label, pick: () => { this.setState({ variant: x.k }); this.replay('tpl'); }, st: { border: '2px solid #151515', padding: '6px 12px', font: "15px 'Anton'", textTransform: 'uppercase', cursor: 'pointer', background: x.k === this.state.variant ? '#E1341E' : '#FFFFFF', color: x.k === this.state.variant ? '#EDE5D3' : '#151515' } })),
+      },
+      story,
+      co: { ...this.A.co, play: () => this.replay('co') },
+      card: {
+        ref: this.cardRef, lRef: this.lRef, rRef: this.rRef, cur,
+        gauges: this.state.g.map((v, k) => ({ label: GL[k], fill: { position: 'absolute', left: 0, right: 0, bottom: 0, height: v * 10 + '%', background: '#E1341E', transition: 'height .45s cubic-bezier(.3,1.4,.5,1)' } })),
+        swipeL: () => this.commit(-1), swipeR: () => this.commit(1),
+        down: e => { const el = this.cardRef.current; if (!el) return; this.drag = { x: e.clientX, dx: 0 }; try { el.setPointerCapture(e.pointerId); } catch (_) {} el.style.transition = 'none'; },
+        move: e => { if (!this.drag) return; this.drag.dx = e.clientX - this.drag.x; this.setX(this.drag.dx); },
+        up: () => { const d = this.drag; if (!d) return; this.drag = null; if (Math.abs(d.dx) > 80) this.commit(d.dx > 0 ? 1 : -1); else { const el = this.cardRef.current; if (el) el.style.transition = 'transform .35s cubic-bezier(.3,1.6,.5,1)'; this.setX(0); } },
+      },
+      duel: {
+        jRef: this.jRef, jE, kE: this.state.hitE ? 'rire' : 'fier',
+        line: this.state.di < 0 ? 'De mon temps, on jouait sans protège-tibias. Et sans se plaindre.' : DUEL[this.state.di].line,
+        barJ: { height: '100%', width: this.state.ego + '%', background: '#E1341E', transition: 'width .5s cubic-bezier(.3,1.4,.5,1)' },
+        attacks: DUEL.map((a, i) => ({ label: a.label, hit: () => this.hit(i) })),
+      },
+      pitch: P.filter(p => p.pitch).map(p => ({ id: p.id, nom: p.nom.replace('Tonton ', '').replace('Coach ', ''), cue: CUES[p.id] })),
+      kits: [['#2446B0', '#FFFFFF', 'St-Clou'], ['#F0A28A', '#1D2747', 'Ste-Gluse'], ['#E1341E', '#151515', 'Pré-Mouillé'], ['#F3E6C4', '#9C7A4E', 'Anciens'], ['#F2C94C', '#151515', 'Chasuble']].map(([kit, trim, nom]) => ({ kit, trim, nom })),
+    };
+  }
+}
+</script>
+</body>
+</html>

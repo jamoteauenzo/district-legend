@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bowlby+One&family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@400;600&family=Lilita+One&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Nunito:wght@700;800;900&family=Patrick+Hand&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+body{margin:0;background:#E4E0D8;font-family:'IBM Plex Sans',sans-serif;color:#1D1A16}
+a{color:#D7261E;text-decoration:underline}
+a:hover{color:#1E4FC9}
+</style>
+</helmet>
+<section style="padding:64px;display:flex;flex-direction:column;gap:40px">
+  <div style="max-width:1100px;display:flex;flex-direction:column;gap:12px">
+    <div style="font:600 13px 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#6B655C">District Legend · Direction artistique · Étape 1</div>
+    <h1 style="margin:0;font:600 44px/1.1 'IBM Plex Sans',sans-serif;letter-spacing:-.02em">Trois directions pour le district</h1>
+    <p style="margin:0;font-size:18px;line-height:1.55;color:#3A362F;text-wrap:pretty">Chaque direction montre le même écran de match et la même carte de décision, pour comparer à contenu égal. Appuie sur <b>CONTESTE</b> pour déclencher le tampon, glisse la carte à gauche ou à droite pour choisir. Les portraits et les moodboards sont des emplacements : dépose tes images de référence dessus.</p>
+    <p style="margin:0;font-size:16px;line-height:1.55;color:#3A362F;text-wrap:pretty">Ma recommandation : <a href="#1a">1a</a>. C'est celle qui évoque le plus directement Fluide Glacial et le foot amateur français, et son contour garde les joueurs lisibles à 44 px. <a href="#1b">1b</a> est encore plus lisible mais ressemble à beaucoup de jeux du store. <a href="#1c">1c</a> est la moins chère à produire et la plus proche d'une page qu'on capture pour sa story.</p>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:48px;align-items:flex-start">
+
+    <!-- ============ 1a ============ -->
+    <div id="1a" style="width:1300px;box-sizing:border-box;padding:48px;background:#F3E7CC;border-radius:4px;box-shadow:0 2px 0 rgba(0,0,0,.08);display:flex;flex-direction:column;gap:40px;color:#1D1A16">
+      <div style="display:flex;gap:24px;align-items:flex-start">
+        <div style="flex:none;width:64px;height:64px;border:3px solid #1D1A16;border-radius:50%;display:flex;align-items:center;justify-content:center;font:28px 'Bowlby One',sans-serif;background:#F1C232;box-shadow:4px 4px 0 #1D1A16">1a</div>
+        <div style="display:flex;flex-direction:column;gap:8px;max-width:900px">
+          <div style="font:15px 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.06em">BD franco-belge moderne, gros contours</div>
+          <h2 style="margin:0;font:56px/1 'Bowlby One',sans-serif;letter-spacing:-.01em">Dimanche 15h</h2>
+          <p style="margin:0;font-size:17px;line-height:1.55;text-wrap:pretty">Le trait de Fluide Glacial adapté au mobile : contour noir épais et vivant, aplats francs, une seule ombre en trame. Le papier crème rappelle l'album qu'on feuillette au club-house. Les personnages sont des caricatures à gros nez et gros bides, dessinées avec tendresse.</p>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:600px minmax(0,1fr);gap:48px">
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="font:600 13px 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.06em">Moodboard</div>
+          <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px">
+            <div style="min-width:0;height:150px;border:2.5px solid #1D1A16"><image-slot id="a-mood-1" shape="rect" placeholder="Planche Gotlib, gros plan visage"></image-slot></div>
+            <div style="min-width:0;height:150px;border:2.5px solid #1D1A16"><image-slot id="a-mood-2" shape="rect" placeholder="Les Bidochon en vacances"></image-slot></div>
+            <div style="min-width:0;height:150px;border:2.5px solid #1D1A16"><image-slot id="a-mood-3" shape="rect" placeholder="Buvette préfabriquée sous la pluie"></image-slot></div>
+            <div style="min-width:0;height:150px;border:2.5px solid #1D1A16"><image-slot id="a-mood-4" shape="rect" placeholder="Main courante rouillée, terrain boueux"></image-slot></div>
+            <div style="min-width:0;height:150px;border:2.5px solid #1D1A16"><image-slot id="a-mood-5" shape="rect" placeholder="Case Titeuf, colère"></image-slot></div>
+            <div style="min-width:0;height:150px;border:2.5px solid #1D1A16"><image-slot id="a-mood-6" shape="rect" placeholder="Trame Ben-Day, papier jauni"></image-slot></div>
+          </div>
+          <div style="font:600 13px 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.06em;margin-top:16px">Références</div>
+          <div style="display:flex;flex-direction:column;gap:6px;font-size:15px;line-height:1.4">
+            <div><b>Gotlib, Rubrique-à-brac</b> : l'expressivité des visages</div>
+            <div><b>Binet, Les Bidochon</b> : les corps, les bides, les marcels</div>
+            <div><b>Zep, Titeuf</b> : lisibilité des expressions en petit</div>
+            <div><b>Groland</b> : les décors de France profonde</div>
+            <div><b>Oddmar, Cuphead</b> : la finition d'un trait 2D en mouvement</div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:28px">
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <div style="font:600 13px 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.06em">Palette</div>
+            <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px">
+              <div style="display:flex;gap:10px;align-items:center"><div style="width:44px;height:44px;border:2.5px solid #1D1A16;background:#F3E7CC"></div><div style="font-size:13px;line-height:1.3">Papier album<br><span style="font-family:'IBM Plex Mono'">#F3E7CC</span></div></div>
+              <div style="display:flex;gap:10px;align-items:center"><div style="width:44px;height:44px;border:2.5px solid #1D1A16;background:#1D1A16"></div><div style="font-size:13px;line-height:1.3">Encre de Chine<br><span style="font-family:'IBM Plex Mono'">#1D1A16</span></div></div>
+              <div style="display:flex;gap:10px;align-items:center"><div style="width:44px;height:44px;border:2.5px solid #1D1A16;background:#6FA33B"></div><div style="font-size:13px;line-height:1.3">Pelouse<br><span style="font-family:'IBM Plex Mono'">#6FA33B</span></div></div>
+              <div style="display:flex;gap:10px;align-items:center"><div style="width:44px;height:44px;border:2.5px solid #1D1A16;background:#7B5431"></div><div style="font-size:13px;line-height:1.3">Boue<br><span style="font-family:'IBM Plex Mono'">#7B5431</span></div></div>
+              <div style="display:flex;gap:10px;align-items:center"><div style="width:44px;height:44px;border:2.5px solid #1D1A16;background:#1E4FC9"></div><div style="font-size:13px;line-height:1.3">Bleu Saint-Clou<br><span style="font-family:'IBM Plex Mono'">#1E4FC9</span></div></div>
+              <div style="display:flex;gap:10px;align-items:center"><div style="width:44px;height:44px;border:2.5px solid #1D1A16;background:#EE9A7E"></div><div style="font-size:13px;line-height:1.3">Saumon Sainte-Gluse<br><span style="font-family:'IBM Plex Mono'">#EE9A7E</span></div></div>
+              <div style="display:flex;gap:10px;align-items:center"><div style="width:44px;height:44px;border:2.5px solid #1D1A16;background:#D7261E"></div><div style="font-size:13px;line-height:1.3">Rouge PÉCAB<br><span style="font-family:'IBM Plex Mono'">#D7261E</span></div></div>
+              <div style="display:flex;gap:10px;align-items:center"><div style="width:44px;height:44px;border:2.5px solid #1D1A16;background:#F1C232"></div><div style="font-size:13px;line-height:1.3">Jaune Ricard<br><span style="font-family:'IBM Plex Mono'">#F1C232</span></div></div>
+              <div style="display:flex;gap:10px;align-items:center"><div style="width:44px;height:44px;border:2.5px solid #1D1A16;background:#F2C3A0"></div><div style="font-size:13px;line-height:1.3">Peau (base)<br><span style="font-family:'IBM Plex Mono'">#F2C3A0</span></div></div>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div style="font:600 13px 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.06em">Typographie</div>
+            <div style="display:flex;gap:20px;align-items:baseline;border-top:2px solid #1D1A16;padding-top:10px"><div style="width:120px;flex:none;font-size:13px">Titres<br><b>Bowlby One</b></div><div style="font:44px/1 'Bowlby One',sans-serif">LA FUSÉE</div></div>
+            <div style="display:flex;gap:20px;align-items:baseline;border-top:2px solid #1D1A16;padding-top:10px"><div style="width:120px;flex:none;font-size:13px">Bulles, textes<br><b>Patrick Hand</b></div><div style="font:24px/1.25 'Patrick Hand',cursive">T'AS BU QUOI HIER ? 5 PINTES, 3 RICARD.</div></div>
+            <div style="display:flex;gap:20px;align-items:baseline;border-top:2px solid #1D1A16;padding-top:10px"><div style="width:120px;flex:none;font-size:13px">Chiffres<br><b>Bowlby One</b></div><div style="font:36px/1 'Bowlby One',sans-serif">0–2 · 67' · 340 m</div></div>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;gap:40px;align-items:flex-start">
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="font:600 13px 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.06em">Match · vue de dessus</div>
+          <div style="width:360px;height:640px;border-radius:24px;overflow:hidden;box-shadow:0 20px 40px rgba(0,0,0,.25);border:3px solid #1D1A16;background:#1D1A16">
+          <div ref="{{ a.screenRef }}" style="position:relative;width:360px;height:640px;overflow:hidden">
+            <svg width="360" height="640" viewBox="0 0 360 640" style="position:absolute;inset:0;display:block">
+              <defs>
+                <symbol id="pa" viewBox="0 0 40 40">
+                  <circle cx="6.5" cy="24" r="4" fill="#F2C3A0" stroke="#1D1A16" stroke-width="2.2"></circle>
+                  <circle cx="33.5" cy="24" r="4" fill="#F2C3A0" stroke="#1D1A16" stroke-width="2.2"></circle>
+                  <ellipse cx="20" cy="24" rx="13" ry="8.5" stroke="#1D1A16" stroke-width="2.2"></ellipse>
+                  <path d="M10 20.5 Q20 15 30 20.5" fill="none" stroke-width="2.6"></path>
+                  <circle cx="20" cy="20" r="7" fill="#F2C3A0" stroke="#1D1A16" stroke-width="2.2"></circle>
+                  <path d="M13 20 A7 7 0 0 1 27 20 Q20 15.5 13 20Z" fill="currentColor" stroke="#1D1A16" stroke-width="1.6"></path>
+                </symbol>
+              </defs>
+              <rect width="360" height="640" fill="#6FA33B"></rect>
+              <rect y="160" width="360" height="80" fill="#629634"></rect>
+              <rect y="320" width="360" height="80" fill="#629634"></rect>
+              <rect y="480" width="360" height="80" fill="#629634"></rect>
+              <ellipse cx="90" cy="420" rx="40" ry="18" fill="#9AAE55" opacity=".7"></ellipse>
+              <ellipse cx="270" cy="520" rx="30" ry="14" fill="#9AAE55" opacity=".7"></ellipse>
+              <path d="M108 150 Q138 126 186 132 Q240 126 256 152 Q248 180 196 182 Q146 188 118 174 Z" fill="#7B5431" stroke="#1D1A16" stroke-width="2"></path>
+              <path d="M140 150 Q168 140 200 146 Q222 152 206 164 Q170 170 146 162 Z" fill="#5E3E22"></path>
+              <g fill="none" stroke="#F6F1E4" stroke-width="3" stroke-dasharray="46 4 18 7 70 3 30 6">
+                <path d="M22 128 V640 M338 128 V640 M22 128 H338"></path>
+                <path d="M126 128 V164 H234 V128"></path>
+                <path d="M64 128 V226 H296 V128"></path>
+                <path d="M146 226 A42 42 0 0 0 214 226"></path>
+                <path d="M22 590 H338"></path>
+                <circle cx="180" cy="590" r="54"></circle>
+              </g>
+              <circle cx="180" cy="200" r="3" fill="#F6F1E4"></circle>
+              <rect x="150" y="112" width="60" height="16" fill="#F6F1E4" opacity=".4"></rect>
+              <path d="M150 128 V112 H210 V128" fill="none" stroke="#1D1A16" stroke-width="3.5"></path>
+              <rect x="0" y="82" width="178" height="26" fill="#F1C232" stroke="#1D1A16" stroke-width="2.5"></rect>
+              <text x="89" y="100" text-anchor="middle" font-family="Bowlby One" font-size="12" fill="#1D1A16">BOUCHERIE MOREL</text>
+              <rect x="182" y="82" width="178" height="26" fill="#D7261E" stroke="#1D1A16" stroke-width="2.5"></rect>
+              <text x="271" y="100" text-anchor="middle" font-family="Bowlby One" font-size="12" fill="#F3E7CC">LE BALTO</text>
+              <rect x="-2" y="160" width="16" height="230" fill="#1E4FC9" stroke="#1D1A16" stroke-width="2.5"></rect>
+              <text x="7" y="275" text-anchor="middle" font-family="Bowlby One" font-size="9" fill="#F3E7CC" transform="rotate(-90 7 275)">GARAGE DUPUIS</text>
+              <path d="M351 112 V640" stroke="#8C5A3A" stroke-width="3.5"></path>
+              <path d="M346 150 h10 M346 230 h10 M346 310 h10 M346 390 h10 M346 470 h10" stroke="#5E3E22" stroke-width="3"></path>
+              <ellipse cx="160" cy="264" rx="21" ry="9" fill="none" stroke="#F1C232" stroke-width="3"></ellipse>
+              <use href="#pa" x="158" y="126" width="44" height="44" fill="#B8D23A" stroke="#1D1A16" color="#3A2A1A"></use>
+              <use href="#pa" x="160" y="186" width="44" height="44" fill="#EE9A7E" stroke="#1F2A4A" color="#3A2A1A"></use>
+              <use href="#pa" x="226" y="222" width="44" height="44" fill="#EE9A7E" stroke="#1F2A4A" color="#C8A060"></use>
+              <use href="#pa" x="92" y="262" width="44" height="44" fill="#EE9A7E" stroke="#1F2A4A" color="#1D1A16"></use>
+              <use href="#pa" x="290" y="330" width="44" height="44" fill="#EE9A7E" stroke="#1F2A4A" color="#6B4A2A"></use>
+              <use href="#pa" x="138" y="236" width="44" height="44" fill="#1E4FC9" stroke="#FFFFFF" color="#E8C35A"></use>
+              <use href="#pa" x="236" y="300" width="44" height="44" fill="#1E4FC9" stroke="#FFFFFF" color="#3A2A1A"></use>
+              <use href="#pa" x="66" y="372" width="44" height="44" fill="#1E4FC9" stroke="#FFFFFF" color="#E0AE88"></use>
+              <use href="#pa" x="186" y="428" width="44" height="44" fill="#1E4FC9" stroke="#FFFFFF" color="#C8612B"></use>
+              <use href="#pa" x="264" y="398" width="44" height="44" fill="#1D1A16" stroke="#F1C232" color="#5A5A5A"></use>
+              <circle cx="170" cy="232" r="5.5" fill="#FFFFFF" stroke="#1D1A16" stroke-width="2"></circle>
+              <circle cx="170" cy="232" r="1.8" fill="#1D1A16"></circle>
+              <g transform="translate(300 160)">
+                <path d="M16 22 q6 4 8 -2" fill="none" stroke="#1D1A16" stroke-width="2.2" stroke-linecap="round"></path>
+                <ellipse cx="12" cy="16" rx="6" ry="9" fill="#C08A4A" stroke="#1D1A16" stroke-width="2"></ellipse>
+                <circle cx="12" cy="6" r="5" fill="#C08A4A" stroke="#1D1A16" stroke-width="2"></circle>
+                <path d="M7 4 l-3 -3 M17 4 l3 -3" stroke="#1D1A16" stroke-width="2.4" stroke-linecap="round"></path>
+              </g>
+            </svg>
+            <div style="position:absolute;top:10px;left:10px;right:10px;height:40px;background:#F3E7CC;border:2.5px solid #1D1A16;border-radius:8px;box-shadow:3px 3px 0 #1D1A16;display:flex;align-items:center;gap:8px;padding:0 8px;box-sizing:border-box">
+              <div style="width:14px;height:14px;background:#1E4FC9;border:2px solid #1D1A16;border-radius:3px"></div>
+              <div style="font:12px 'Bowlby One';flex:1">ST-CLOU</div>
+              <div style="font:20px 'Bowlby One'">0–2</div>
+              <div style="font:12px 'Bowlby One';flex:1;text-align:right">STE-GLUSE</div>
+              <div style="width:14px;height:14px;background:#EE9A7E;border:2px solid #1D1A16;border-radius:3px"></div>
+              <div style="font:14px 'Bowlby One';background:#F1C232;border:2px solid #1D1A16;border-radius:4px;padding:1px 6px">67'</div>
+            </div>
+            <div style="position:absolute;top:118px;left:10px;background:#FFFFFF;border:2.5px solid #1D1A16;border-radius:6px;padding:3px 10px;font:17px 'Patrick Hand',cursive;box-shadow:2px 2px 0 #1D1A16">OBJECTIF : GAGNE LE MATCH</div>
+            <svg width="48" height="60" viewBox="0 0 48 60" style="position:absolute;top:118px;right:10px;overflow:visible">
+              <defs><clipPath id="chA"><rect x="4" y="8" width="30" height="48" rx="4"></rect></clipPath></defs>
+              <path d="M34 18 h5 a6 6 0 0 1 6 6 v12 a6 6 0 0 1 -6 6 h-5" fill="none" stroke="#1D1A16" stroke-width="4"></path>
+              <rect x="4" y="8" width="30" height="48" rx="4" fill="#F3E7CC" opacity=".6"></rect>
+              <g clip-path="url(#chA)">
+                <rect x="4" y="{{ a.ch.y }}" width="30" height="{{ a.ch.h }}" fill="#F1C232" style="transition:all .5s cubic-bezier(.3,1.4,.5,1)"></rect>
+                <g transform="translate(0 {{ a.ch.y }})" style="transition:transform .5s cubic-bezier(.3,1.4,.5,1)"><path d="M2 2 q4 -7 8 0 q4 -7 8 0 q4 -7 8 0 q4 -7 8 0 v4 h-32z" fill="#FFFFFF" stroke="#1D1A16" stroke-width="1.5"></path></g>
+              </g>
+              <rect x="4" y="8" width="30" height="48" rx="4" fill="none" stroke="#1D1A16" stroke-width="3"></rect>
+              <path d="M11 16 V48" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" opacity=".8"></path>
+            </svg>
+            <div style="position:absolute;left:20px;bottom:26px;width:112px;height:112px;border-radius:50%;border:3px solid #1D1A16;background:rgba(243,231,204,.35);display:flex;align-items:center;justify-content:center">
+              <div style="width:48px;height:48px;border-radius:50%;background:#F3E7CC;border:3px solid #1D1A16;box-shadow:3px 3px 0 #1D1A16;transform:translate(10px,-8px)"></div>
+            </div>
+            <div onClick="{{ a.tackle }}" style="position:absolute;right:112px;bottom:92px;width:66px;height:66px;border-radius:50%;background:#F1C232;border:3px solid #1D1A16;box-shadow:3px 3px 0 #1D1A16;display:flex;align-items:center;justify-content:center;font:12px 'Bowlby One';cursor:pointer" style-active="transform:translate(2px,2px);box-shadow:1px 1px 0 #1D1A16">TACLE</div>
+            <div onClick="{{ a.pecab }}" style="position:absolute;right:18px;bottom:30px;width:88px;height:88px;border-radius:50%;background:#D7261E;border:3px solid #1D1A16;box-shadow:4px 4px 0 #1D1A16;display:flex;align-items:center;justify-content:center;font:12px 'Bowlby One';color:#F3E7CC;cursor:pointer" style-active="transform:translate(3px,3px);box-shadow:1px 1px 0 #1D1A16">CONTESTE</div>
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none">
+              <div ref="{{ a.stampRef }}" style="opacity:0;font:68px/1 'Bowlby One';color:#D7261E;border:7px solid #D7261E;border-radius:12px;padding:10px 18px 4px;background:rgba(243,231,204,.85);box-shadow:inset 0 0 0 3px #F3E7CC,inset 0 0 0 6px #D7261E">PÉCAB</div>
+            </div>
+          </div>
+          </div>
+          <div style="font-size:14px;max-width:360px;line-height:1.45">Appuie sur CONTESTE : le tampon s'écrase, l'écran tremble, la chope monte. Aucun chiffre.</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="font:600 13px 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.06em">Carte de décision</div>
+          <div style="position:relative;width:360px;height:640px;border-radius:24px;overflow:hidden;box-shadow:0 20px 40px rgba(0,0,0,.25);border:3px solid #1D1A16;background-color:#F3E7CC;background-image:radial-gradient(rgba(29,26,22,.14) 1.2px,transparent 1.4px);background-size:9px 9px;box-sizing:border-box">
+            <div style="position:absolute;top:16px;left:14px;right:14px;display:flex;justify-content:space-between">
+              <sc-for list="{{ a.gauges }}" as="g" hint-placeholder-count="5">
+                <div style="display:flex;flex-direction:column;align-items:center;gap:4px;width:60px">
+                  <div style="position:relative;width:18px;height:48px;border:2.5px solid #1D1A16;border-radius:5px;background:#FFFFFF;overflow:hidden"><div style="{{ g.fill }}"></div></div>
+                  <div style="font:14px 'Patrick Hand',cursive">{{ g.label }}</div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="position:absolute;top:100px;left:18px;right:18px;background:#FFFFFF;border:2.5px solid #1D1A16;border-radius:16px;padding:12px 14px;font:19px/1.2 'Patrick Hand',cursive;text-transform:uppercase;box-shadow:3px 3px 0 #1D1A16;min-height:72px;box-sizing:border-box">{{ a.card.text }}</div>
+            <div ref="{{ a.cardRef }}" onPointerDown="{{ a.down }}" onPointerMove="{{ a.move }}" onPointerUp="{{ a.up }}" onPointerCancel="{{ a.up }}" onClickCapture="{{ a.clickCap }}" style="position:absolute;top:210px;left:56px;width:248px;height:300px;touch-action:none;cursor:grab;transform-origin:50% 130%">
+              <div style="position:absolute;inset:0;background:#FFFFFF;border:4px solid #1D1A16;border-radius:10px;box-shadow:6px 6px 0 #1D1A16;overflow:hidden">
+                <div style="position:absolute;top:0;left:0;right:0;height:240px;background:#EE9A7E">
+                  <sc-for list="{{ a.cards }}" as="c" hint-placeholder-count="1">
+                    <div style="{{ c.vis }}"><image-slot id="{{ c.sid }}" shape="rect" placeholder="{{ c.ph }}"></image-slot></div>
+                  </sc-for>
+                </div>
+                <div style="position:absolute;left:0;right:0;bottom:0;height:52px;border-top:4px solid #1D1A16;background:#F1C232;display:flex;align-items:center;justify-content:center;font:18px 'Bowlby One'">{{ a.card.who }}</div>
+              </div>
+              <div ref="{{ a.lRef }}" style="position:absolute;top:18px;right:-10px;opacity:0;transform:rotate(8deg);background:#1D1A16;color:#F3E7CC;font:20px 'Patrick Hand',cursive;padding:4px 10px;text-transform:uppercase;pointer-events:none">{{ a.card.left }}</div>
+              <div ref="{{ a.rRef }}" style="position:absolute;top:18px;left:-10px;opacity:0;transform:rotate(-8deg);background:#D7261E;color:#F3E7CC;font:20px 'Patrick Hand',cursive;padding:4px 10px;text-transform:uppercase;pointer-events:none">{{ a.card.right }}</div>
+            </div>
+            <div style="position:absolute;top:530px;left:0;right:0;text-align:center;font:17px 'Patrick Hand',cursive">{{ a.card.role }}</div>
+            <div style="position:absolute;bottom:22px;left:18px;right:18px;display:flex;justify-content:space-between;font:13px 'Bowlby One'"><div>SEMAINE 3 · MARDI</div><div style="color:#D7261E">OBJECTIF : SOIS EXEMPLAIRE</div></div>
+          </div>
+          <div style="display:flex;gap:8px">
+            <div onClick="{{ a.swipeL }}" style="flex:1;border:2.5px solid #1D1A16;border-radius:6px;padding:6px 10px;font:16px 'Patrick Hand';cursor:pointer;background:#FFFFFF">← {{ a.card.left }}</div>
+            <div onClick="{{ a.swipeR }}" style="flex:1;border:2.5px solid #1D1A16;border-radius:6px;padding:6px 10px;font:16px 'Patrick Hand';cursor:pointer;background:#FFFFFF;text-align:right">{{ a.card.right }} →</div>
+          </div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;gap:24px;min-width:0">
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <div style="font:600 13px 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.06em">Taille réelle en match · 44 px</div>
+            <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;background:#6FA33B;border:2.5px solid #1D1A16;padding:14px 8px;border-radius:8px">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:4px"><svg width="44" height="44"><use href="#pa" width="44" height="44" fill="#1E4FC9" stroke="#FFFFFF" color="#E8C35A"></use></svg><div style="font:12px 'Patrick Hand';color:#FFFFFF">St-Clou</div></div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:4px"><svg width="44" height="44"><use href="#pa" width="44" height="44" fill="#EE9A7E" stroke="#1F2A4A" color="#3A2A1A"></use></svg><div style="font:12px 'Patrick Hand';color:#FFFFFF">Ste-Gluse</div></div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:4px"><svg width="44" height="44"><use href="#pa" width="44" height="44" fill="#C8202B" stroke="#1D1A16" color="#1D1A16"></use></svg><div style="font:12px 'Patrick Hand';color:#FFFFFF">Pré-Mouillé</div></div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:4px"><svg width="44" height="44"><use href="#pa" width="44" height="44" fill="#EFE3C2" stroke="#7A5A2A" color="#9A9A9A"></use></svg><div style="font:12px 'Patrick Hand';color:#FFFFFF">Anciens</div></div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:4px"><svg width="44" height="44"><use href="#pa" width="44" height="44" fill="#D8F03A" stroke="#1D1A16" color="#6B4A2A"></use></svg><div style="font:12px 'Patrick Hand';color:#FFFFFF">Chasubles</div></div>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:14px;font-size:15px;line-height:1.5">
+            <div><b>Forces.</b> Identité française immédiate. Le contour porte la lisibilité à 44 px et les expressions en portrait.</div>
+            <div><b>Risques.</b> Le trait doit rester cohérent entre les deux échelles : deux épaisseurs fixes (2 px en match, 5 px en portrait), jamais mises à l'échelle.</div>
+            <div><b>Production.</b> Coût moyen. SVG natif, la trame passe en texture PNG superposée. Les portraits demandent un vrai dessinateur ou une IA très cadrée sur un style.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ 1b ============ -->
+    <div id="1b" style="width:1300px;box-sizing:border-box;padding:48px;background:#2A1B55;border-radius:4px;display:flex;flex-direction:column;gap:40px;color:#FFF4D6">
+      <div style="display:flex;gap:24px;align-items:flex-start">
+        <div style="flex:none;width:64px;height:64px;border:3px solid #1B1340;border-radius:18px;display:flex;align-items:center;justify-content:center;font:30px 'Lilita One',sans-serif;background:#FFC62E;color:#1B1340;box-shadow:inset 0 -6px 0 rgba(0,0,0,.2),0 4px 0 #1B1340">1b</div>
+        <div style="display:flex;flex-direction:column;gap:8px;max-width:900px">
+          <div style="font:15px 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.06em;color:#FFC62E">Cartoon premium mobile</div>
+          <h2 style="margin:0;font:60px/1 'Lilita One',sans-serif">Ligue des Villages</h2>
+          <p style="margin:0;font:700 17px/1.55 'Nunito',sans-serif;text-wrap:pretty">Le district traité comme une grosse licence mobile : volumes simples, ombres en deux tons, contour sombre coloré, interface en boutons bombés. L'humour vient du contraste entre une finition de jeu à gros budget et ce qu'on montre : un bide, un Ricard, un projecteur sur quatre.</p>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:600px minmax(0,1fr);gap:48px">
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="font:600 13px 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.06em;color:#FFC62E">Moodboard</div>
+          <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px">
+            <div style="min-width:0;height:150px;border-radius:14px;overflow:hidden;background:#1B1340"><image-slot id="b-mood-1" shape="rect" placeholder="Écran de victoire Brawl Stars"></image-slot></div>
+            <div style="min-width:0;height:150px;border-radius:14px;overflow:hidden;background:#1B1340"><image-slot id="b-mood-2" shape="rect" placeholder="Carte Clash Royale épique"></image-slot></div>
+            <div style="min-width:0;height:150px;border-radius:14px;overflow:hidden;background:#1B1340"><image-slot id="b-mood-3" shape="rect" placeholder="Vue de dessus Rumble Stars"></image-slot></div>
+            <div style="min-width:0;height:150px;border-radius:14px;overflow:hidden;background:#1B1340"><image-slot id="b-mood-4" shape="rect" placeholder="Guirlande de guinguette la nuit"></image-slot></div>
+            <div style="min-width:0;height:150px;border-radius:14px;overflow:hidden;background:#1B1340"><image-slot id="b-mood-5" shape="rect" placeholder="Projecteur de stade municipal"></image-slot></div>
+            <div style="min-width:0;height:150px;border-radius:14px;overflow:hidden;background:#1B1340"><image-slot id="b-mood-6" shape="rect" placeholder="Maillot amateur froissé"></image-slot></div>
+          </div>
+          <div style="font:600 13px 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.06em;margin-top:16px;color:#FFC62E">Références</div>
+          <div style="display:flex;flex-direction:column;gap:6px;font:700 15px/1.4 'Nunito',sans-serif">
+            <div><b style="font-weight:900">Brawl Stars</b> : silhouettes et couleurs d'équipe</div>
+            <div><b style="font-weight:900">Clash Royale</b> : boutons, cartes, récompenses</div>
+            <div><b style="font-weight:900">Rumble Stars Football</b> : le foot vu de dessus sur mobile</div>
+            <div><b style="font-weight:900">Les Indestructibles</b> : proportions caricaturales</div>
+            <div><b style="font-weight:900">Emotes Fortnite</b> : célébrations et contestations</div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:28px">
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <div style="font:600 13px 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.06em;color:#FFC62E">Palette</div>
+            <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;font-family:'Nunito';font-weight:700">
+              <div style="display:flex;gap:10px;align-items:center"><div style="width:44px;height:44px;border-radius:12px;border:3px solid #1B1340;background:#2A1B55;box-shadow:0 0 0 2px #FFF4D6"></div><div style="font-size:13px;line-height:1.3">Nuit de buvette<br><span style="font-family:'IBM Plex Mono'">#2A1B55</span></div></div>
+              <div style="display:flex;gap:10px;align-items:center"><div style="width:44px;height:44px;border-radius:12px;border:3px solid #1B1340;background:#1B1340;box-shadow:0 0 0 2px #FFF4D6"></div><div style="font-size:13px;line-height:1.3">Contour<br><span style="font-family:'IBM Plex Mono'">#1B1340</span></div></div>
+              <div style="display:flex;gap:10px;align-items:center"><div style="width:44px;height:44px;border-radius:12px;border:3px solid #1B1340;background:#43C04B"></div><div style="font-size:13px;line-height:1.3">Pelouse<br><span style="font-family:'IBM Plex Mono'">#43C04B</span></div></div>
+              <div style="display:flex;gap:10px;align-items:center"><div style="width:44px;height:44px;border-radius:12px;border:3px solid #1B1340;background:#8A5A34"></div><div style="font-size:13px;line-height:1.3">Boue<br><span style="font-family:'IBM Plex Mono'">#8A5A34</span></div></div>
+              <div style="display:flex;gap:10px;align-items:center"><div style="width:44px;height:44px;border-radius:12px;border:3px solid #1B1340;background:#2F6BFF"></div><div style="font-size:13px;line-height:1.3">Bleu Saint-Clou<br><span style="font-family:'IBM Plex Mono'">#2F6BFF</span></div></div>
+              <div style="display:flex;gap:10px;align-items:center"><div style="width:44px;height:44px;border-radius:12px;border:3px solid #1B1340;background:#FF9E86"></div><div style="font-size:13px;line-height:1.3">Saumon Sainte-Gluse<br><span style="font-family:'IBM Plex Mono'">#FF9E86</span></div></div>
+              <div style="display:flex;gap:10px;align-items:center"><div style="width:44px;height:44px;border-radius:12px;border:3px solid #1B1340;background:#FF3D3D"></div><div style="font-size:13px;line-height:1.3">Rouge PÉCAB<br><span style="font-family:'IBM Plex Mono'">#FF3D3D</span></div></div>
+              <div style="display:flex;gap:10px;align-items:center"><div style="width:44px;height:44px;border-radius:12px;border:3px solid #1B1340;background:#FFC62E"></div><div style="font-size:13px;line-height:1.3">Or trophée<br><span style="font-family:'IBM Plex Mono'">#FFC62E</span></div></div>
+              <div style="display:flex;gap:10px;align-items:center"><div style="width:44px;height:44px;border-radius:12px;border:3px solid #1B1340;background:#FFF4D6"></div><div style="font-size:13px;line-height:1.3">Mousse<br><span style="font-family:'IBM Plex Mono'">#FFF4D6</span></div></div>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div style="font:600 13px 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.06em;color:#FFC62E">Typographie</div>
+            <div style="display:flex;gap:20px;align-items:baseline;border-top:2px solid rgba(255,244,214,.3);padding-top:10px"><div style="width:120px;flex:none;font:700 13px 'Nunito'">Titres<br><b>Lilita One</b></div><div style="font:48px/1 'Lilita One',sans-serif;color:#FFC62E">LA FUSÉE</div></div>
+            <div style="display:flex;gap:20px;align-items:baseline;border-top:2px solid rgba(255,244,214,.3);padding-top:10px"><div style="width:120px;flex:none;font:700 13px 'Nunito'">Textes<br><b>Nunito 800</b></div><div style="font:800 22px/1.3 'Nunito',sans-serif">T'as bu quoi hier ? 5 pintes, 3 Ricard.</div></div>
+            <div style="display:flex;gap:20px;align-items:baseline;border-top:2px solid rgba(255,244,214,.3);padding-top:10px"><div style="width:120px;flex:none;font:700 13px 'Nunito'">Chiffres<br><b>Lilita One</b></div><div style="font:40px/1 'Lilita One',sans-serif">0–2 · 67' · 340 m</div></div>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;gap:40px;align-items:flex-start">
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="font:600 13px 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.06em;color:#FFC62E">Match · vue de dessus</div>
+          <div style="width:360px;height:640px;border-radius:24px;overflow:hidden;box-shadow:0 20px 40px rgba(0,0,0,.4);background:#1B1340">
+          <div ref="{{ b.screenRef }}" style="position:relative;width:360px;height:640px;overflow:hidden">
+            <svg width="360" height="640" viewBox="0 0 360 640" style="position:absolute;inset:0;display:block">
+              <defs>
+                <symbol id="pb" viewBox="0 0 40 40">
+                  <ellipse cx="20" cy="33" rx="14" ry="4.5" fill="#000000" opacity=".25"></ellipse>
+                  <circle cx="6.5" cy="24" r="4.2" fill="#FFC9A3" stroke="#1B1340" stroke-width="2"></circle>
+                  <circle cx="33.5" cy="24" r="4.2" fill="#FFC9A3" stroke="#1B1340" stroke-width="2"></circle>
+                  <ellipse cx="20" cy="24" rx="13.5" ry="9" stroke="#1B1340" stroke-width="2"></ellipse>
+                  <ellipse cx="20" cy="27" rx="11" ry="4.5" fill="#000000" opacity=".18"></ellipse>
+                  <path d="M10 20.5 Q20 15 30 20.5" fill="none" stroke-width="2.6"></path>
+                  <circle cx="20" cy="19.5" r="7.2" fill="#FFC9A3" stroke="#1B1340" stroke-width="2"></circle>
+                  <path d="M12.8 19.5 A7.2 7.2 0 0 1 27.2 19.5 Q20 14.5 12.8 19.5Z" fill="currentColor" stroke="#1B1340" stroke-width="1.6"></path>
+                  <ellipse cx="16.5" cy="14.8" rx="2.4" ry="1.2" fill="#FFFFFF" opacity=".6"></ellipse>
+                </symbol>
+              </defs>
+              <rect width="360" height="640" fill="#43C04B"></rect>
+              <rect y="160" width="360" height="80" fill="#3BB443"></rect>
+              <rect y="320" width="360" height="80" fill="#3BB443"></rect>
+              <rect y="480" width="360" height="80" fill="#3BB443"></rect>
+              <ellipse cx="90" cy="420" rx="40" ry="18" fill="#7CC456"></ellipse>
+              <path d="M108 150 Q138 126 186 132 Q240 126 256 152 Q248 180 196 182 Q146 188 118 174 Z" fill="#A87244"></path>
+              <path d="M112 152 Q140 132 186 138 Q236 132 250 154 Q244 176 196 178 Q148 184 122 172 Z" fill="#8A5A34"></path>
+              <ellipse cx="160" cy="160" rx="10" ry="4" fill="#B98556"></ellipse>
+              <ellipse cx="208" cy="150" rx="7" ry="3" fill="#B98556"></ellipse>
+              <g fill="none" stroke="#FFFFFF" stroke-width="3.5" opacity=".92" stroke-dasharray="80 5 120 4">
+                <path d="M22 128 V640 M338 128 V640 M22 128 H338"></path>
+                <path d="M126 128 V164 H234 V128"></path>
+                <path d="M64 128 V226 H296 V128"></path>
+                <path d="M146 226 A42 42 0 0 0 214 226"></path>
+                <path d="M22 590 H338"></path>
+                <circle cx="180" cy="590" r="54"></circle>
+              </g>
+              <circle cx="180" cy="200" r="3" fill="#FFFFFF"></circle>
+              <rect x="150" y="110" width="60" height="18" rx="3" fill="#FFFFFF" opacity=".35"></rect>
+              <path d="M150 128 V110 H210 V128" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"></path>
+              <rect x="4" y="80" width="170" height="26" rx="8" fill="#FFC62E" stroke="#1B1340" stroke-width="3"></rect>
+              <text x="89" y="98" text-anchor="middle" font-family="Lilita One" font-size="13" fill="#1B1340">BOUCHERIE MOREL</text>
+              <rect x="186" y="80" width="170" height="26" rx="8" fill="#FF3D3D" stroke="#1B1340" stroke-width="3"></rect>
+              <text x="271" y="98" text-anchor="middle" font-family="Lilita One" font-size="13" fill="#FFFFFF">LE BALTO</text>
+              <rect x="-4" y="160" width="18" height="230" rx="6" fill="#2F6BFF" stroke="#1B1340" stroke-width="3"></rect>
+              <text x="6" y="275" text-anchor="middle" font-family="Lilita One" font-size="10" fill="#FFFFFF" transform="rotate(-90 6 275)">GARAGE DUPUIS</text>
+              <path d="M351 112 V640" stroke="#9C6B45" stroke-width="4"></path>
+              <ellipse cx="160" cy="266" rx="22" ry="9" fill="#FFC62E" opacity=".5"></ellipse>
+              <ellipse cx="160" cy="266" rx="22" ry="9" fill="none" stroke="#FFC62E" stroke-width="3"></ellipse>
+              <use href="#pb" x="158" y="126" width="44" height="44" fill="#B8E34A" stroke="#1B1340" color="#3A2A1A"></use>
+              <use href="#pb" x="160" y="186" width="44" height="44" fill="#FF9E86" stroke="#22306B" color="#3A2A1A"></use>
+              <use href="#pb" x="226" y="222" width="44" height="44" fill="#FF9E86" stroke="#22306B" color="#C8A060"></use>
+              <use href="#pb" x="92" y="262" width="44" height="44" fill="#FF9E86" stroke="#22306B" color="#1B1340"></use>
+              <use href="#pb" x="290" y="330" width="44" height="44" fill="#FF9E86" stroke="#22306B" color="#6B4A2A"></use>
+              <use href="#pb" x="138" y="236" width="44" height="44" fill="#2F6BFF" stroke="#FFFFFF" color="#FFD65A"></use>
+              <use href="#pb" x="236" y="300" width="44" height="44" fill="#2F6BFF" stroke="#FFFFFF" color="#3A2A1A"></use>
+              <use href="#pb" x="66" y="372" width="44" height="44" fill="#2F6BFF" stroke="#FFFFFF" color="#EDB48C"></use>
+              <use href="#pb" x="186" y="428" width="44" height="44" fill="#2F6BFF" stroke="#FFFFFF" color="#E0662B"></use>
+              <use href="#pb" x="264" y="398" width="44" height="44" fill="#1B1340" stroke="#FFC62E" color="#5A5A5A"></use>
+              <ellipse cx="171" cy="238" rx="6" ry="2.5" fill="#000000" opacity=".25"></ellipse>
+              <circle cx="170" cy="232" r="6" fill="#FFFFFF" stroke="#1B1340" stroke-width="2"></circle>
+              <circle cx="168" cy="230" r="2" fill="#1B1340"></circle>
+              <g transform="translate(300 160)">
+                <ellipse cx="12" cy="26" rx="9" ry="3" fill="#000000" opacity=".25"></ellipse>
+                <path d="M16 22 q6 4 8 -2" fill="none" stroke="#1B1340" stroke-width="2.4" stroke-linecap="round"></path>
+                <ellipse cx="12" cy="16" rx="6.5" ry="9" fill="#D89A55" stroke="#1B1340" stroke-width="2"></ellipse>
+                <circle cx="12" cy="6" r="5.5" fill="#D89A55" stroke="#1B1340" stroke-width="2"></circle>
+                <path d="M7 4 l-3 -3 M17 4 l3 -3" stroke="#1B1340" stroke-width="2.6" stroke-linecap="round"></path>
+              </g>
+            </svg>
+            <div style="position:absolute;top:10px;left:10px;right:10px;height:42px;background:#1B1340;border-radius:14px;display:flex;align-items:center;gap:6px;padding:0 5px;box-sizing:border-box;box-shadow:0 4px 0 rgba(0,0,0,.3)">
+              <div style="height:32px;flex:1;background:#2F6BFF;border-radius:10px;display:flex;align-items:center;justify-content:center;font:15px 'Lilita One';color:#FFFFFF;box-shadow:inset 0 -4px 0 rgba(0,0,0,.2)">ST-CLOU</div>
+              <div style="font:24px 'Lilita One';color:#FFFFFF;padding:0 4px">0 – 2</div>
+              <div style="height:32px;flex:1;background:#FF9E86;border-radius:10px;display:flex;align-items:center;justify-content:center;font:15px 'Lilita One';color:#1B1340;box-shadow:inset 0 -4px 0 rgba(0,0,0,.15)">STE-GLUSE</div>
+              <div style="height:32px;background:#FFC62E;border-radius:10px;display:flex;align-items:center;padding:0 8px;font:16px 'Lilita One';color:#1B1340;box-shadow:inset 0 -4px 0 rgba(0,0,0,.2)">67'</div>
+            </div>
+            <div style="position:absolute;top:118px;left:10px;background:#FFFFFF;border:3px solid #1B1340;border-radius:12px;padding:4px 12px;font:900 13px 'Nunito';color:#1B1340;box-shadow:0 3px 0 #1B1340">Objectif : gagne le match</div>
+            <svg width="48" height="60" viewBox="0 0 48 60" style="position:absolute;top:118px;right:10px;overflow:visible">
+              <defs><clipPath id="chB"><rect x="4" y="8" width="30" height="48" rx="6"></rect></clipPath></defs>
+              <path d="M34 18 h5 a6 6 0 0 1 6 6 v12 a6 6 0 0 1 -6 6 h-5" fill="none" stroke="#1B1340" stroke-width="7"></path>
+              <path d="M34 18 h5 a6 6 0 0 1 6 6 v12 a6 6 0 0 1 -6 6 h-5" fill="none" stroke="#BFE6FF" stroke-width="3"></path>
+              <rect x="4" y="8" width="30" height="48" rx="6" fill="#BFE6FF" opacity=".55"></rect>
+              <g clip-path="url(#chB)">
+                <rect x="4" y="{{ b.ch.y }}" width="30" height="{{ b.ch.h }}" fill="#FFB21E" style="transition:all .5s cubic-bezier(.3,1.4,.5,1)"></rect>
+                <rect x="24" y="{{ b.ch.y }}" width="10" height="{{ b.ch.h }}" fill="#E8900E" style="transition:all .5s cubic-bezier(.3,1.4,.5,1)"></rect>
+                <g transform="translate(0 {{ b.ch.y }})" style="transition:transform .5s cubic-bezier(.3,1.4,.5,1)"><path d="M2 2 q4 -8 8 0 q4 -8 8 0 q4 -8 8 0 q4 -8 8 0 v5 h-32z" fill="#FFF4D6"></path></g>
+              </g>
+              <rect x="4" y="8" width="30" height="48" rx="6" fill="none" stroke="#1B1340" stroke-width="3.5"></rect>
+              <rect x="9" y="14" width="4" height="34" rx="2" fill="#FFFFFF" opacity=".8"></rect>
+            </svg>
+            <div style="position:absolute;left:20px;bottom:26px;width:112px;height:112px;border-radius:50%;background:rgba(27,19,64,.4);border:3px solid rgba(255,255,255,.6);display:flex;align-items:center;justify-content:center">
+              <div style="width:50px;height:50px;border-radius:50%;background:#FFFFFF;border:3px solid #1B1340;box-shadow:inset 0 -5px 0 rgba(0,0,0,.15),0 3px 0 #1B1340;transform:translate(10px,-8px)"></div>
+            </div>
+            <div onClick="{{ b.tackle }}" style="position:absolute;right:112px;bottom:94px;width:66px;height:66px;border-radius:50%;background:#FFC62E;border:3px solid #1B1340;box-shadow:inset 0 -6px 0 rgba(0,0,0,.2),0 4px 0 #1B1340;display:flex;align-items:center;justify-content:center;font:15px 'Lilita One';color:#1B1340;cursor:pointer" style-active="transform:translateY(3px);box-shadow:inset 0 -3px 0 rgba(0,0,0,.2),0 1px 0 #1B1340">TACLE</div>
+            <div onClick="{{ b.pecab }}" style="position:absolute;right:18px;bottom:30px;width:90px;height:90px;border-radius:50%;background:#FF3D3D;border:3px solid #1B1340;box-shadow:inset 0 -7px 0 rgba(0,0,0,.22),0 5px 0 #1B1340;display:flex;align-items:center;justify-content:center;font:15px 'Lilita One';color:#FFFFFF;cursor:pointer" style-active="transform:translateY(4px);box-shadow:inset 0 -3px 0 rgba(0,0,0,.22),0 1px 0 #1B1340">CONTESTE</div>
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none">
+              <div ref="{{ b.stampRef }}" style="opacity:0;font:76px/1 'Lilita One';color:#FF3D3D;-webkit-text-stroke:3px #1B1340;border:6px solid #1B1340;border-radius:22px;padding:8px 22px 6px;background:#FFF4D6;box-shadow:0 8px 0 #1B1340">PÉCAB!</div>
+            </div>
+          </div>
+          </div>
+          <div style="font:700 14px/1.45 'Nunito';max-width:360px">Appuie sur CONTESTE : tampon, tremblement, la chope monte.</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="font:600 13px 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.06em;color:#FFC62E">Carte de décision</div>
+          <div style="position:relative;width:360px;height:640px;border-radius:24px;overflow:hidden;box-shadow:0 20px 40px rgba(0,0,0,.4);background:radial-gradient(circle at 50% 45%,#3D2A78 0%,#2A1B55 60%,#1B1340 100%)">
+            <div style="position:absolute;top:16px;left:12px;right:12px;display:flex;justify-content:space-between;background:#1B1340;border-radius:16px;padding:10px 4px">
+              <sc-for list="{{ b.gauges }}" as="g" hint-placeholder-count="5">
+                <div style="display:flex;flex-direction:column;align-items:center;gap:5px;width:64px">
+                  <div style="position:relative;width:20px;height:46px;border-radius:10px;background:#2A1B55;border:2px solid #4A3A8A;overflow:hidden"><div style="{{ g.fill }}"></div></div>
+                  <div style="font:800 11px 'Nunito';color:#FFF4D6">{{ g.label }}</div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="position:absolute;top:118px;left:18px;right:18px;font:800 18px/1.3 'Nunito';color:#FFFFFF;text-align:center;min-height:70px;text-wrap:pretty">{{ b.card.text }}</div>
+            <div ref="{{ b.cardRef }}" onPointerDown="{{ b.down }}" onPointerMove="{{ b.move }}" onPointerUp="{{ b.up }}" onPointerCancel="{{ b.up }}" onClickCapture="{{ b.clickCap }}" style="position:absolute;top:210px;left:56px;width:248px;height:300px;touch-action:none;cursor:grab;transform-origin:50% 130%">
+              <div style="position:absolute;inset:0;background:#FFF4D6;border:4px solid #1B1340;border-radius:24px;box-shadow:0 8px 0 #1B1340,0 16px 30px rgba(0,0,0,.35);overflow:hidden">
+                <div style="position:absolute;top:8px;left:8px;right:8px;height:222px;background:#2F6BFF;border-radius:16px;overflow:hidden">
+                  <sc-for list="{{ b.cards }}" as="c" hint-placeholder-count="1">
+                    <div style="{{ c.vis }}"><image-slot id="{{ c.sid }}" shape="rect" placeholder="{{ c.ph }}"></image-slot></div>
+                  </sc-for>
+                </div>
+                <div style="position:absolute;left:0;right:0;bottom:12px;display:flex;justify-content:center"><div style="background:#FFC62E;border:3px solid #1B1340;border-radius:12px;padding:4px 14px;font:20px 'Lilita One';color:#1B1340;box-shadow:inset 0 -4px 0 rgba(0,0,0,.18)">{{ b.card.who }}</div></div>
+              </div>
+              <div ref="{{ b.lRef }}" style="position:absolute;top:18px;right:-12px;opacity:0;transform:rotate(8deg);background:#FFFFFF;border:3px solid #1B1340;border-radius:12px;color:#1B1340;font:17px 'Lilita One';padding:5px 12px;pointer-events:none;box-shadow:0 4px 0 #1B1340">{{ b.card.left }}</div>
+              <div ref="{{ b.rRef }}" style="position:absolute;top:18px;left:-12px;opacity:0;transform:rotate(-8deg);background:#43C04B;border:3px solid #1B1340;border-radius:12px;color:#FFFFFF;font:17px 'Lilita One';padding:5px 12px;pointer-events:none;box-shadow:0 4px 0 #1B1340">{{ b.card.right }}</div>
+            </div>
+            <div style="position:absolute;top:530px;left:0;right:0;text-align:center;font:800 14px 'Nunito';color:#FFF4D6">{{ b.card.role }}</div>
+            <div style="position:absolute;bottom:20px;left:14px;right:14px;display:flex;justify-content:space-between;align-items:center;font:13px 'Lilita One'"><div style="color:#FFF4D6">SEMAINE 3 · MARDI</div><div style="background:#FF3D3D;color:#FFFFFF;border-radius:8px;padding:3px 8px">OBJECTIF : SOIS EXEMPLAIRE</div></div>
+          </div>
+          <div style="display:flex;gap:8px">
+            <div onClick="{{ b.swipeL }}" style="flex:1;border:3px solid #1B1340;border-radius:12px;padding:6px 10px;font:800 14px 'Nunito';cursor:pointer;background:#FFF4D6;color:#1B1340">← {{ b.card.left }}</div>
+            <div onClick="{{ b.swipeR }}" style="flex:1;border:3px solid #1B1340;border-radius:12px;padding:6px 10px;font:800 14px 'Nunito';cursor:pointer;background:#FFF4D6;color:#1B1340;text-align:right">{{ b.card.right }} →</div>
+          </div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;gap:24px;min-width:0">
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <div style="font:600 13px 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.06em;color:#FFC62E">Taille réelle en match · 44 px</div>
+            <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;background:#43C04B;border:3px solid #1B1340;padding:14px 8px;border-radius:14px">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:4px"><svg width="44" height="44"><use href="#pb" width="44" height="44" fill="#2F6BFF" stroke="#FFFFFF" color="#FFD65A"></use></svg><div style="font:800 11px 'Nunito';color:#1B1340">St-Clou</div></div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:4px"><svg width="44" height="44"><use href="#pb" width="44" height="44" fill="#FF9E86" stroke="#22306B" color="#3A2A1A"></use></svg><div style="font:800 11px 'Nunito';color:#1B1340">Ste-Gluse</div></div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:4px"><svg width="44" height="44"><use href="#pb" width="44" height="44" fill="#E0202B" stroke="#1B1340" color="#1B1340"></use></svg><div style="font:800 11px 'Nunito';color:#1B1340">Pré-Mouillé</div></div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:4px"><svg width="44" height="44"><use href="#pb" width="44" height="44" fill="#F3E6C4" stroke="#7A5A2A" color="#A0A0A0"></use></svg><div style="font:800 11px 'Nunito';color:#1B1340">Anciens</div></div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:4px"><svg width="44" height="44"><use href="#pb" width="44" height="44" fill="#DDF53A" stroke="#1B1340" color="#6B4A2A"></use></svg><div style="font:800 11px 'Nunito';color:#1B1340">Chasubles</div></div>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:14px;font:700 15px/1.5 'Nunito'">
+            <div><b style="font-weight:900;color:#FFC62E">Forces.</b> La plus lisible en match. Les joueurs mobiles reconnaissent le langage tout de suite, et les récompenses sont naturellement spectaculaires.</div>
+            <div><b style="font-weight:900;color:#FFC62E">Risques.</b> Ressemble à beaucoup de jeux du store. L'ancrage français repose alors sur le décor et les textes, moins sur le trait.</div>
+            <div><b style="font-weight:900;color:#FFC62E">Production.</b> Coût élevé : deux tons d'ombre et des reflets sur chaque asset, une interface avec beaucoup d'états (repos, pressé, désactivé).</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ 1c ============ -->
+    <div id="1c" style="width:1300px;box-sizing:border-box;padding:48px;background:#EDE5D3;border-radius:4px;box-shadow:0 2px 0 rgba(0,0,0,.08);display:flex;flex-direction:column;gap:40px;color:#151515">
+      <div style="display:flex;gap:24px;align-items:flex-start;border-bottom:4px solid #151515;padding-bottom:24px">
+        <div style="flex:none;width:64px;height:64px;display:flex;align-items:center;justify-content:center;font:32px 'Anton',sans-serif;background:#E1341E;color:#EDE5D3;box-shadow:3px 3px 0 #2446B0">1c</div>
+        <div style="display:flex;flex-direction:column;gap:8px;max-width:900px">
+          <div style="font:15px 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.06em">Flat graphique, presse locale, papier découpé</div>
+          <h2 style="margin:0;font:64px/1 'Anton',sans-serif;text-transform:uppercase;letter-spacing:.01em">L'Écho de Grandcour</h2>
+          <p style="margin:0;font:18px/1.55 'Newsreader',serif;text-wrap:pretty">Tout le jeu comme une page sport de la presse régionale imprimée en quatre encres. Formes plates sans contour, léger décalage de repérage, texture de papier journal. Les portraits sont des découpes collées, les titres sortent d'un bandeau de une. Aussi rigoureux que Reigns, avec une matière plus populaire.</p>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:600px minmax(0,1fr);gap:48px">
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="font:600 13px 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.06em">Moodboard</div>
+          <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px">
+            <div style="min-width:0;height:150px;background:#FFFFFF;padding:5px;box-shadow:2px 3px 0 rgba(0,0,0,.15);transform:rotate(-1deg)"><image-slot id="c-mood-1" shape="rect" placeholder="Page sport PQR, résultats district"></image-slot></div>
+            <div style="min-width:0;height:150px;background:#FFFFFF;padding:5px;box-shadow:2px 3px 0 rgba(0,0,0,.15);transform:rotate(.8deg)"><image-slot id="c-mood-2" shape="rect" placeholder="Affiche de loto du club"></image-slot></div>
+            <div style="min-width:0;height:150px;background:#FFFFFF;padding:5px;box-shadow:2px 3px 0 rgba(0,0,0,.15);transform:rotate(-.5deg)"><image-slot id="c-mood-3" shape="rect" placeholder="Photo d'équipe découpée"></image-slot></div>
+            <div style="min-width:0;height:150px;background:#FFFFFF;padding:5px;box-shadow:2px 3px 0 rgba(0,0,0,.15);transform:rotate(.6deg)"><image-slot id="c-mood-4" shape="rect" placeholder="Tirage riso bleu + rouge"></image-slot></div>
+            <div style="min-width:0;height:150px;background:#FFFFFF;padding:5px;box-shadow:2px 3px 0 rgba(0,0,0,.15);transform:rotate(-1.2deg)"><image-slot id="c-mood-5" shape="rect" placeholder="Reigns, carte personnage"></image-slot></div>
+            <div style="min-width:0;height:150px;background:#FFFFFF;padding:5px;box-shadow:2px 3px 0 rgba(0,0,0,.15);transform:rotate(.4deg)"><image-slot id="c-mood-6" shape="rect" placeholder="Ticket de tombola, buvette"></image-slot></div>
+          </div>
+          <div style="font:600 13px 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.06em;margin-top:16px">Références</div>
+          <div style="display:flex;flex-direction:column;gap:6px;font:16px/1.4 'Newsreader',serif">
+            <div><b>Reigns</b> : la carte, les jauges, la sobriété</div>
+            <div><b>Untitled Goose Game</b> : le flat sans contour, les ombres pleines</div>
+            <div><b>Pages sport de la PQR</b> : titres, légendes, tableaux de résultats</div>
+            <div><b>Affiches de loto et de bal</b> : la typo de village</div>
+            <div><b>Risographie</b> : les encres qui débordent, le repérage approximatif</div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:28px">
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <div style="font:600 13px 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.06em">Palette · 4 encres + papier</div>
+            <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px">
+              <div style="display:flex;gap:10px;align-items:center"><div style="width:44px;height:44px;background:#EDE5D3;box-shadow:inset 0 0 0 1.5px #151515"></div><div style="font-size:13px;line-height:1.3">Papier journal<br><span style="font-family:'IBM Plex Mono'">#EDE5D3</span></div></div>
+              <div style="display:flex;gap:10px;align-items:center"><div style="width:44px;height:44px;background:#151515"></div><div style="font-size:13px;line-height:1.3">Noir d'imprimerie<br><span style="font-family:'IBM Plex Mono'">#151515</span></div></div>
+              <div style="display:flex;gap:10px;align-items:center"><div style="width:44px;height:44px;background:#E1341E"></div><div style="font-size:13px;line-height:1.3">Rouge une / PÉCAB<br><span style="font-family:'IBM Plex Mono'">#E1341E</span></div></div>
+              <div style="display:flex;gap:10px;align-items:center"><div style="width:44px;height:44px;background:#2446B0"></div><div style="font-size:13px;line-height:1.3">Bleu Saint-Clou<br><span style="font-family:'IBM Plex Mono'">#2446B0</span></div></div>
+              <div style="display:flex;gap:10px;align-items:center"><div style="width:44px;height:44px;background:#7E9B45"></div><div style="font-size:13px;line-height:1.3">Vert terrain<br><span style="font-family:'IBM Plex Mono'">#7E9B45</span></div></div>
+              <div style="display:flex;gap:10px;align-items:center"><div style="width:44px;height:44px;background:#9C7A4E"></div><div style="font-size:13px;line-height:1.3">Boue<br><span style="font-family:'IBM Plex Mono'">#9C7A4E</span></div></div>
+              <div style="display:flex;gap:10px;align-items:center"><div style="width:44px;height:44px;background:#F0A28A"></div><div style="font-size:13px;line-height:1.3">Saumon Sainte-Gluse<br><span style="font-family:'IBM Plex Mono'">#F0A28A</span></div></div>
+              <div style="display:flex;gap:10px;align-items:center"><div style="width:44px;height:44px;background:#F2C94C"></div><div style="font-size:13px;line-height:1.3">Jaune tombola<br><span style="font-family:'IBM Plex Mono'">#F2C94C</span></div></div>
+              <div style="display:flex;gap:10px;align-items:center"><div style="width:44px;height:44px;background:#E9B794"></div><div style="font-size:13px;line-height:1.3">Peau (base)<br><span style="font-family:'IBM Plex Mono'">#E9B794</span></div></div>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div style="font:600 13px 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.06em">Typographie</div>
+            <div style="display:flex;gap:20px;align-items:baseline;border-top:2px solid #151515;padding-top:10px"><div style="width:120px;flex:none;font-size:13px">Titres<br><b>Anton</b></div><div style="font:52px/1 'Anton',sans-serif">LA FUSÉE</div></div>
+            <div style="display:flex;gap:20px;align-items:baseline;border-top:2px solid #151515;padding-top:10px"><div style="width:120px;flex:none;font-size:13px">Textes<br><b>Newsreader</b></div><div style="font:italic 24px/1.3 'Newsreader',serif">« T'as bu quoi hier ? » — « 5 pintes, 3 Ricard. »</div></div>
+            <div style="display:flex;gap:20px;align-items:baseline;border-top:2px solid #151515;padding-top:10px"><div style="width:120px;flex:none;font-size:13px">Chiffres<br><b>Anton</b></div><div style="font:44px/1 'Anton',sans-serif">0–2 · 67' · 340 M</div></div>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;gap:40px;align-items:flex-start">
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="font:600 13px 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.06em">Match · vue de dessus</div>
+          <div style="width:360px;height:640px;border-radius:24px;overflow:hidden;box-shadow:0 20px 40px rgba(0,0,0,.25);background:#151515">
+          <div ref="{{ c.screenRef }}" style="position:relative;width:360px;height:640px;overflow:hidden">
+            <svg width="360" height="640" viewBox="0 0 360 640" style="position:absolute;inset:0;display:block">
+              <defs>
+                <symbol id="pc" viewBox="0 0 40 40">
+                  <ellipse cx="22" cy="26.5" rx="13.5" ry="9" fill="#151515" opacity=".35"></ellipse>
+                  <circle cx="6.5" cy="24" r="4" fill="#E9B794"></circle>
+                  <circle cx="33.5" cy="24" r="4" fill="#E9B794"></circle>
+                  <ellipse cx="20" cy="24" rx="13.5" ry="9"></ellipse>
+                  <path d="M9.5 21 Q20 15 30.5 21" fill="none" stroke-width="3"></path>
+                  <circle cx="21.5" cy="21.5" r="7" fill="#151515" opacity=".3"></circle>
+                  <circle cx="20" cy="20" r="7" fill="#E9B794"></circle>
+                  <path d="M13 20 A7 7 0 0 1 27 20 Q20 15.5 13 20Z" fill="currentColor"></path>
+                </symbol>
+                <filter id="grainC"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch"></feTurbulence><feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .18 0"></feColorMatrix></filter>
+              </defs>
+              <rect width="360" height="640" fill="#7E9B45"></rect>
+              <rect y="160" width="360" height="80" fill="#8BA851"></rect>
+              <rect y="320" width="360" height="80" fill="#8BA851"></rect>
+              <rect y="480" width="360" height="80" fill="#8BA851"></rect>
+              <ellipse cx="90" cy="420" rx="40" ry="18" fill="#A8AE62"></ellipse>
+              <path d="M108 150 Q138 126 186 132 Q240 126 256 152 Q248 180 196 182 Q146 188 118 174 Z" fill="#9C7A4E"></path>
+              <path d="M146 152 Q172 142 204 148 Q220 156 204 164 Q170 170 150 162 Z" fill="#7E5E38"></path>
+              <g fill="none" stroke="#EDE5D3" stroke-width="3" stroke-dasharray="40 6 14 9 64 4 24 8">
+                <path d="M22 128 V640 M338 128 V640 M22 128 H338"></path>
+                <path d="M126 128 V164 H234 V128"></path>
+                <path d="M64 128 V226 H296 V128"></path>
+                <path d="M146 226 A42 42 0 0 0 214 226"></path>
+                <path d="M22 590 H338"></path>
+                <circle cx="180" cy="590" r="54"></circle>
+              </g>
+              <circle cx="180" cy="200" r="3" fill="#EDE5D3"></circle>
+              <rect x="150" y="112" width="60" height="16" fill="#EDE5D3" opacity=".5"></rect>
+              <path d="M150 128 V112 H210 V128" fill="none" stroke="#151515" stroke-width="3"></path>
+              <rect x="0" y="82" width="180" height="26" fill="#EDE5D3"></rect>
+              <text x="90" y="101" text-anchor="middle" font-family="Anton" font-size="15" fill="#151515" letter-spacing=".5">BOUCHERIE MOREL</text>
+              <rect x="180" y="82" width="180" height="26" fill="#E1341E"></rect>
+              <text x="270" y="101" text-anchor="middle" font-family="Anton" font-size="15" fill="#EDE5D3" letter-spacing=".5">LE BALTO</text>
+              <rect x="0" y="160" width="15" height="230" fill="#2446B0"></rect>
+              <text x="8" y="275" text-anchor="middle" font-family="Anton" font-size="11" fill="#EDE5D3" transform="rotate(-90 8 275)">GARAGE DUPUIS</text>
+              <path d="M351 112 V640" stroke="#151515" stroke-width="2.5"></path>
+              <circle cx="160" cy="264" r="22" fill="#F2C94C" opacity=".7"></circle>
+              <use href="#pc" x="158" y="126" width="44" height="44" fill="#F2C94C" stroke="#151515" color="#151515"></use>
+              <use href="#pc" x="160" y="186" width="44" height="44" fill="#F0A28A" stroke="#1D2747" color="#151515"></use>
+              <use href="#pc" x="226" y="222" width="44" height="44" fill="#F0A28A" stroke="#1D2747" color="#B8894A"></use>
+              <use href="#pc" x="92" y="262" width="44" height="44" fill="#F0A28A" stroke="#1D2747" color="#151515"></use>
+              <use href="#pc" x="290" y="330" width="44" height="44" fill="#F0A28A" stroke="#1D2747" color="#6B4A2A"></use>
+              <use href="#pc" x="138" y="236" width="44" height="44" fill="#2446B0" stroke="#EDE5D3" color="#F2C94C"></use>
+              <use href="#pc" x="236" y="300" width="44" height="44" fill="#2446B0" stroke="#EDE5D3" color="#151515"></use>
+              <use href="#pc" x="66" y="372" width="44" height="44" fill="#2446B0" stroke="#EDE5D3" color="#D9A27E"></use>
+              <use href="#pc" x="186" y="428" width="44" height="44" fill="#2446B0" stroke="#EDE5D3" color="#E1341E"></use>
+              <use href="#pc" x="264" y="398" width="44" height="44" fill="#151515" stroke="#F2C94C" color="#6A6A6A"></use>
+              <circle cx="172" cy="234" r="5.5" fill="#151515" opacity=".35"></circle>
+              <circle cx="170" cy="232" r="5.5" fill="#FFFFFF"></circle>
+              <g transform="translate(300 160)">
+                <ellipse cx="14" cy="18" rx="6" ry="9" fill="#151515" opacity=".3"></ellipse>
+                <path d="M16 22 q6 4 8 -2" fill="none" stroke="#9C7A4E" stroke-width="2.6" stroke-linecap="round"></path>
+                <ellipse cx="12" cy="16" rx="6" ry="9" fill="#B8894A"></ellipse>
+                <circle cx="12" cy="6" r="5" fill="#B8894A"></circle>
+                <path d="M7 4 l-3 -3 M17 4 l3 -3" stroke="#151515" stroke-width="2.6" stroke-linecap="round"></path>
+              </g>
+              <rect width="360" height="640" filter="url(#grainC)"></rect>
+            </svg>
+            <div style="position:absolute;top:0;left:0;right:0;height:50px;background:#EDE5D3;border-bottom:3px solid #151515;display:flex;align-items:center;gap:8px;padding:0 10px;box-sizing:border-box">
+              <div style="font:17px 'Anton';color:#2446B0;flex:1">SAINT-CLOU</div>
+              <div style="font:26px 'Anton'">0–2</div>
+              <div style="font:17px 'Anton';color:#151515;flex:1;text-align:right">STE-GLUSE</div>
+              <div style="font:17px 'Anton';background:#E1341E;color:#EDE5D3;padding:2px 7px">67'</div>
+            </div>
+            <div style="position:absolute;top:118px;left:10px;background:#151515;color:#EDE5D3;padding:3px 10px;font:italic 15px 'Newsreader',serif">Objectif : gagne le match</div>
+            <svg width="48" height="60" viewBox="0 0 48 60" style="position:absolute;top:118px;right:10px;overflow:visible">
+              <defs><clipPath id="chC"><rect x="4" y="8" width="30" height="48"></rect></clipPath></defs>
+              <rect x="7" y="11" width="30" height="48" fill="#E1341E"></rect>
+              <path d="M34 18 h6 a5 5 0 0 1 5 5 v14 a5 5 0 0 1 -5 5 h-6" fill="none" stroke="#151515" stroke-width="4"></path>
+              <rect x="4" y="8" width="30" height="48" fill="#EDE5D3"></rect>
+              <g clip-path="url(#chC)">
+                <rect x="4" y="{{ c.ch.y }}" width="30" height="{{ c.ch.h }}" fill="#F2C94C" style="transition:all .5s cubic-bezier(.3,1.4,.5,1)"></rect>
+                <g transform="translate(0 {{ c.ch.y }})" style="transition:transform .5s cubic-bezier(.3,1.4,.5,1)"><path d="M2 2 q4 -7 8 0 q4 -7 8 0 q4 -7 8 0 q4 -7 8 0 v4 h-32z" fill="#FFFFFF"></path></g>
+              </g>
+              <rect x="4" y="8" width="30" height="48" fill="none" stroke="#151515" stroke-width="2.5"></rect>
+            </svg>
+            <div style="position:absolute;left:20px;bottom:26px;width:112px;height:112px;border-radius:50%;border:3px dashed #EDE5D3;display:flex;align-items:center;justify-content:center">
+              <div style="width:48px;height:48px;border-radius:50%;background:#EDE5D3;box-shadow:3px 3px 0 #151515;transform:translate(10px,-8px)"></div>
+            </div>
+            <div onClick="{{ c.tackle }}" style="position:absolute;right:112px;bottom:92px;width:66px;height:66px;border-radius:50%;background:#2446B0;box-shadow:3px 3px 0 #151515;display:flex;align-items:center;justify-content:center;font:15px 'Anton';color:#EDE5D3;cursor:pointer" style-active="transform:translate(2px,2px);box-shadow:1px 1px 0 #151515">TACLE</div>
+            <div onClick="{{ c.pecab }}" style="position:absolute;right:18px;bottom:30px;width:88px;height:88px;border-radius:50%;background:#E1341E;box-shadow:4px 4px 0 #151515;display:flex;align-items:center;justify-content:center;font:16px 'Anton';color:#EDE5D3;cursor:pointer" style-active="transform:translate(3px,3px);box-shadow:1px 1px 0 #151515">CONTESTE</div>
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none">
+              <div ref="{{ c.stampRef }}" style="opacity:0;font:84px/1 'Anton';color:#E1341E;border:6px solid #E1341E;padding:6px 18px 2px;letter-spacing:.04em;mix-blend-mode:multiply;background:rgba(237,229,211,.6)">PÉCAB</div>
+            </div>
+          </div>
+          </div>
+          <div style="font:15px/1.45 'Newsreader',serif;max-width:360px">Appuie sur CONTESTE : tampon encreur, tremblement, la chope monte.</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="font:600 13px 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.06em">Carte de décision</div>
+          <div style="position:relative;width:360px;height:640px;border-radius:24px;overflow:hidden;box-shadow:0 20px 40px rgba(0,0,0,.25);background:#EDE5D3">
+            <div style="position:absolute;top:0;left:0;right:0;padding:10px 14px 0;display:flex;justify-content:space-between;align-items:baseline;border-bottom:2px solid #151515;margin:0 14px;padding:12px 0 6px"><div style="font:15px 'Anton';letter-spacing:.02em">L'ÉCHO DE GRANDCOUR</div><div style="font:italic 12px 'Newsreader'">Semaine 3 · mardi</div></div>
+            <div style="position:absolute;top:50px;left:14px;right:14px;display:flex;justify-content:space-between">
+              <sc-for list="{{ c.gauges }}" as="g" hint-placeholder-count="5">
+                <div style="display:flex;flex-direction:column;align-items:center;gap:4px;width:62px">
+                  <div style="position:relative;width:26px;height:44px;background:#D8CDB4;overflow:hidden"><div style="{{ g.fill }}"></div></div>
+                  <div style="font:12px 'Anton';letter-spacing:.03em;text-transform:uppercase">{{ g.label }}</div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="position:absolute;top:128px;left:22px;right:22px;font:italic 20px/1.25 'Newsreader',serif;min-height:70px;text-wrap:pretty">« {{ c.card.text }} »</div>
+            <div ref="{{ c.cardRef }}" onPointerDown="{{ c.down }}" onPointerMove="{{ c.move }}" onPointerUp="{{ c.up }}" onPointerCancel="{{ c.up }}" onClickCapture="{{ c.clickCap }}" style="position:absolute;top:220px;left:56px;width:248px;height:290px;touch-action:none;cursor:grab;transform-origin:50% 130%">
+              <div style="position:absolute;inset:0;transform:rotate(-1.5deg);background:#FFFFFF;box-shadow:4px 5px 0 rgba(21,21,21,.25);padding:8px;box-sizing:border-box">
+                <div style="position:absolute;top:8px;left:8px;right:8px;height:220px;background:#F0A28A">
+                  <sc-for list="{{ c.cards }}" as="c2" hint-placeholder-count="1">
+                    <div style="{{ c2.vis }}"><image-slot id="{{ c2.sid }}" shape="rect" placeholder="{{ c2.ph }}"></image-slot></div>
+                  </sc-for>
+                </div>
+                <div style="position:absolute;left:8px;right:8px;bottom:8px;height:46px;background:#151515;color:#EDE5D3;display:flex;align-items:center;justify-content:center;font:22px 'Anton';text-transform:uppercase;letter-spacing:.02em">{{ c.card.who }}</div>
+              </div>
+              <div ref="{{ c.lRef }}" style="position:absolute;top:20px;right:-14px;opacity:0;transform:rotate(9deg);border:3px solid #151515;color:#151515;background:#EDE5D3;font:20px 'Anton';padding:2px 10px;text-transform:uppercase;pointer-events:none">{{ c.card.left }}</div>
+              <div ref="{{ c.rRef }}" style="position:absolute;top:20px;left:-14px;opacity:0;transform:rotate(-9deg);border:3px solid #E1341E;color:#E1341E;background:#EDE5D3;font:20px 'Anton';padding:2px 10px;text-transform:uppercase;pointer-events:none">{{ c.card.right }}</div>
+            </div>
+            <div style="position:absolute;top:528px;left:0;right:0;text-align:center;font:italic 15px 'Newsreader',serif">{{ c.card.role }}</div>
+            <div style="position:absolute;bottom:20px;left:14px;right:14px;border-top:2px solid #151515;padding-top:8px;display:flex;justify-content:space-between;font:14px 'Anton';letter-spacing:.02em"><div>OBJECTIF</div><div style="color:#E1341E">SOIS UN JOUEUR EXEMPLAIRE</div></div>
+          </div>
+          <div style="display:flex;gap:8px">
+            <div onClick="{{ c.swipeL }}" style="flex:1;border:2px solid #151515;padding:6px 10px;font:16px 'Newsreader';cursor:pointer;background:#FFFFFF">← {{ c.card.left }}</div>
+            <div onClick="{{ c.swipeR }}" style="flex:1;border:2px solid #151515;padding:6px 10px;font:16px 'Newsreader';cursor:pointer;background:#FFFFFF;text-align:right">{{ c.card.right }} →</div>
+          </div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;gap:24px;min-width:0">
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <div style="font:600 13px 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.06em">Taille réelle en match · 44 px</div>
+            <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;background:#7E9B45;padding:14px 8px">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:4px"><svg width="44" height="44"><use href="#pc" width="44" height="44" fill="#2446B0" stroke="#EDE5D3" color="#F2C94C"></use></svg><div style="font:12px 'Anton';color:#EDE5D3">ST-CLOU</div></div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:4px"><svg width="44" height="44"><use href="#pc" width="44" height="44" fill="#F0A28A" stroke="#1D2747" color="#151515"></use></svg><div style="font:12px 'Anton';color:#EDE5D3">STE-GLUSE</div></div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:4px"><svg width="44" height="44"><use href="#pc" width="44" height="44" fill="#E1341E" stroke="#151515" color="#151515"></use></svg><div style="font:12px 'Anton';color:#EDE5D3">PRÉ-MOUILLÉ</div></div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:4px"><svg width="44" height="44"><use href="#pc" width="44" height="44" fill="#F3E6C4" stroke="#9C7A4E" color="#8A8A8A"></use></svg><div style="font:12px 'Anton';color:#EDE5D3">ANCIENS</div></div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:4px"><svg width="44" height="44"><use href="#pc" width="44" height="44" fill="#F2C94C" stroke="#151515" color="#6B4A2A"></use></svg><div style="font:12px 'Anton';color:#EDE5D3">CHASUBLES</div></div>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:14px;font:16px/1.5 'Newsreader',serif">
+            <div><b>Forces.</b> La moins chère : formes plates, peu d'états. Chaque écran ressemble à une page qu'on a envie de capturer, et la presse locale donne l'ancrage français sans effort.</div>
+            <div><b>Risques.</b> Sans contour, les portraits perdent en expressivité. Les impacts (déchirures, tampons, encre qui bave) doivent compenser. Le jaune tombola et le saumon manquent de contraste en petit : à tester.</div>
+            <div><b>Production.</b> Coût faible. SVG plat, une texture de grain globale, les portraits en découpe collée se prêtent bien à la génération encadrée.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const CARDS = [
+  { id: 'coach', who: 'Coach Gérard', role: 'Entraîneur, diplôme de 1994', ph: 'Portrait : Coach Gérard', text: "Le 30/30 c'est ce soir 19h. Je compte sur toi, petit.", left: "J'ai piscine", right: 'Présent coach', fxL: [-2, 1, 0, 0, 1], fxR: [1, -1, 0, 0, -1] },
+  { id: 'prez', who: 'Le président', role: 'Tient la buvette, sacoche banane', ph: 'Portrait : le président', text: "Tu me tiens le barbecue dimanche ? Les merguez vont pas se cuire toutes seules.", left: "J'ai match", right: 'Je prends la pince', fxL: [0, 0, -2, 0, 0], fxR: [-1, 1, 2, -1, 1] },
+  { id: 'jeanmi', who: 'Jean-Mi', role: 'Capitaine, 38 ans, bandeau éponge', ph: 'Portrait : Jean-Mi', text: "Ici les coups francs c'est moi qui les tire. Depuis 2004.", left: 'Vas-y Jean-Mi', right: 'Pousse-toi', fxL: [0, 1, 0, 0, -1], fxR: [0, -2, 0, 0, 2] },
+  { id: 'mere', who: 'La mère', role: 'Famille', ph: 'Portrait : la mère', text: "Tu rentres à quelle heure après ton match ? Je fais un rôti.", left: 'Vers 18h', right: "Y'a 3e mi-temps", fxL: [0, -1, 0, 2, -1], fxR: [0, 2, 0, -2, 2] },
+];
+const GL = ['Coach', 'Vestiaire', 'Président', 'Famille', 'District'];
+const FILL = { a: '#1D1A16', b: '#FFC62E', c: '#E1341E' };
+const DIRS = ['a', 'b', 'c'];
+
+class Component extends DCLogic {
+  constructor(p) {
+    super(p);
+    this.r = {}; this.drag = {}; this.moved = {}; this.h = {};
+    DIRS.forEach(d => {
+      this.r[d] = { card: React.createRef(), l: React.createRef(), rr: React.createRef(), stamp: React.createRef(), screen: React.createRef() };
+      this.h[d] = {
+        down: e => this.down(d, e), move: e => this.move(d, e), up: () => this.up(d),
+        clickCap: e => { if (this.moved[d]) { e.stopPropagation(); e.preventDefault(); } },
+        swipeL: () => this.commit(d, -1), swipeR: () => this.commit(d, 1),
+        pecab: () => this.pecab(d), tackle: () => this.shake(d, 4),
+      };
+    });
+    this.state = { idx: { a: 0, b: 0, c: 0 }, g: { a: [5, 5, 5, 5, 5], b: [5, 5, 5, 5, 5], c: [5, 5, 5, 5, 5] }, chope: { a: .3, b: .3, c: .3 } };
+  }
+  setX(d, dx) {
+    const r = this.r[d];
+    if (r.card.current) r.card.current.style.transform = `translateX(${dx}px) rotate(${dx / 16}deg)`;
+    const cl = v => Math.max(0, Math.min(1, v));
+    if (r.l.current) r.l.current.style.opacity = cl(-dx / 70);
+    if (r.rr.current) r.rr.current.style.opacity = cl(dx / 70);
+  }
+  down(d, e) {
+    const el = this.r[d].card.current; if (!el) return;
+    this.drag[d] = { x: e.clientX, dx: 0 }; this.moved[d] = false;
+    try { el.setPointerCapture(e.pointerId); } catch (_) {}
+    el.style.transition = 'none';
+  }
+  move(d, e) {
+    const s = this.drag[d]; if (!s) return;
+    s.dx = e.clientX - s.x; if (Math.abs(s.dx) > 5) this.moved[d] = true;
+    this.setX(d, s.dx);
+  }
+  up(d) {
+    const s = this.drag[d]; if (!s) return; this.drag[d] = null;
+    if (Math.abs(s.dx) > 80) this.commit(d, s.dx > 0 ? 1 : -1);
+    else { const el = this.r[d].card.current; if (el) el.style.transition = 'transform .35s cubic-bezier(.3,1.6,.5,1)'; this.setX(d, 0); }
+  }
+  commit(d, dir) {
+    if (this.busy?.[d]) return; this.busy = { ...(this.busy || {}), [d]: true };
+    const el = this.r[d].card.current;
+    if (el) el.style.transition = 'transform .28s ease-in';
+    this.setX(d, dir * 440);
+    setTimeout(() => {
+      this.setState(st => {
+        const card = CARDS[st.idx[d]]; const fx = dir > 0 ? card.fxR : card.fxL;
+        return { idx: { ...st.idx, [d]: (st.idx[d] + 1) % CARDS.length }, g: { ...st.g, [d]: st.g[d].map((v, k) => Math.max(0, Math.min(10, v + fx[k]))) } };
+      });
+      if (el) {
+        el.style.transition = 'none'; this.setX(d, 0); el.style.transform = 'scale(.85)';
+        requestAnimationFrame(() => requestAnimationFrame(() => { el.style.transition = 'transform .3s cubic-bezier(.3,1.5,.5,1)'; el.style.transform = 'none'; }));
+      }
+      this.busy[d] = false;
+    }, 290);
+  }
+  shake(d, amp) {
+    const s = this.r[d].screen.current; if (!s || !s.animate) return;
+    s.animate([{ transform: 'translate(0,0)' }, { transform: `translate(${-amp}px,${amp / 2}px)` }, { transform: `translate(${amp}px,${-amp / 2}px)` }, { transform: `translate(${-amp / 2}px,${-amp}px)` }, { transform: `translate(${amp / 2}px,${amp / 2}px)` }, { transform: 'translate(0,0)' }], { duration: 320, easing: 'ease-out' });
+  }
+  pecab(d) {
+    const st = this.r[d].stamp.current;
+    if (st && st.animate) {
+      const rot = d === 'c' ? -10 : -14;
+      st.animate([
+        { opacity: 0, transform: `rotate(${rot + 8}deg) scale(3.2)` },
+        { opacity: 1, transform: `rotate(${rot}deg) scale(.9)`, offset: .14 },
+        { opacity: 1, transform: `rotate(${rot}deg) scale(1.04)`, offset: .2 },
+        { opacity: 1, transform: `rotate(${rot}deg) scale(1)`, offset: .26 },
+        { opacity: 1, transform: `rotate(${rot}deg) scale(1)`, offset: .85 },
+        { opacity: 0, transform: `rotate(${rot}deg) scale(1.1)` },
+      ], { duration: 1700, easing: 'ease-out', fill: 'forwards' });
+    }
+    setTimeout(() => this.shake(d, 9), 220);
+    setTimeout(() => this.setState(s => {
+      const v = s.chope[d] >= .99 ? .2 : Math.min(1, s.chope[d] + .14);
+      return { chope: { ...s.chope, [d]: v } };
+    }), 400);
+  }
+  mk(d) {
+    const i = this.state.idx[d]; const h = 44 * this.state.chope[d];
+    return {
+      ...this.h[d],
+      card: CARDS[i],
+      cards: CARDS.map((c, k) => ({ sid: `${d}-card-${c.id}`, ph: c.ph, vis: { position: 'absolute', inset: 0, display: k === i ? 'block' : 'none' } })),
+      gauges: this.state.g[d].map((v, k) => ({ label: GL[k], fill: { position: 'absolute', left: 0, right: 0, bottom: 0, height: v * 10 + '%', background: FILL[d], transition: 'height .45s cubic-bezier(.3,1.4,.5,1)' } })),
+      ch: { y: 56 - h, h },
+      cardRef: this.r[d].card, lRef: this.r[d].l, rRef: this.r[d].rr, stampRef: this.r[d].stamp, screenRef: this.r[d].screen,
+    };
+  }
+  renderVals() { return { a: this.mk('a'), b: this.mk('b'), c: this.mk('c') }; }
+}
+</script>
+</body>
+</html>
