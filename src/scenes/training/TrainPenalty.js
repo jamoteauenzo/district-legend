@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import BaseTraining from './BaseTraining.js';
-import { txt, floatText } from '../../ui/text.js';
+import { txt, floatText, tag, roundBtn } from '../../ui/text.js';
 import { sfx } from '../../ui/sfx.js';
 import { buvette, parking } from './decor.js';
 import { C, CSS } from '../../palette.js';
@@ -60,8 +60,8 @@ export default class TrainPenalty extends BaseTraining {
     this.ball = fit(this.add.image(180, 470, 'ball'), 3).setDepth(6);
     this.cursor = this.add.graphics().setDepth(7);
     this.powerBar = this.add.graphics().setDepth(7);
-    this.scoreText = txt(this, 180, 262, '', 13, CSS.cream, { bold: true, stroke: CSS.outline }).setDepth(8);
-    this.infoText = txt(this, 180, 290, '', 11, CSS.cream, { stroke: CSS.outline }).setDepth(8);
+    this.scoreText = tag(this, 180, 262, '', 13, CSS.paper).setDepth(8);
+    this.infoText = tag(this, 180, 290, '', 11, CSS.paper).setDepth(8);
 
     this.shot = 0;
     this.goals = 0;
@@ -99,15 +99,8 @@ export default class TrainPenalty extends BaseTraining {
     this.refresh();
   }
 
-  makeBtn(x, y, r, label, fill, cb, size = 12, color = CSS.cream) {
-    const c = this.add.circle(x, y, r, fill, 0.9).setStrokeStyle(3, C.outline).setDepth(60).setInteractive();
-    txt(this, x, y, label, size, color, { bold: true, stroke: color === CSS.cream ? CSS.outline : undefined }).setDepth(61);
-    c.on('pointerdown', () => {
-      c.setScale(0.9);
-      cb();
-    });
-    c.on('pointerup', () => c.setScale(1));
-    c.on('pointerout', () => c.setScale(1));
+  makeBtn(x, y, r, label, fill, cb) {
+    return roundBtn(this, x, y, r, label, fill, cb);
   }
 
   refresh() {

@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 import BaseTraining from './BaseTraining.js';
 import { Controls } from '../../ui/controls.js';
-import { txt, floatText } from '../../ui/text.js';
+import { txt, floatText, tag } from '../../ui/text.js';
 import { sfx } from '../../ui/sfx.js';
 import { grass, clubhouse, parking } from './decor.js';
 import { C, CSS } from '../../palette.js';
@@ -25,22 +25,22 @@ export default class TrainPlots extends BaseTraining {
 
   create() {
     grass(this);
-    clubhouse(this, 14, 60, 120, 60);
-    this.hideZone = new Phaser.Geom.Rectangle(0, 44, 150, 30); // derrière le club-house
-    parking(this, 220, 44, 140, 60);
-    this.exitZone = new Phaser.Geom.Rectangle(220, 44, 140, 60);
-    txt(this, 290, 112, 'PARKING', 9, CSS.cream, { bold: true, stroke: CSS.outline }).setDepth(2);
-    txt(this, 75, 52, '(derrière)', 9, CSS.cream, { stroke: CSS.outline }).setDepth(2);
+    clubhouse(this, 14, 112, 120, 60);
+    this.hideZone = new Phaser.Geom.Rectangle(0, 80, 150, 30); // derrière le club-house
+    parking(this, 220, 84, 140, 60);
+    this.exitZone = new Phaser.Geom.Rectangle(220, 84, 140, 60);
+    tag(this, 290, 152, 'PARKING', 9, CSS.paper).setDepth(2);
+    tag(this, 75, 96, '(derrière)', 9, CSS.paper).setDepth(2);
 
     // Le sac à plots
     const g = this.add.graphics().setDepth(2);
     g.fillStyle(C.navy, 1);
     g.fillRoundedRect(BAG.x - 16, BAG.y - 10, 32, 22, 4);
-    txt(this, BAG.x, BAG.y + 22, 'SAC', 9, CSS.cream, { bold: true, stroke: CSS.outline }).setDepth(3);
+    tag(this, BAG.x, BAG.y + 22, 'SAC', 9, CSS.paper).setDepth(3);
 
     this.plots = [];
     for (let i = 0; i < COUNT; i++) {
-      const p = fit(this.add.image(Phaser.Math.Between(30, 330), Phaser.Math.Between(160, 540), 'plot'), 2).setDepth(3);
+      const p = fit(this.add.image(Phaser.Math.Between(30, 330), Phaser.Math.Between(210, 540), 'plot'), 2).setDepth(3);
       p.state = 'ground';
       this.plots.push(p);
     }
@@ -52,7 +52,7 @@ export default class TrainPlots extends BaseTraining {
 
     // Fred s'éclipse dès le début : l'indice
     this.fred = fit(this.add.image(160, 300, 'mate1'), 2).setDepth(4);
-    this.tweens.add({ targets: this.fred, x: 300, y: 70, duration: 5000, delay: 2600, onComplete: () => this.fred.setVisible(false) });
+    this.tweens.add({ targets: this.fred, x: 290, y: 110, duration: 5000, delay: 2600, onComplete: () => this.fred.setVisible(false) });
     this.time.delayedCall(2800, () => floatText(this, 160, 270, 'Fred : allez, salut les gars', CSS.cream, 10));
 
     this.user = fit(this.add.image(180, 420, `p_${this.char.id}`), 2).setDepth(5);
@@ -63,7 +63,7 @@ export default class TrainPlots extends BaseTraining {
     this.caughtAt = -99;
     this.escaped = false;
 
-    this.countText = txt(this, 180, 140, '', 11, CSS.cream, { stroke: CSS.outline }).setDepth(50);
+    this.countText = tag(this, 180, 196, '', 11, CSS.paper).setDepth(50);
     this.controls = new Controls(this, { onA: () => this.drop(), onB: () => this.whistleInnocently() });
     this.controls.setLabels('POSER', 'SIFFLOTER');
 
@@ -107,7 +107,7 @@ export default class TrainPlots extends BaseTraining {
     const v = this.controls.vector;
     const speed = 105 * (1 - this.carried.length * 0.08);
     u.x = Phaser.Math.Clamp(u.x + v.x * speed * dt, 10, 350);
-    u.y = Phaser.Math.Clamp(u.y + v.y * speed * dt, 50, 560);
+    u.y = Phaser.Math.Clamp(u.y + v.y * speed * dt, 84, 560);
     u.setAngle(v.length() > 0.3 ? Math.sin(this.elapsed * 16) * 5 : 0);
     if (v.x) u.setFlipX(v.x < 0);
 
@@ -152,7 +152,7 @@ export default class TrainPlots extends BaseTraining {
   drop() {
     if (!this.running || this.over || !this.carried.length) return;
     const u = this.user;
-    const behind = this.hideZone.contains(u.x, u.y) || (u.x < 150 && u.y < 140);
+    const behind = this.hideZone.contains(u.x, u.y) || (u.x < 150 && u.y < 110);
     if (behind && this.coachSees(u.x, u.y)) return this.getCaught(u.x, u.y);
     for (const p of this.carried) {
       p.state = behind ? 'hidden' : 'ground';

@@ -1,10 +1,10 @@
 import Phaser from 'phaser';
 import BaseTraining from './BaseTraining.js';
-import { txt, floatText } from '../../ui/text.js';
+import { txt, title, floatText, tag, roundBtn } from '../../ui/text.js';
 import { sfx } from '../../ui/sfx.js';
 import { grass } from './decor.js';
 import { C, CSS } from '../../palette.js';
-import { fit, unitOf } from '../../ui/sprites.js';
+import { portraitKey } from '../../assets.js';
 
 // Étirements : le coach prend une posture, tu dois la copier à temps.
 // Officiellement : suivre le coach. En vrai : la mauvaise posture, la sieste
@@ -28,12 +28,13 @@ export default class TrainEtirements extends BaseTraining {
 
   create() {
     grass(this);
-    this.coach = fit(this.add.image(110, 330, 'coach'), 6).setDepth(3);
-    this.user = fit(this.add.image(250, 330, `p_${this.char.id}`), 6).setDepth(3);
-    this.coachLabel = txt(this, 110, 420, '', 13, CSS.yellow, { bold: true, stroke: CSS.outline }).setDepth(5);
-    this.userLabel = txt(this, 250, 420, '', 12, CSS.cream, { stroke: CSS.outline }).setDepth(5);
-    this.arrow = txt(this, 110, 180, '', 54, CSS.yellow, { bold: true, stroke: CSS.outline, strokeThickness: 5 }).setDepth(5);
-    this.counter = txt(this, 180, 470, '', 12, CSS.cream, { stroke: CSS.outline }).setDepth(5);
+    // Deux découpages papier : le coach montre, tu copies.
+    this.coach = this.cutout('coach', 100);
+    this.user = this.cutout(this.char.id, 262);
+    this.coachLabel = tag(this, 100, 446, '', 13, CSS.yellow).setDepth(5);
+    this.userLabel = tag(this, 262, 446, '', 12, CSS.paper).setDepth(5);
+    this.arrow = title(this, 100, 160, '', 54, CSS.yellow, { stroke: CSS.ink, strokeThickness: 6 }).setDepth(5);
+    this.counter = tag(this, 180, 470, '', 12, CSS.paper).setDepth(5);
     this.bar = this.add.graphics().setDepth(5);
 
     this.round = 0;
@@ -51,8 +52,8 @@ export default class TrainEtirements extends BaseTraining {
       ['down', 130, 596],
       ['right', 200, 560],
     ];
-    for (const [pose, x, y] of btns) this.makeBtn(x, y, POSES[pose].arrow, () => this.press(pose), C.cream, CSS.outline);
-    this.makeBtn(300, 560, "S'ALLONGER", () => this.press('lie'), C.red, CSS.cream, 38, 10);
+    for (const [pose, x, y] of btns) this.makeBtn(x, y, POSES[pose].arrow, () => this.press(pose), C.paper);
+    this.makeBtn(300, 560, "S'ALLONGER", () => this.press('lie'), C.red, 38, 13);
     const kb = this.input.keyboard;
     if (kb) {
       kb.on('keydown-UP', () => this.press('up'));
@@ -66,25 +67,33 @@ export default class TrainEtirements extends BaseTraining {
     this.time.delayedCall(2400, () => this.nextRound());
   }
 
-  makeBtn(x, y, label, cb, fill, color, r = 28, size = 22) {
-    const c = this.add.circle(x, y, r, fill, 0.9).setStrokeStyle(3, C.outline).setDepth(60).setInteractive();
-    txt(this, x, y, label, size, color, { bold: true }).setDepth(61);
-    c.on('pointerdown', () => {
-      c.setScale(0.9);
-      cb();
-    });
-    c.on('pointerup', () => c.setScale(1));
-    c.on('pointerout', () => c.setScale(1));
+  makeBtn(x, y, label, cb, fill, r = 28, size = 22) {
+    return roundBtn(this, x, y, r, label, fill, cb, { size });
   }
 
-  // Applique une posture à un sprite (transformations simples)
-  pose(sprite, p) {
-    sprite.setAngle(0).setScale(6).setY(330);
-    if (p === 'up') sprite.setScale(6, 7);
-    else if (p === 'down') sprite.setScale(6.6, 4.4).setY(355);
-    else if (p === 'left') sprite.setAngle(-18);
-    else if (p === 'right') sprite.setAngle(18);
-    else if (p === 'lie') sprite.setAngle(90).setY(380);
+  // Portrait découpé, posé au sol (origine en bas), avec son ombre
+  cutout(id, x) {
+    this.add.ellipse(x, 432, 120, 14, C.ink, 0.18).setDepth(2);
+    const img = this.add.image(x, 430, portraitKey(id, 'neutre')).setOrigin(0.5, 1).setDepth(3);
+    img.id = id;
+    img.base = 128 / img.width;
+    img.setScale(img.base);
+    return img;
+  }
+
+  // Applique une posture au découpage (et l'expression qui va avec)
+  pose(sprite, p, expr = 'neutre') {
+    const b = sprite.base;
+    const key = portraitKey(sprite.id, expr);
+    if (this.textures.exists(key)) sprite.setTexture(key);
+    this.tweens.killTweensOf(sprite);
+    let to = { angle: 0, scaleX: b, scaleY: b, y: 430 };
+    if (p === 'up') to = { ...to, scaleY: b * 1.18, scaleX: b * 0.94 };
+    else if (p === 'down') to = { ...to, scaleX: b * 1.12, scaleY: b * 0.7 };
+    else if (p === 'left') to.angle = -16;
+    else if (p === 'right') to.angle = 16;
+    else if (p === 'lie') to = { ...to, angle: 90, y: 440 };
+    this.tweens.add({ targets: sprite, ...to, duration: 160, ease: 'Back.easeOut' });
   }
 
   nextRound() {
@@ -99,7 +108,7 @@ export default class TrainEtirements extends BaseTraining {
     this.target = Phaser.Utils.Array.GetRandom(KEYS);
     this.answered = false;
     this.roundStart = this.elapsed;
-    this.pose(this.coach, this.target);
+    this.pose(this.coach, this.target, 'fier');
     this.coachLabel.setText(POSES[this.target].label);
     this.arrow.setText(POSES[this.target].arrow);
     this.counter.setText(`Posture ${this.round}/${ROUNDS}   Réussies : ${this.good}`);
@@ -107,7 +116,7 @@ export default class TrainEtirements extends BaseTraining {
     this.time.delayedCall(WINDOW * 1000, () => {
       if (!this.answered && !this.over) {
         this.userLabel.setText('...');
-        floatText(this, 110, 250, 'TU DORS ?', CSS.red, 12);
+        floatText(this, 100, 250, 'TU DORS ?', CSS.red, 12);
       }
       this.nextRound();
     });
@@ -120,7 +129,7 @@ export default class TrainEtirements extends BaseTraining {
     // Deux fois la même posture trop vite : claquage
     if (p === this.lastPress && this.elapsed - this.lastPressAt < 0.35 && !this.injured && p !== 'lie') {
       this.injured = true;
-      this.pose(u, 'lie');
+      this.pose(u, 'lie', 'choque');
       this.userLabel.setText('AÏE');
       sfx.thud(this);
       this.legende(40, "Claquage en s'étirant", 250, 260);
@@ -138,12 +147,12 @@ export default class TrainEtirements extends BaseTraining {
       this.userLabel.setText('*boite*');
       return;
     }
-    this.pose(u, p);
+    this.pose(u, p, p === 'lie' ? 'rire' : p === this.target ? 'fier' : 'gueule');
     if (p === 'lie') {
       this.naps++;
       this.userLabel.setText('Sieste');
       this.legende(12, 'Sieste', 250, 260);
-      if (this.naps === 3) floatText(this, 110, 250, 'DEBOUT !', CSS.red, 14);
+      if (this.naps === 3) floatText(this, 100, 250, 'DEBOUT !', CSS.red, 14);
     } else if (p === this.target) {
       this.good++;
       this.niveau(0.5);
@@ -169,7 +178,10 @@ export default class TrainEtirements extends BaseTraining {
     if (this.target && !this.over) {
       const left = Math.max(0, 1 - (this.elapsed - this.roundStart) / WINDOW);
       this.bar.fillStyle(C.yellow, 1);
-      this.bar.fillRect(40, 210, 140 * left, 6);
+      this.bar.fillStyle(C.ink, 1);
+      this.bar.fillRect(28, 198, 148, 10);
+      this.bar.fillStyle(C.yellow, 1);
+      this.bar.fillRect(30, 200, 144 * left, 6);
     }
   }
 

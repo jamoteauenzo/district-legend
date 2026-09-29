@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 import BaseTraining from './BaseTraining.js';
 import { Controls } from '../../ui/controls.js';
-import { txt, floatText } from '../../ui/text.js';
+import { txt, floatText, tag } from '../../ui/text.js';
 import { sfx } from '../../ui/sfx.js';
 import { grass, parking } from './decor.js';
 import { C, CSS } from '../../palette.js';
@@ -54,7 +54,7 @@ export default class TrainFinition extends BaseTraining {
     this.contested = 0;
     this.lastCrossAt = -99;
 
-    this.countText = txt(this, 180, 250, '', 12, CSS.cream, { stroke: CSS.outline }).setDepth(50);
+    this.countText = tag(this, 180, 250, '', 12, CSS.paper).setDepth(50);
     this.controls = new Controls(this, { onA: () => this.shoot(), onB: () => this.contest() });
     this.controls.setLabels('FRAPPE', 'CONTESTER');
 

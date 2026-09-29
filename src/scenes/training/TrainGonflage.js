@@ -1,9 +1,10 @@
 import Phaser from 'phaser';
 import BaseTraining from './BaseTraining.js';
-import { txt, floatText } from '../../ui/text.js';
+import { txt, floatText, tag, roundBtn } from '../../ui/text.js';
 import { sfx } from '../../ui/sfx.js';
 import { C, CSS } from '../../palette.js';
 import { fit, unitOf } from '../../ui/sprites.js';
+import { portraitKey } from '../../assets.js';
 
 // Gonfler les ballons avec la vieille pompe du club-house.
 // Officiellement : 5 ballons à la bonne pression. En vrai : un ballon qui
@@ -24,25 +25,26 @@ export default class TrainGonflage extends BaseTraining {
   create() {
     // Intérieur du local matériel
     const g = this.add.graphics().setDepth(0);
-    g.fillStyle(0x5a4a3a, 1);
+    g.fillStyle(C.mud, 1);
     g.fillRect(0, 0, 360, 640);
-    g.fillStyle(0x6b5a48, 1);
+    g.fillStyle(C.ink, 0.12);
     for (let y = 60; y < 640; y += 40) g.fillRect(0, y, 360, 2);
     g.fillStyle(C.prefab, 1);
     g.fillRect(0, 420, 360, 220);
     // Filets à ballons et chasubles sur les murs
     g.fillStyle(C.yellow, 1);
     g.fillRect(24, 90, 50, 70);
-    txt(this, 49, 170, 'CHASUBLES', 8, CSS.cream, { stroke: CSS.outline }).setDepth(1);
+    tag(this, 49, 170, 'CHASUBLES', 8, CSS.paper).setDepth(1);
 
-    this.president = fit(this.add.image(300, 380, 'coach'), 3).setDepth(3).setFlipX(true);
-    txt(this, 300, 336, 'Le président', 9, CSS.cream, { stroke: CSS.outline }).setDepth(3);
+    this.president = this.add.image(292, 420, portraitKey('president', 'neutre')).setOrigin(0.5, 1).setDepth(3).setFlipX(true);
+    this.president.setScale(110 / this.president.width);
+    tag(this, 292, 430, 'Le président', 11, CSS.paper).setDepth(3);
 
     this.ballImg = fit(this.add.image(180, 330, 'ball'), 6).setDepth(4);
     // Manomètre
     this.gauge = this.add.graphics().setDepth(5);
     this.pressureText = txt(this, 180, 470, '', 14, CSS.outline, { bold: true }).setDepth(6);
-    this.countText = txt(this, 180, 110, '', 12, CSS.cream, { stroke: CSS.outline }).setDepth(6);
+    this.countText = tag(this, 180, 130, '', 12, CSS.paper).setDepth(6);
 
     this.ballNo = 0;
     this.pressure = 0;
@@ -64,15 +66,8 @@ export default class TrainGonflage extends BaseTraining {
     this.nextBall();
   }
 
-  makeBtn(x, y, r, label, fill, cb, color = CSS.cream) {
-    const c = this.add.circle(x, y, r, fill, 0.9).setStrokeStyle(3, C.outline).setDepth(60).setInteractive();
-    txt(this, x, y, label, 12, color, { bold: true, stroke: color === CSS.cream ? CSS.outline : undefined }).setDepth(61);
-    c.on('pointerdown', () => {
-      c.setScale(0.9);
-      cb();
-    });
-    c.on('pointerup', () => c.setScale(1));
-    c.on('pointerout', () => c.setScale(1));
+  makeBtn(x, y, r, label, fill, cb) {
+    return roundBtn(this, x, y, r, label, fill, cb);
   }
 
   nextBall() {

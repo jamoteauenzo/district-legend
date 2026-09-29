@@ -109,3 +109,39 @@ export function button(scene, x, y, w, h, label, onClick, opts = {}) {
   };
   return api;
 }
+
+// Étiquette de la DA : Anton sur bandeau noir (compteurs, repères de décor).
+export function tag(scene, x, y, str, size = 12, color = CSS.paper, opts = {}) {
+  const t = txt(scene, x, y, str, size, color, { ...opts, title: true });
+  t.setBackgroundColor(CSS.ink).setPadding(6, 3, 6, 3);
+  // Pas de bandeau vide
+  const set = t.setText.bind(t);
+  t.setText = (s) => {
+    set(String(s).toUpperCase());
+    t.setVisible(String(s) !== '');
+    return t;
+  };
+  if (String(str) === '') t.setVisible(false);
+  return t;
+}
+
+// Bouton rond de la DA : aplat, bord noir, ombre pleine de 3 px, Anton.
+export function roundBtn(scene, x, y, r, label, fill, onPress, opts = {}) {
+  const shadow = scene.add.circle(x + 3, y + 3, r, C.ink).setDepth(60);
+  const c = scene.add.circle(x, y, r, fill).setStrokeStyle(2, C.ink).setDepth(60).setInteractive();
+  const dark = fill === C.ink || fill === C.red || fill === C.blue || fill === C.green;
+  const size = opts.size ?? Math.max(10, Math.min(18, Math.round(r / 2.6)));
+  const t = title(scene, x, y, label, size, opts.color ?? (dark ? CSS.paper : CSS.ink)).setDepth(61);
+  const press = (on) => {
+    const d = on ? 2 : 0;
+    c.setPosition(x + d, y + d);
+    t.setPosition(x + d, y + d);
+  };
+  c.on('pointerdown', () => {
+    press(true);
+    onPress();
+  });
+  c.on('pointerup', () => press(false));
+  c.on('pointerout', () => press(false));
+  return { c, t, shadow, flash: () => { press(true); scene.time.delayedCall(90, () => press(false)); } };
+}

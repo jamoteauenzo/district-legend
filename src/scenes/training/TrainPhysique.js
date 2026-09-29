@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 import BaseTraining from './BaseTraining.js';
 import { Controls } from '../../ui/controls.js';
-import { txt, floatText } from '../../ui/text.js';
+import { txt, floatText, tag } from '../../ui/text.js';
 import { sfx } from '../../ui/sfx.js';
 import { grass, buvette } from './decor.js';
 import { C, CSS } from '../../palette.js';
@@ -66,7 +66,7 @@ export default class TrainPhysique extends BaseTraining {
     this.lacesPhase = -1;
     this.fredHint = false;
 
-    this.phaseText = txt(this, 210, 112, '', 22, CSS.yellow, { bold: true, stroke: CSS.outline }).setDepth(50);
+    this.phaseText = tag(this, 210, 112, '', 22, CSS.yellow).setDepth(50);
 
     this.controls = new Controls(this, { onA: () => this.contest(), onB: () => this.tieLaces() });
     this.controls.setLabels('CONTESTER', 'LACETS');

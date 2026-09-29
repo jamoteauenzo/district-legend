@@ -1,6 +1,6 @@
 # District Legend
 
-Jeu mobile en pixel art : fais la meilleure carrière de footballeur de district possible, de 18 à 40 ans. Le jeu ne te dit jamais que le but est d'être nul.
+Jeu mobile au style « presse locale découpée » (direction artistique 1c, *L'Écho de Grandcour*) : fais la meilleure carrière de footballeur de district possible, de 18 à 40 ans. Le jeu ne te dit jamais que le but est d'être nul.
 
 Game design complet : [document de game design](https://claude.ai/code/artifact/26fbcd9c-20ba-417f-b81e-75b7f7047459).
 
@@ -13,7 +13,7 @@ npm run dev
 
 Ouvre l'adresse affichée (`http://localhost:5173`). Pour tester sur ton téléphone, ouvre l'adresse « Network » depuis le même Wi-Fi.
 
-Au clavier : flèches ou ZQSD pour bouger, `X` ou `Espace` pour le bouton rouge, `C` pour le bouton jaune.
+Au clavier : flèches ou ZQSD pour bouger, `X` ou `Espace` pour le bouton rouge, `C` pour le bouton bleu. Touche l'écran pour fermer une bulle de dialogue.
 
 ## Mettre en ligne (Vercel)
 
@@ -22,6 +22,17 @@ Importe ce dépôt sur [vercel.com/new](https://vercel.com/new). Vercel détecte
 ## Le son PÉCAB
 
 Dépose le fichier audio dans `public/audio/pecab.mp3`. Le jeu le détecte au lancement et l'utilise à chaque tampon PÉCAB. Sans fichier, un bruit de tampon le remplace.
+
+## Direction artistique (v0.8)
+
+Toute la DA vient du dossier `DA/` produit avec Claude Design (voir `DA/README.md`) :
+
+- Papier crème, encre noire, rouge et bleu francs, grain papier sur tout l'écran ; titres en Anton, textes en Newsreader (polices embarquées, pas de Google Fonts)
+- Rendu net en 2x (logique 360 × 640), plus de pixel art
+- 17 personnages en portraits découpés, 5 expressions chacun (`public/assets/portraits`, générés par `scripts/build-portraits.py`)
+- Sprites de match vus de dessus, par tenue (`public/assets/match`, générés par `scripts/build-match-sprites.cjs` depuis `DA/src/characters.js`)
+- Dialogues : le personnage apparaît en grand avec sa bulle (normale, gueulée, pensée, murmurée) ; le jeu se met en pause pendant qu'il parle
+- Menu en une de journal, choix du joueur en cartes, programme WhatsApp, cartes de décision, duel, interview, feuilles de fin : tout suit les maquettes
 
 ## Contenu de la v0.7
 

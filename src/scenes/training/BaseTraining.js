@@ -16,6 +16,12 @@ import { setupCamera } from '../../view.js';
 // Socle commun des entraînements : barre du haut façon 1c (titre, chrono,
 // objectif officiel sur bandeau noir, chope), intro par un personnage,
 // gains de Légende et écran de fin.
+// 0:45, 1:20…
+const clock = (s) => {
+  const t = Math.max(0, Math.ceil(s));
+  return `${Math.floor(t / 60)}:${String(t % 60).padStart(2, '0')}`;
+};
+
 export default class BaseTraining extends Phaser.Scene {
   // Appelé par Phaser avant create() : la carrière est dispo dès le décor.
   init() {
@@ -49,7 +55,7 @@ export default class BaseTraining extends Phaser.Scene {
     fix(this.add.rectangle(0, 48, 360, 3, C.ink).setOrigin(0), 101);
     fix(title(this, 12, 25, name, 18, CSS.ink, { ox: 0 }), 101);
     this.timerBox = fix(this.add.rectangle(292, 25, 46, 26, C.red), 101);
-    this.timerText = fix(title(this, 292, 25, '', 15, CSS.paper), 102);
+    this.timerText = fix(title(this, 292, 25, clock(duration), 15, CSS.paper), 102);
     // Objectif officiel : bandeau noir, italique papier
     const obj = fix(txt(this, 16, 66, `Objectif : ${objective}`, 13, CSS.paper, { italic: true, ox: 0 }), 102);
     fix(this.add.rectangle(10, 66, obj.width + 12, 20, C.ink).setOrigin(0, 0.5), 101);
@@ -73,8 +79,7 @@ export default class BaseTraining extends Phaser.Scene {
   tickTimer(dt) {
     if (!this.running || this.over) return false;
     this.elapsed += dt;
-    const left = Math.max(0, Math.ceil(this.duration - this.elapsed));
-    this.timerText.setText(`0:${String(left).padStart(2, '0')}`);
+    this.timerText.setText(clock(this.duration - this.elapsed));
     return this.elapsed < this.duration;
   }
 

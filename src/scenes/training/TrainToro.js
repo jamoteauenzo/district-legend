@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 import BaseTraining from './BaseTraining.js';
 import { Controls } from '../../ui/controls.js';
-import { txt, floatText } from '../../ui/text.js';
+import { txt, floatText, tag } from '../../ui/text.js';
 import { sfx } from '../../ui/sfx.js';
 import { grass } from './decor.js';
 import { C, CSS } from '../../palette.js';
@@ -59,7 +59,7 @@ export default class TrainToro extends BaseTraining {
     this.holdUntil = 0;
     this.flight = null;
 
-    this.countText = txt(this, 180, 490, '', 12, CSS.cream, { stroke: CSS.outline }).setDepth(50);
+    this.countText = tag(this, 180, 104, '', 12, CSS.paper).setDepth(50);
     this.controls = new Controls(this, { onA: () => this.tackle(), onB: () => this.sulk() });
     this.controls.setLabels('TACLE', 'BOUDER');
 

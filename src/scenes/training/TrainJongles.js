@@ -1,10 +1,11 @@
 import Phaser from 'phaser';
 import BaseTraining from './BaseTraining.js';
-import { txt, floatText } from '../../ui/text.js';
+import { txt, title, floatText, tag, roundBtn } from '../../ui/text.js';
 import { sfx } from '../../ui/sfx.js';
 import { clubhouse, parking } from './decor.js';
 import { C, CSS } from '../../palette.js';
 import { fit, unitOf } from '../../ui/sprites.js';
+import { portraitKey } from '../../assets.js';
 
 // Jongles, vue de côté. Le ballon retombe à gauche ou à droite : il faut
 // taper avec le bon pied au bon moment. Officiellement : 20 d'affilée.
@@ -17,7 +18,7 @@ const BALLS = 3;
 const TARGET = 20;
 
 const VICTIMS = [
-  { id: 'coach', label: 'Sur le coach !', x: 62, y: 430, pts: 40 },
+  { id: 'coach', label: 'Sur le coach !', x: 62, y: 372, pts: 40 },
   { id: 'dog', label: 'Kaiser !', x: 312, y: 500, pts: 30 },
   { id: 'vitre', label: 'La vitre du club-house !', x: 60, y: 300, pts: 50 },
   { id: 'voiture', label: 'Sur une voiture !', x: 300, y: 405, pts: 30 },
@@ -31,7 +32,7 @@ export default class TrainJongles extends BaseTraining {
   create() {
     // Décor vu de côté
     const g = this.add.graphics().setDepth(0);
-    g.fillStyle(C.sky, 1);
+    g.fillStyle(C.paperMid, 1);
     g.fillRect(0, 0, 360, 440);
     g.fillStyle(C.grass, 1);
     g.fillRect(0, 440, 360, 200);
@@ -40,9 +41,11 @@ export default class TrainJongles extends BaseTraining {
     clubhouse(this, 10, 270, 120, 90);
     parking(this, 240, 380, 120, 50);
 
-    this.coach = fit(this.add.image(62, 470, 'coach'), 4).setDepth(3);
+    this.coach = this.add.image(62, 452, portraitKey('coach', 'neutre')).setOrigin(0.5, 1).setDepth(3);
+    this.coach.setScale(96 / this.coach.width);
     this.dog = fit(this.add.image(312, 510, 'dog'), 3).setDepth(3).setFlipX(true);
-    this.user = fit(this.add.image(180, FOOT_Y - 34, `p_${this.char.id}`), 5).setDepth(4);
+    this.user = this.add.image(180, FOOT_Y + 8, portraitKey(this.char.id, 'neutre')).setOrigin(0.5, 1).setDepth(4);
+    this.user.setScale(118 / this.user.width);
     this.shadow = this.add.ellipse(180, FOOT_Y + 6, 16, 5, C.outline, 0.3).setDepth(3);
     this.ball = fit(this.add.image(180, 200, 'ball'), 3).setDepth(6);
     this.ball.vx = 0;
@@ -57,8 +60,8 @@ export default class TrainJongles extends BaseTraining {
     this.victims = {};
     this.gravity = 1100;
 
-    this.streakText = txt(this, 180, 110, '', 40, CSS.cream, { bold: true, stroke: CSS.outline, strokeThickness: 5 }).setDepth(50);
-    this.ballsText = txt(this, 180, 150, '', 12, CSS.cream, { stroke: CSS.outline }).setDepth(50);
+    this.streakText = title(this, 180, 124, '', 44, CSS.paper, { stroke: CSS.ink, strokeThickness: 6 }).setDepth(50);
+    this.ballsText = tag(this, 180, 166, '', 12, CSS.paper).setDepth(50);
 
     // Deux gros boutons : pied gauche, pied droit
     this.btnG = this.makeFootButton(80, 590, 'PIED G', 'L');
@@ -75,16 +78,7 @@ export default class TrainJongles extends BaseTraining {
   }
 
   makeFootButton(x, y, label, side) {
-    const c = this.add.circle(x, y, 36, side === 'L' ? C.blue : C.red, 0.85).setStrokeStyle(3, C.outline).setDepth(60);
-    txt(this, x, y, label, 12, CSS.cream, { bold: true, stroke: CSS.outline }).setDepth(61);
-    c.setInteractive();
-    c.on('pointerdown', () => {
-      c.setScale(0.92);
-      this.foot(side);
-    });
-    c.on('pointerup', () => c.setScale(1));
-    c.on('pointerout', () => c.setScale(1));
-    return c;
+    return roundBtn(this, x, y, 38, label, side === 'L' ? C.blue : C.red, () => this.foot(side), { size: 16 });
   }
 
   refreshTexts() {
@@ -175,6 +169,8 @@ export default class TrainJongles extends BaseTraining {
         if (v.id === 'coach') {
           sfx.thud(this);
           this.talk('coach', 'AÏE ! MA TÊTE !', { expr: 'choque', type: 'gueule', auto: 1300 });
+          this.coach.setTexture(portraitKey('coach', 'choque'));
+          this.time.delayedCall(1600, () => this.coach.setTexture(portraitKey('coach', 'neutre')));
           this.tweens.add({ targets: this.coach, angle: -15, duration: 100, yoyo: true, repeat: 2 });
         } else if (v.id === 'dog') {
           sfx.bark(this);
