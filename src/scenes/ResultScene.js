@@ -6,6 +6,7 @@ import { C, CSS } from '../palette.js';
 import { sfx } from '../ui/sfx.js';
 import { music } from '../audio/music.js';
 import { muteButton } from '../ui/muteButton.js';
+import { setupCamera } from '../view.js';
 
 // Feuille de fin de séance (match ou entraînement) : le résultat officiel,
 // que personne ne regarde, et les vraies stats. Puis retour au programme.
@@ -16,6 +17,7 @@ export default class ResultScene extends Phaser.Scene {
   }
 
   create({ title, subtitle, official, lines, coach, legendeStart, reporter, interview }) {
+    setupCamera(this);
     const career = state.career;
     const g = this.add.graphics();
     g.fillStyle(C.cream, 1);

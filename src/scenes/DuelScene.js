@@ -7,6 +7,7 @@ import { sfx } from '../ui/sfx.js';
 import { music } from '../audio/music.js';
 import { muteButton } from '../ui/muteButton.js';
 import { C, CSS } from '../palette.js';
+import { setupCamera } from '../view.js';
 
 // Boss du chapitre 1, phase 2 : le duel de chambrage à la buvette.
 // Tour par tour. Jean-Mi prépare une réplique (on devine laquelle à son
@@ -50,6 +51,7 @@ export default class DuelScene extends Phaser.Scene {
   }
 
   create() {
+    setupCamera(this);
     const f = this.career.flags;
     const hard = f.jeanmiHostile || f.capitaine;
     const easy = f.jeanmiAllie || f.jeanmiRespect;

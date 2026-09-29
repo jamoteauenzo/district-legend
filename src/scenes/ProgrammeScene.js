@@ -5,6 +5,7 @@ import { txt, button } from '../ui/text.js';
 import { music } from '../audio/music.js';
 import { muteButton } from '../ui/muteButton.js';
 import { C, CSS } from '../palette.js';
+import { setupCamera } from '../view.js';
 
 // Le programme de la semaine, envoyé par le coach sur le groupe WhatsApp.
 const MATES = [
@@ -21,6 +22,7 @@ export default class ProgrammeScene extends Phaser.Scene {
   }
 
   create() {
+    setupCamera(this);
     const week = WEEKS[currentWeek()];
     const step = currentStep();
     const done = weekDone();

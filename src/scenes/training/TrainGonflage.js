@@ -16,6 +16,10 @@ export default class TrainGonflage extends BaseTraining {
     super('TrainGonflage');
   }
 
+  portraits() {
+    return ['president'];
+  }
+
   create() {
     // Intérieur du local matériel
     const g = this.add.graphics().setDepth(0);
@@ -55,7 +59,7 @@ export default class TrainGonflage extends BaseTraining {
       kb.on('keydown-C', () => this.validate());
     }
 
-    this.setup({ title: 'Gonfler les ballons', objective: `${BALLS} ballons à la bonne pression`, duration: 40 });
+    this.setup({ title: 'Gonfler les ballons', objective: `${BALLS} ballons à la bonne pression`, duration: 40, intro: { who: 'president', text: 'La pompe est dans le local. Pas trop gonflés : c\'est 25 € le ballon.' } });
     this.nextBall();
   }
 
@@ -91,7 +95,7 @@ export default class TrainGonflage extends BaseTraining {
     sfx.stamp(this);
     this.cameras.main.shake(200, 0.02);
     floatText(this, 180, 300, 'BOUM', CSS.red, 30);
-    floatText(this, 300, 320, "C'EST 25 € LE BALLON !", CSS.red, 11);
+    this.talk('president', 'C\'EST 25 € LE BALLON !', { expr: 'gueule', type: 'gueule', auto: 1400 });
     this.legende(40, 'Ballon explosé', 180, 260);
     sfx.laugh(this);
     this.firstPecab();

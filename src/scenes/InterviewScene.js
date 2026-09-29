@@ -8,6 +8,7 @@ import { sfx } from '../ui/sfx.js';
 import { music } from '../audio/music.js';
 import { muteButton } from '../ui/muteButton.js';
 import { C, CSS } from '../palette.js';
+import { setupCamera } from '../view.js';
 
 // L'interview d'après-match, filmée en story par le Reporter.
 // Une question, trois morceaux de réponse à choisir. Le jeu ne dit jamais
@@ -23,6 +24,7 @@ export default class InterviewScene extends Phaser.Scene {
   }
 
   create() {
+    setupCamera(this);
     music.stop();
     const f = this.career.flags;
     f.interviews = (f.interviews ?? 0) + 1;

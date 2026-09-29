@@ -5,6 +5,7 @@ import { Mug } from '../ui/mug.js';
 import { music } from '../audio/music.js';
 import { muteButton } from '../ui/muteButton.js';
 import { C, CSS } from '../palette.js';
+import { setupCamera } from '../view.js';
 
 // Fin du chapitre 1 : la page sportive de L'Écho de Grandcour.
 export default class ChapterEndScene extends Phaser.Scene {
@@ -13,6 +14,7 @@ export default class ChapterEndScene extends Phaser.Scene {
   }
 
   create() {
+    setupCamera(this);
     const c = state.career;
     const f = c.flags;
     state.meta.unlockedGege = true;

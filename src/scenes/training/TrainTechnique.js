@@ -5,6 +5,7 @@ import { floatText } from '../../ui/text.js';
 import { sfx } from '../../ui/sfx.js';
 import { grass, clubhouse, parking } from './decor.js';
 import { C, CSS } from '../../palette.js';
+import { followY, snapY } from '../../view.js';
 
 // Le circuit technique : slalom entre les coupelles, échelle de rythme entre
 // les plots, puis frappe dans la mini-cage. Officiellement : sans rien toucher.
@@ -16,6 +17,10 @@ const CAGE = { x: 180, y: 120, w: 56 };
 export default class TrainTechnique extends BaseTraining {
   constructor() {
     super('TrainTechnique');
+  }
+
+  portraits() {
+    return ['coach', 'president'];
   }
 
   create() {
@@ -63,14 +68,13 @@ export default class TrainTechnique extends BaseTraining {
     this.parkingShots = 0;
     this.lost = 0;
 
-    const cam = this.cameras.main;
-    cam.setBounds(0, -44, 360, H + 44);
-    cam.startFollow(this.user, true, 0.12, 0.12, 0, 60);
+    this.camFollow = { top: -50, bottom: H, offset: -60 };
+    snapY(this, this.user, this.camFollow);
 
     this.controls = new Controls(this, { onA: () => this.shoot(), onB: () => this.contest() });
     this.controls.setLabels('FRAPPE', 'CONTESTER');
 
-    this.setup({ title: 'Technique : le circuit', objective: 'circuit propre en 40 s', duration: LIMIT });
+    this.setup({ title: 'Technique : le circuit', objective: 'circuit propre en 40 s', duration: LIMIT, intro: { text: 'Slalom, échelle, mini-cage. Sans toucher une seule coupelle.' } });
   }
 
   addObstacle(key, x, y) {
@@ -97,6 +101,7 @@ export default class TrainTechnique extends BaseTraining {
       if (v.x) u.setFlipX(v.x < 0);
     } else u.setAngle(0);
 
+    followY(this, u, this.camFollow);
     const b = this.ball;
     if (this.hasBall) {
       // Le ballon colle au pied, avec un peu de retard
@@ -154,7 +159,7 @@ export default class TrainTechnique extends BaseTraining {
       if (!this.roofDone) {
         this.roofDone = true;
         this.legende(60, 'Sur le toit !', 280, 110);
-        floatText(this, 290, 150, 'Le président va chercher l\'échelle...', CSS.cream, 10);
+        this.talk('president', 'Le troisième ballon sur le toit cette saison. Je vais chercher l\'échelle…', { expr: 'choque', auto: 2200 });
         sfx.laugh(this);
         this.firstPecab();
       }

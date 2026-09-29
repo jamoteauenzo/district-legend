@@ -18,6 +18,10 @@ export default class TrainPlots extends BaseTraining {
     super('TrainPlots');
   }
 
+  portraits() {
+    return ['coach', 'president'];
+  }
+
   create() {
     grass(this);
     clubhouse(this, 14, 60, 120, 60);
@@ -62,7 +66,7 @@ export default class TrainPlots extends BaseTraining {
     this.controls = new Controls(this, { onA: () => this.drop(), onB: () => this.whistleInnocently() });
     this.controls.setLabels('POSER', 'SIFFLOTER');
 
-    this.setup({ title: 'Corvée : les plots', objective: `ramène les ${COUNT} plots au sac`, duration: 40 });
+    this.setup({ title: 'Corvée : les plots', objective: `ramène les ${COUNT} plots au sac`, duration: 40, intro: { who: 'president', text: 'Douze plots, dans le sac. Et personne ne part avant, hein !' } });
     this.refresh();
   }
 
@@ -177,7 +181,7 @@ export default class TrainPlots extends BaseTraining {
     this.caught++;
     this.caughtAt = this.elapsed;
     sfx.whistle(this);
-    floatText(this, this.coach.x + 70, this.coach.y - 30, 'OH ! REVIENS ICI !', CSS.red, 12);
+    this.talk('coach', 'OH ! REVIENS ICI !', { expr: 'gueule', type: 'gueule', auto: 1200 });
     this.user.setPosition(Phaser.Math.Clamp(x, 40, 320), 300);
   }
 

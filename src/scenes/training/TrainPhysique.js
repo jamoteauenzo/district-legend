@@ -70,7 +70,7 @@ export default class TrainPhysique extends BaseTraining {
     this.controls = new Controls(this, { onA: () => this.contest(), onB: () => this.tieLaces() });
     this.controls.setLabels('CONTESTER', 'LACETS');
 
-    this.setup({ title: 'Physique : le 30/30', objective: `${TARGET} allers-retours`, duration: REPS * (RUN + REST) });
+    this.setup({ title: 'Physique : le 30/30', objective: `${TARGET} allers-retours`, duration: REPS * (RUN + REST), intro: { text: 'Le 30/30. Huit allers-retours. Et on ne marche PAS, c\'est clair ?' } });
   }
 
   // Phase en cours : { run: bool, rep, left }
@@ -186,7 +186,7 @@ export default class TrainPhysique extends BaseTraining {
     this.caughtAt = this.elapsed;
     this.caughtContested = false;
     sfx.whistle(this);
-    floatText(this, 300, 290, 'ON NE MARCHE PAS !', CSS.red, 13);
+    this.talk('coach', 'ON NE MARCHE PAS !', { expr: 'gueule', type: 'gueule', auto: 1300 });
     this.cameras.main.shake(120, 0.006);
   }
 

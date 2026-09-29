@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { txt } from './text.js';
 import { C, CSS } from '../palette.js';
+import { ptr } from '../view.js';
 
 // Joystick virtuel à gauche + deux boutons d'action à droite.
 // Au clavier : flèches / ZQSD / WASD pour bouger, X ou Espace = A, C = B.
@@ -52,7 +53,8 @@ export class Controls {
     this.onB();
   }
 
-  down(p) {
+  down(raw) {
+    const p = { ...ptr(raw), id: raw.id };
     if (Phaser.Math.Distance.Between(p.x, p.y, this.btnA.x, this.btnA.y) < this.btnA.r + 10) return this.pressA();
     if (Phaser.Math.Distance.Between(p.x, p.y, this.btnB.x, this.btnB.y) < this.btnB.r + 10) return this.pressB();
     if (this.joyId === null && p.x < 200 && p.y > 330) {
@@ -63,8 +65,8 @@ export class Controls {
     }
   }
 
-  move(p) {
-    if (p.id === this.joyId) this.moveKnob(p);
+  move(raw) {
+    if (raw.id === this.joyId) this.moveKnob(ptr(raw));
   }
 
   up(p) {

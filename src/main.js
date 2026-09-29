@@ -1,4 +1,10 @@
 import Phaser from 'phaser';
+import '@fontsource/anton';
+import '@fontsource/newsreader/400.css';
+import '@fontsource/newsreader/600.css';
+import '@fontsource/newsreader/400-italic.css';
+import '@fontsource/newsreader/600-italic.css';
+import { Z, WIDTH, HEIGHT } from './view.js';
 import { load } from './state.js';
 import BootScene from './scenes/BootScene.js';
 import MenuScene from './scenes/MenuScene.js';
@@ -20,15 +26,14 @@ import TrainPlots from './scenes/training/TrainPlots.js';
 import TrainGonflage from './scenes/training/TrainGonflage.js';
 import TrainPenalty from './scenes/training/TrainPenalty.js';
 
-// Le jeu tourne en 360 × 640 : du pixel art en 180 × 320 affiché ×2,
-// pour que le texte reste lisible sur téléphone.
+// Taille logique 360 × 640 (DA), rendue en ×Z pour la netteté (voir view.js).
 const config = {
   type: Phaser.AUTO,
   parent: 'game',
-  width: 360,
-  height: 640,
-  pixelArt: true,
-  backgroundColor: '#1E2438',
+  width: WIDTH * Z,
+  height: HEIGHT * Z,
+  antialias: true,
+  backgroundColor: '#EDE5D3',
   scale: { mode: Phaser.Scale.FIT, autoCenter: Phaser.Scale.CENTER_BOTH },
   scene: [
     BootScene,
@@ -65,7 +70,9 @@ async function hasPecabAudio() {
 
 async function start() {
   load();
-  const fontReady = document.fonts ? document.fonts.load('16px "Pixelify Sans"') : Promise.resolve();
+  const fontReady = document.fonts
+    ? Promise.all(['20px "Anton"', '16px "Newsreader"', 'italic 16px "Newsreader"', '600 16px "Newsreader"'].map((f) => document.fonts.load(f)))
+    : Promise.resolve();
   const timeout = new Promise((resolve) => setTimeout(resolve, 2500));
   const [pecabAudio] = await Promise.all([hasPecabAudio(), Promise.race([fontReady, timeout])]);
   window.__HAS_PECAB = pecabAudio;

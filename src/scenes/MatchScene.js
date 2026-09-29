@@ -10,6 +10,7 @@ import { music } from '../audio/music.js';
 import { muteButton } from '../ui/muteButton.js';
 import { advanceWeek } from '../data/schedule.js';
 import { C, CSS } from '../palette.js';
+import { setupCamera, followY, snapY, ptr } from '../view.js';
 
 // Terrain vu de dessus. L'équipe A (la tienne, en bleu) attaque vers le haut.
 const W = 360;
@@ -104,6 +105,7 @@ export default class MatchScene extends Phaser.Scene {
   }
 
   create() {
+    setupCamera(this);
     this.career = state.career;
     this.char = getCharacter(this.career.charId);
     this.elapsed = 0;
@@ -149,9 +151,8 @@ export default class MatchScene extends Phaser.Scene {
     this.nextPickupAt = 7;
     this.recruiter = null;
 
-    const cam = this.cameras.main;
-    cam.setBounds(0, -44, W, H + 44);
-    cam.startFollow(this.user, true, 0.12, 0.12, 0, -60);
+    this.camFollow = { top: -50, bottom: H, offset: 60 };
+    snapY(this, this.user, this.camFollow);
 
     this.createHud();
     this.controls = new Controls(this, { onA: () => this.pressA(), onB: () => this.pressB() });
@@ -280,8 +281,7 @@ export default class MatchScene extends Phaser.Scene {
   }
 
   banner(title, sub) {
-    const cam = this.cameras.main;
-    const bg = this.add.rectangle(cam.width / 2, 250, 360, 70, C.outline, 0.8).setScrollFactor(0).setDepth(250);
+    const bg = this.add.rectangle(180, 250, 360, 70, C.outline, 0.8).setScrollFactor(0).setDepth(250);
     const t1 = txt(this, 180, 238, title, 22, CSS.yellow, { bold: true }).setScrollFactor(0).setDepth(251);
     const t2 = txt(this, 180, 266, sub ?? '', 12, CSS.cream).setScrollFactor(0).setDepth(251);
     this.tweens.add({
@@ -351,6 +351,7 @@ export default class MatchScene extends Phaser.Scene {
     this.checkRecruiter();
     this.updateHud();
 
+    followY(this, this.user, this.camFollow);
     for (const p of this.players) p.setDepth(4 + p.y / 1000);
     this.referee.setDepth(4 + this.referee.y / 1000);
   }
@@ -1170,7 +1171,7 @@ export default class MatchScene extends Phaser.Scene {
     this.carrier = u;
     this.ball.x = u.x;
     this.ball.y = u.y + 4;
-    this.cameras.main.centerOn(180, 150);
+    snapY(this, { y: 150 }, this.camFollow);
     this.banner('SEUL FACE AU BUT VIDE !', 'Appuie sur TIR.');
   }
 

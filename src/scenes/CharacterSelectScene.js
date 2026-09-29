@@ -6,6 +6,7 @@ import { C, CSS } from '../palette.js';
 import { sfx } from '../ui/sfx.js';
 import { music } from '../audio/music.js';
 import { muteButton } from '../ui/muteButton.js';
+import { setupCamera, ptr } from '../view.js';
 
 export default class CharacterSelectScene extends Phaser.Scene {
   constructor() {
@@ -13,6 +14,7 @@ export default class CharacterSelectScene extends Phaser.Scene {
   }
 
   create() {
+    setupCamera(this);
     this.index = 0;
     this.cameras.main.setBackgroundColor(C.night);
     txt(this, 180, 34, 'SIGNE TA LICENCE', 22, CSS.yellow, { bold: true });
@@ -24,8 +26,9 @@ export default class CharacterSelectScene extends Phaser.Scene {
     button(this, 326, 250, 44, 44, '>', () => this.shift(1), { size: 22 });
 
     // Balayage gauche / droite
-    this.input.on('pointerdown', (p) => (this.swipeX = p.x));
-    this.input.on('pointerup', (p) => {
+    this.input.on('pointerdown', (p) => (this.swipeX = ptr(p).x));
+    this.input.on('pointerup', (raw) => {
+      const p = ptr(raw);
       if (this.swipeX === undefined) return;
       const dx = p.x - this.swipeX;
       if (Math.abs(dx) > 50 && p.y > 80 && p.y < 540) {

@@ -4,6 +4,7 @@ import { txt, button } from '../ui/text.js';
 import { C, CSS } from '../palette.js';
 import { music } from '../audio/music.js';
 import { muteButton } from '../ui/muteButton.js';
+import { setupCamera } from '../view.js';
 
 // Menu principal façon feuille de match.
 export default class MenuScene extends Phaser.Scene {
@@ -12,6 +13,7 @@ export default class MenuScene extends Phaser.Scene {
   }
 
   create() {
+    setupCamera(this);
     const g = this.add.graphics();
     // Terrain de nuit en fond
     for (let i = 0; i < 16; i++) {

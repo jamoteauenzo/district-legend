@@ -8,6 +8,7 @@ import { sfx } from '../ui/sfx.js';
 import { music } from '../audio/music.js';
 import { muteButton } from '../ui/muteButton.js';
 import { C, CSS } from '../palette.js';
+import { setupCamera, ptr } from '../view.js';
 
 // Les cartes de décision, façon Reigns. On glisse la carte à gauche ou à
 // droite (ou on touche un des deux boutons). Les points au-dessus des
@@ -32,6 +33,7 @@ export default class CardsScene extends Phaser.Scene {
   }
 
   create() {
+    setupCamera(this);
     const f = this.career.flags;
     this.cards = this.deck.cards.filter((c) => (!c.if || f[c.if]) && (!c.ifNot || !f[c.ifNot]));
     this.index = 0;
@@ -55,7 +57,7 @@ export default class CardsScene extends Phaser.Scene {
     this.sayText = txt(this, 180, 470, '', 13, CSS.cream, { wrap: 320, stroke: CSS.outline }).setDepth(30);
     this.counter = txt(this, 180, 628, '', 10, CSS.grey).setDepth(5);
 
-    this.input.on('pointermove', (p) => this.drag(p));
+    this.input.on('pointermove', (p) => this.drag(p));  // p converti dans drag()
     this.input.on('pointerup', (p) => this.release(p));
 
     music.play('menu');
@@ -145,8 +147,9 @@ export default class CardsScene extends Phaser.Scene {
   }
 
   // Glisser la carte
-  drag(p) {
-    if (this.busy || !this.card || this.card.options || !p.isDown || !this.cardObj) return;
+  drag(raw) {
+    if (this.busy || !this.card || this.card.options || !raw.isDown || !this.cardObj) return;
+    const p = ptr(raw);
     if (p.downY < CARD.y - CARD.h / 2 || p.downY > CARD.y + CARD.h / 2) return;
     const dx = Phaser.Math.Clamp(p.x - p.downX, -140, 140);
     this.cardObj.x = CARD.x + dx;

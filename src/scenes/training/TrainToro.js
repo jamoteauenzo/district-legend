@@ -21,6 +21,10 @@ export default class TrainToro extends BaseTraining {
     super('TrainToro');
   }
 
+  portraits() {
+    return ['jeanmi'];
+  }
+
   create() {
     grass(this);
     const g = this.add.graphics().setDepth(1);
@@ -58,7 +62,7 @@ export default class TrainToro extends BaseTraining {
     this.controls = new Controls(this, { onA: () => this.tackle(), onB: () => this.sulk() });
     this.controls.setLabels('TACLE', 'BOUDER');
 
-    this.setup({ title: 'Le toro', objective: `récupère ${TARGET} ballons`, duration: 45 });
+    this.setup({ title: 'Le toro', objective: `récupère ${TARGET} ballons`, duration: 45, intro: { who: 'jeanmi', expr: 'fier', text: 'Au milieu, le nouveau. Trois ballons, sinon c\'est ta tournée.' } });
     this.refresh();
   }
 
@@ -211,7 +215,7 @@ export default class TrainToro extends BaseTraining {
     if (this.tackles === 1) this.firstPecab();
     if (this.tackles === 3) {
       this.legende(40, 'Jean-Mi veut se battre', 180, 150);
-      floatText(this, 180, 130, 'Jean-Mi : « VIENS DERRIÈRE LE CLUB-HOUSE »', CSS.cream, 10);
+      this.talk('jeanmi', 'VIENS DERRIÈRE LE CLUB-HOUSE !', { expr: 'gueule', type: 'gueule', auto: 1500 });
     }
   }
 

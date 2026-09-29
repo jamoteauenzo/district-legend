@@ -61,7 +61,7 @@ export default class TrainEtirements extends BaseTraining {
       kb.on('keydown-SPACE', () => this.press('lie'));
     }
 
-    this.setup({ title: 'Étirements', objective: `copie le coach (${ROUNDS} postures)`, duration: ROUNDS * WINDOW + 3 });
+    this.setup({ title: 'Étirements', objective: `copie le coach (${ROUNDS} postures)`, duration: ROUNDS * WINDOW + 3, intro: { text: 'Étirements. Tu fais comme moi. Et on ne s\'allonge pas.' } });
     this.time.delayedCall(2400, () => this.nextRound());
   }
 
@@ -88,6 +88,11 @@ export default class TrainEtirements extends BaseTraining {
 
   nextRound() {
     if (this.over) return;
+    // On attend la fin des dialogues (intro du coach, claquage…)
+    if (this.talking || !this.running) {
+      this.time.delayedCall(200, () => this.nextRound());
+      return;
+    }
     if (this.round >= ROUNDS) return this.end();
     this.round++;
     this.target = Phaser.Utils.Array.GetRandom(KEYS);
@@ -118,7 +123,7 @@ export default class TrainEtirements extends BaseTraining {
       this.userLabel.setText('AÏE');
       sfx.thud(this);
       this.legende(40, "Claquage en s'étirant", 250, 260);
-      floatText(this, 110, 250, "Tu t'es claqué en t'ÉTIRANT ?!", CSS.red, 11);
+      this.talk('coach', "Tu t'es claqué… en t'ÉTIRANT ?", { expr: 'choque', auto: 1800 });
       sfx.laugh(this);
       this.firstPecab();
       return;

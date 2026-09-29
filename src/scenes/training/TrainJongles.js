@@ -68,7 +68,7 @@ export default class TrainJongles extends BaseTraining {
       for (const k of ['RIGHT', 'D']) kb.on(`keydown-${k}`, () => this.foot('R'));
     }
 
-    this.setup({ title: 'Jongles', objective: `${TARGET} jongles d'affilée`, duration: 50 });
+    this.setup({ title: 'Jongles', objective: `${TARGET} jongles d'affilée`, duration: 50, intro: { text: 'Jongles. Pied gauche, pied droit. J\'en veux vingt d\'affilée.' } });
     this.time.delayedCall(2300, () => this.newBall());
     this.refreshTexts();
   }
@@ -173,7 +173,7 @@ export default class TrainJongles extends BaseTraining {
         this.legende(v.pts, v.label, v.x < 180 ? v.x + 70 : v.x - 50, v.y - 30);
         if (v.id === 'coach') {
           sfx.thud(this);
-          floatText(this, 62, 400, 'AÏE ! MA TÊTE !', CSS.red, 12);
+          this.talk('coach', 'AÏE ! MA TÊTE !', { expr: 'choque', type: 'gueule', auto: 1300 });
           this.tweens.add({ targets: this.coach, angle: -15, duration: 100, yoyo: true, repeat: 2 });
         } else if (v.id === 'dog') {
           sfx.bark(this);

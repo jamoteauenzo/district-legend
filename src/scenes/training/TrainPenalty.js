@@ -25,6 +25,10 @@ export default class TrainPenalty extends BaseTraining {
     this.matchLegendeStart = data?.legendeStart;
   }
 
+  portraits() {
+    return ['coach', 'fred'];
+  }
+
   create() {
     const g = this.add.graphics().setDepth(0);
     g.fillStyle(C.sky, 1);
@@ -83,7 +87,11 @@ export default class TrainPenalty extends BaseTraining {
 
     const title = this.cup ? 'Tirs au but' : 'Tirs au but';
     const objective = this.cup ? 'qualifie Saint-Clou' : `marque 4 tirs sur ${SHOTS}`;
-    this.setup({ title, objective, duration: 999 });
+    const intro = this.cup
+      ? { text: 'Tirs au but. Tu tires le premier. Et PAS de panenka.', expr: 'gueule' }
+      : { who: 'fred', expr: 'fier', text: 'Vas-y, tire. De toute façon, je les arrête tous.' };
+    this.setup({ title, objective, duration: 999, intro });
+    this.timerBox.setVisible(false);
     if (this.cup && this.matchLegendeStart !== undefined) this.legendeStart = this.matchLegendeStart;
     this.timerText.setVisible(false);
     this.time.delayedCall(2300, () => this.nextShot());

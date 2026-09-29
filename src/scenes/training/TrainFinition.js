@@ -57,7 +57,7 @@ export default class TrainFinition extends BaseTraining {
     this.controls = new Controls(this, { onA: () => this.shoot(), onB: () => this.contest() });
     this.controls.setLabels('FRAPPE', 'CONTESTER');
 
-    this.setup({ title: 'Finition', objective: `${TARGET} buts sur ${CROSSES} centres`, duration: 80 });
+    this.setup({ title: 'Finition', objective: `${TARGET} buts sur ${CROSSES} centres`, duration: 80, intro: { text: 'Je centre, tu frappes. Cinq buts sur dix, c\'est le minimum.' } });
     this.time.delayedCall(2600, () => this.nextCross());
     this.refresh();
   }
@@ -229,7 +229,7 @@ export default class TrainFinition extends BaseTraining {
     if (this.elapsed - this.lastCrossAt < 3 && this.contested < 3) {
       this.contested++;
       floatText(this, u.x, u.y - 34, 'Centre pourri coach !', CSS.cream, 11);
-      floatText(this, 320, 290, 'Il est parfait mon centre !', CSS.yellow, 10);
+      this.talk('coach', 'IL EST PARFAIT MON CENTRE !', { expr: 'gueule', type: 'gueule', auto: 1300 });
       this.legende(10, 'Mauvaise foi', u.x, u.y - 50);
     } else {
       floatText(this, u.x, u.y - 34, 'Le ballon est trop gonflé !', CSS.cream, 11);
