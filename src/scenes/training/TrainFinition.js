@@ -5,6 +5,7 @@ import { txt, floatText } from '../../ui/text.js';
 import { sfx } from '../../ui/sfx.js';
 import { grass, parking } from './decor.js';
 import { C, CSS } from '../../palette.js';
+import { fit, unitOf } from '../../ui/sprites.js';
 
 // Finition : le coach centre depuis l'aile, tu reprends devant le but.
 // Officiellement : 5 buts sur 10 centres. En vrai : la volée dans le
@@ -35,13 +36,13 @@ export default class TrainFinition extends BaseTraining {
     g.fillStyle(C.cream, 0.2);
     g.fillRect(GOAL.left, GOAL.y - 13, GOAL.right - GOAL.left, 13);
 
-    this.keeper = this.add.image(180, GOAL.y + 10, 'mateGK').setScale(2).setDepth(4);
-    this.coach = this.add.image(330, 320, 'coach').setScale(2).setDepth(4).setFlipX(true);
-    this.user = this.add.image(180, 330, `p_${this.char.id}`).setScale(2).setDepth(5);
+    this.keeper = fit(this.add.image(180, GOAL.y + 10, 'mateGK'), 2).setDepth(4);
+    this.coach = fit(this.add.image(330, 320, 'coach'), 2).setDepth(4).setFlipX(true);
+    this.user = fit(this.add.image(180, 330, `p_${this.char.id}`), 2).setDepth(5);
     this.user.fallUntil = 0;
 
     this.shadow = this.add.ellipse(0, 0, 8, 3, C.outline, 0.35).setDepth(5).setVisible(false);
-    this.ball = this.add.image(-50, -50, 'ball').setScale(2).setDepth(7);
+    this.ball = fit(this.add.image(-50, -50, 'ball'), 2).setDepth(7);
     this.ballState = 'idle';
 
     this.crossNo = 0;
@@ -185,7 +186,7 @@ export default class TrainFinition extends BaseTraining {
       targets: b,
       x: over ? tx + Phaser.Math.Between(-30, 30) : tx,
       y: over ? 50 : GOAL.y - 6,
-      scale: over ? 1.4 : 2,
+      scale: (over ? 1.4 : 2) * unitOf('ball'),
       duration: over ? 650 : 380,
       ease: 'Quad.easeOut',
       onComplete: () => this.resolveShot(over, tx),
@@ -194,7 +195,7 @@ export default class TrainFinition extends BaseTraining {
 
   resolveShot(over, tx) {
     const b = this.ball;
-    b.setScale(2);
+    fit(b, 2);
     if (over) {
       this.parkingShots++;
       sfx.alarm(this);

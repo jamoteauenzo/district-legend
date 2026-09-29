@@ -5,6 +5,7 @@ import { txt, floatText } from '../../ui/text.js';
 import { sfx } from '../../ui/sfx.js';
 import { grass, clubhouse, parking } from './decor.js';
 import { C, CSS } from '../../palette.js';
+import { fit, unitOf } from '../../ui/sprites.js';
 
 // La corvée de fin de séance : ramasser les plots et les ramener au sac.
 // Officiellement : les 12. En vrai : les planquer derrière le club-house ou
@@ -39,22 +40,22 @@ export default class TrainPlots extends BaseTraining {
 
     this.plots = [];
     for (let i = 0; i < COUNT; i++) {
-      const p = this.add.image(Phaser.Math.Between(30, 330), Phaser.Math.Between(160, 540), 'plot').setScale(2).setDepth(3);
+      const p = fit(this.add.image(Phaser.Math.Between(30, 330), Phaser.Math.Between(160, 540), 'plot'), 2).setDepth(3);
       p.state = 'ground';
       this.plots.push(p);
     }
 
-    this.coach = this.add.image(40, 470, 'coach').setScale(2).setDepth(5);
+    this.coach = fit(this.add.image(40, 470, 'coach'), 2).setDepth(5);
     this.cone = this.add.graphics().setDepth(2);
     this.coachAngle = -Math.PI / 2;
     this.coachSpin = 0.7;
 
     // Fred s'éclipse dès le début : l'indice
-    this.fred = this.add.image(160, 300, 'mate1').setScale(2).setDepth(4);
+    this.fred = fit(this.add.image(160, 300, 'mate1'), 2).setDepth(4);
     this.tweens.add({ targets: this.fred, x: 300, y: 70, duration: 5000, delay: 2600, onComplete: () => this.fred.setVisible(false) });
     this.time.delayedCall(2800, () => floatText(this, 160, 270, 'Fred : allez, salut les gars', CSS.cream, 10));
 
-    this.user = this.add.image(180, 420, `p_${this.char.id}`).setScale(2).setDepth(5);
+    this.user = fit(this.add.image(180, 420, `p_${this.char.id}`), 2).setDepth(5);
     this.carried = [];
     this.bagged = 0;
     this.hidden = 0;

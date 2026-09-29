@@ -4,6 +4,7 @@ import { txt, floatText } from '../../ui/text.js';
 import { sfx } from '../../ui/sfx.js';
 import { clubhouse, parking } from './decor.js';
 import { C, CSS } from '../../palette.js';
+import { fit, unitOf } from '../../ui/sprites.js';
 
 // Jongles, vue de côté. Le ballon retombe à gauche ou à droite : il faut
 // taper avec le bon pied au bon moment. Officiellement : 20 d'affilée.
@@ -39,11 +40,11 @@ export default class TrainJongles extends BaseTraining {
     clubhouse(this, 10, 270, 120, 90);
     parking(this, 240, 380, 120, 50);
 
-    this.coach = this.add.image(62, 470, 'coach').setScale(4).setDepth(3);
-    this.dog = this.add.image(312, 510, 'dog').setScale(3).setDepth(3).setFlipX(true);
-    this.user = this.add.image(180, FOOT_Y - 34, `p_${this.char.id}`).setScale(5).setDepth(4);
+    this.coach = fit(this.add.image(62, 470, 'coach'), 4).setDepth(3);
+    this.dog = fit(this.add.image(312, 510, 'dog'), 3).setDepth(3).setFlipX(true);
+    this.user = fit(this.add.image(180, FOOT_Y - 34, `p_${this.char.id}`), 5).setDepth(4);
     this.shadow = this.add.ellipse(180, FOOT_Y + 6, 16, 5, C.outline, 0.3).setDepth(3);
-    this.ball = this.add.image(180, 200, 'ball').setScale(3).setDepth(6);
+    this.ball = fit(this.add.image(180, 200, 'ball'), 3).setDepth(6);
     this.ball.vx = 0;
     this.ball.vy = 0;
     this.ballState = 'wait';

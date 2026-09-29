@@ -4,6 +4,7 @@ import { txt, floatText } from '../../ui/text.js';
 import { sfx } from '../../ui/sfx.js';
 import { grass } from './decor.js';
 import { C, CSS } from '../../palette.js';
+import { fit, unitOf } from '../../ui/sprites.js';
 
 // Étirements : le coach prend une posture, tu dois la copier à temps.
 // Officiellement : suivre le coach. En vrai : la mauvaise posture, la sieste
@@ -27,8 +28,8 @@ export default class TrainEtirements extends BaseTraining {
 
   create() {
     grass(this);
-    this.coach = this.add.image(110, 330, 'coach').setScale(6).setDepth(3);
-    this.user = this.add.image(250, 330, `p_${this.char.id}`).setScale(6).setDepth(3);
+    this.coach = fit(this.add.image(110, 330, 'coach'), 6).setDepth(3);
+    this.user = fit(this.add.image(250, 330, `p_${this.char.id}`), 6).setDepth(3);
     this.coachLabel = txt(this, 110, 420, '', 13, CSS.yellow, { bold: true, stroke: CSS.outline }).setDepth(5);
     this.userLabel = txt(this, 250, 420, '', 12, CSS.cream, { stroke: CSS.outline }).setDepth(5);
     this.arrow = txt(this, 110, 180, '', 54, CSS.yellow, { bold: true, stroke: CSS.outline, strokeThickness: 5 }).setDepth(5);

@@ -6,6 +6,7 @@ import { sfx } from '../../ui/sfx.js';
 import { grass, clubhouse, parking } from './decor.js';
 import { C, CSS } from '../../palette.js';
 import { followY, snapY } from '../../view.js';
+import { fit, unitOf } from '../../ui/sprites.js';
 
 // Le circuit technique : slalom entre les coupelles, échelle de rythme entre
 // les plots, puis frappe dans la mini-cage. Officiellement : sans rien toucher.
@@ -53,11 +54,11 @@ export default class TrainTechnique extends BaseTraining {
       this.addObstacle('plot', 214, 390 + i * 28);
     }
 
-    this.coach = this.add.image(290, 180, 'coach').setScale(2).setDepth(5).setFlipX(true);
+    this.coach = fit(this.add.image(290, 180, 'coach'), 2).setDepth(5).setFlipX(true);
 
-    this.user = this.add.image(180, 950, `p_${this.char.id}`).setScale(2).setDepth(5);
+    this.user = fit(this.add.image(180, 950, `p_${this.char.id}`), 2).setDepth(5);
     this.user.facing = new Phaser.Math.Vector2(0, -1);
-    this.ball = this.add.image(180, 940, 'ball').setScale(2).setDepth(6);
+    this.ball = fit(this.add.image(180, 940, 'ball'), 2).setDepth(6);
     this.ball.vx = 0;
     this.ball.vy = 0;
     this.hasBall = true;
@@ -78,7 +79,7 @@ export default class TrainTechnique extends BaseTraining {
   }
 
   addObstacle(key, x, y) {
-    const o = this.add.image(x, y, key).setScale(2).setDepth(3);
+    const o = fit(this.add.image(x, y, key), 2).setDepth(3);
     o.down = false;
     this.obstacles.push(o);
   }

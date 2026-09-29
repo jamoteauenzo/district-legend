@@ -3,6 +3,7 @@ import BaseTraining from './BaseTraining.js';
 import { txt, floatText } from '../../ui/text.js';
 import { sfx } from '../../ui/sfx.js';
 import { C, CSS } from '../../palette.js';
+import { fit, unitOf } from '../../ui/sprites.js';
 
 // Gonfler les ballons avec la vieille pompe du club-house.
 // Officiellement : 5 ballons à la bonne pression. En vrai : un ballon qui
@@ -34,10 +35,10 @@ export default class TrainGonflage extends BaseTraining {
     g.fillRect(24, 90, 50, 70);
     txt(this, 49, 170, 'CHASUBLES', 8, CSS.cream, { stroke: CSS.outline }).setDepth(1);
 
-    this.president = this.add.image(300, 380, 'coach').setScale(3).setDepth(3).setFlipX(true);
+    this.president = fit(this.add.image(300, 380, 'coach'), 3).setDepth(3).setFlipX(true);
     txt(this, 300, 336, 'Le président', 9, CSS.cream, { stroke: CSS.outline }).setDepth(3);
 
-    this.ballImg = this.add.image(180, 330, 'ball').setScale(6).setDepth(4);
+    this.ballImg = fit(this.add.image(180, 330, 'ball'), 6).setDepth(4);
     // Manomètre
     this.gauge = this.add.graphics().setDepth(5);
     this.pressureText = txt(this, 180, 470, '', 14, CSS.outline, { bold: true }).setDepth(6);
@@ -78,7 +79,7 @@ export default class TrainGonflage extends BaseTraining {
     if (this.ballNo >= BALLS) return this.end();
     this.ballNo++;
     this.pressure = 0.1;
-    this.ballImg.setVisible(true).setScale(4);
+    fit(this.ballImg.setVisible(true), 4);
     this.countText.setText(`Ballon ${this.ballNo}/${BALLS}   Bons : ${this.good}`);
   }
 
@@ -130,7 +131,7 @@ export default class TrainGonflage extends BaseTraining {
     }
     // La pompe fuit : la pression redescend doucement
     if (this.ballImg.visible) this.pressure = Math.max(0.05, this.pressure - 0.05 * dt);
-    this.ballImg.setScale(3 + this.pressure * 4);
+    fit(this.ballImg, 3 + this.pressure * 4);
 
     const g = this.gauge;
     g.clear();

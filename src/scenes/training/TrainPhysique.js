@@ -5,6 +5,7 @@ import { txt, floatText } from '../../ui/text.js';
 import { sfx } from '../../ui/sfx.js';
 import { grass, buvette } from './decor.js';
 import { C, CSS } from '../../palette.js';
+import { fit, unitOf } from '../../ui/sprites.js';
 
 // Le 30/30 : des allers-retours entre deux lignes de plots, en alternant
 // course et récup. Officiellement il faut tenir le rythme. En vrai, on
@@ -29,14 +30,14 @@ export default class TrainPhysique extends BaseTraining {
     g.lineBetween(50, FAR_Y, 310, FAR_Y);
     g.lineBetween(50, START_Y, 310, START_Y);
     for (const x of [50, 110, 180, 250, 310]) {
-      this.add.image(x, FAR_Y, 'plot').setScale(2).setDepth(2);
-      this.add.image(x, START_Y, 'plot').setScale(2).setDepth(2);
+      fit(this.add.image(x, FAR_Y, 'plot'), 2).setDepth(2);
+      fit(this.add.image(x, START_Y, 'plot'), 2).setDepth(2);
     }
     buvette(this, 14, 62);
     this.buvetteZone = new Phaser.Geom.Rectangle(0, 50, 100, 70);
 
-    this.coach = this.add.image(326, 340, 'coach').setScale(2).setDepth(5).setFlipX(true);
-    this.phone = this.add.image(318, 338, 'phone').setScale(2).setDepth(6).setVisible(false);
+    this.coach = fit(this.add.image(326, 340, 'coach'), 2).setDepth(5).setFlipX(true);
+    this.phone = fit(this.add.image(318, 338, 'phone'), 2).setDepth(6).setVisible(false);
     this.cone = this.add.graphics().setDepth(3);
     this.coachLooking = true;
     this.nextCoachSwitch = 3;
@@ -44,14 +45,14 @@ export default class TrainPhysique extends BaseTraining {
     // Les coéquipiers : Fred est le premier à tricher
     this.mates = ['mate1', 'mate2', 'mate3'].map((key, i) => {
       const x = [LANES[0], LANES[1], LANES[3]][i];
-      const m = this.add.image(x, START_Y, key).setScale(2).setDepth(4);
+      const m = fit(this.add.image(x, START_Y, key), 2).setDepth(4);
       m.goingUp = true;
       m.speed = Phaser.Math.Between(88, 104);
       m.lazy = i === 0;
       return m;
     });
 
-    this.user = this.add.image(LANES[2], START_Y, `p_${this.char.id}`).setScale(2).setDepth(4);
+    this.user = fit(this.add.image(LANES[2], START_Y, `p_${this.char.id}`), 2).setDepth(4);
     this.needFar = true;
     this.laps = 0;
     this.walkTime = 0;

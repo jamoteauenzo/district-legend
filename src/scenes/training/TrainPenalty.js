@@ -4,6 +4,7 @@ import { txt, floatText } from '../../ui/text.js';
 import { sfx } from '../../ui/sfx.js';
 import { buvette, parking } from './decor.js';
 import { C, CSS } from '../../palette.js';
+import { fit, unitOf } from '../../ui/sprites.js';
 
 // Tirs au but. Deux modes :
 // - entraînement du jeudi contre Fred (5 tirs, objectif 4 buts)
@@ -54,9 +55,9 @@ export default class TrainPenalty extends BaseTraining {
     g.fillStyle(C.chalk, 1);
     g.fillCircle(180, 470, 3);
 
-    this.keeper = this.add.image(180, 196, this.cup ? 'cupGK' : 'mateGK').setScale(4).setDepth(4);
-    this.user = this.add.image(180, 560, `p_${this.char.id}`).setScale(4).setDepth(5);
-    this.ball = this.add.image(180, 470, 'ball').setScale(3).setDepth(6);
+    this.keeper = fit(this.add.image(180, 196, this.cup ? 'cupGK' : 'mateGK'), 4).setDepth(4);
+    this.user = fit(this.add.image(180, 560, `p_${this.char.id}`), 4).setDepth(5);
+    this.ball = fit(this.add.image(180, 470, 'ball'), 3).setDepth(6);
     this.cursor = this.add.graphics().setDepth(7);
     this.powerBar = this.add.graphics().setDepth(7);
     this.scoreText = txt(this, 180, 262, '', 13, CSS.cream, { bold: true, stroke: CSS.outline }).setDepth(8);
@@ -122,7 +123,7 @@ export default class TrainPenalty extends BaseTraining {
     this.aimT = 0;
     this.celebrated = false;
     this.keeper.setPosition(180, 196).setAngle(0);
-    this.ball.setPosition(180, 470).setScale(3).setVisible(true);
+    fit(this.ball.setPosition(180, 470), 3).setVisible(true);
     this.user.setPosition(180, 560).setAngle(0);
     this.infoText.setText('Vise... puis TIRER');
     this.refresh();
@@ -258,7 +259,7 @@ export default class TrainPenalty extends BaseTraining {
       targets: b,
       x: dest.x,
       y: dest.y,
-      scale: dest.s,
+      scale: dest.s * unitOf('ball'),
       duration: isPanenka ? 900 : result === 'weak' ? 800 : 380,
       ease: isPanenka ? 'Sine.easeInOut' : 'Quad.easeOut',
       onComplete: () => this.outcome(result),

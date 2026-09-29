@@ -5,6 +5,7 @@ import { txt, floatText } from '../../ui/text.js';
 import { sfx } from '../../ui/sfx.js';
 import { grass } from './decor.js';
 import { C, CSS } from '../../palette.js';
+import { fit, unitOf } from '../../ui/sprites.js';
 
 // Le toro : les coéquipiers se font des passes en cercle, tu es au milieu.
 // Officiellement : récupérer 3 ballons. En vrai : tacler les copains, se
@@ -32,19 +33,19 @@ export default class TrainToro extends BaseTraining {
     g.strokeCircle(CX, CY, R);
     for (let i = 0; i < 8; i++) {
       const a = (i / 8) * Math.PI * 2;
-      this.add.image(CX + Math.cos(a) * (R + 16), CY + Math.sin(a) * (R + 16), 'coupelle').setScale(2).setDepth(1);
+      fit(this.add.image(CX + Math.cos(a) * (R + 16), CY + Math.sin(a) * (R + 16), 'coupelle'), 2).setDepth(1);
     }
 
     this.passers = PASSERS.map((key, i) => {
       const a = (i / PASSERS.length) * Math.PI * 2 - Math.PI / 2;
-      const p = this.add.image(CX + Math.cos(a) * R, CY + Math.sin(a) * R, key).setScale(2).setDepth(4);
+      const p = fit(this.add.image(CX + Math.cos(a) * R, CY + Math.sin(a) * R, key), 2).setDepth(4);
       p.name = NAMES[i];
       p.hitUntil = 0;
       return p;
     });
-    this.user = this.add.image(CX, CY, `p_${this.char.id}`).setScale(2).setDepth(5);
+    this.user = fit(this.add.image(CX, CY, `p_${this.char.id}`), 2).setDepth(5);
     this.user.facing = new Phaser.Math.Vector2(0, -1);
-    this.ball = this.add.image(0, 0, 'ball').setScale(2).setDepth(6);
+    this.ball = fit(this.add.image(0, 0, 'ball'), 2).setDepth(6);
 
     this.recovered = 0;
     this.tackles = 0;

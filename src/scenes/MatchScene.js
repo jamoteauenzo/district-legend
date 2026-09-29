@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 import { state, gainLegende, gainNiveau, save } from '../state.js';
 import { getCharacter } from '../data/characters.js';
-import { txt, floatText } from '../ui/text.js';
+import { txt, title, floatText } from '../ui/text.js';
 import { Controls } from '../ui/controls.js';
 import { Mug } from '../ui/mug.js';
 import { pecab } from '../ui/pecab.js';
@@ -11,6 +11,7 @@ import { muteButton } from '../ui/muteButton.js';
 import { advanceWeek } from '../data/schedule.js';
 import { C, CSS } from '../palette.js';
 import { setupCamera, followY, snapY, ptr } from '../view.js';
+import { fit, unitOf } from '../ui/sprites.js';
 
 // Terrain vu de dessus. L'équipe A (la tienne, en bleu) attaque vers le haut.
 const W = 360;
@@ -126,9 +127,10 @@ export default class MatchScene extends Phaser.Scene {
     // Postes : lane = couloir (0 gauche → 1 droite), baseDepth = hauteur de base
     this.user = this.makePlayer(`p_${this.char.id}`, 180, 520, 'A', 'user', 'mid', 0.5);
     this.mateGK = this.makePlayer('mateGK', 180, 745, 'A', 'gk');
-    this.makePlayer('mate1', 100, 620, 'A', 'field', 'def', 0.3);
-    this.makePlayer('mate2', 260, 620, 'A', 'field', 'def', 0.7);
-    this.makePlayer('mate3', 180, 440, 'A', 'field', 'att', 0.5);
+    const mates = ['jordan', 'dylan', 'matheo', 'kevin', 'gege'].filter((id) => id !== this.char.id).map((id) => `p_${id}`);
+    this.makePlayer(mates[0], 100, 620, 'A', 'field', 'def', 0.3);
+    this.makePlayer(mates[1], 260, 620, 'A', 'field', 'def', 0.7);
+    this.makePlayer(mates[2], 180, 440, 'A', 'field', 'att', 0.5);
     const o = this.cfg.opp;
     this.oppGK = this.makePlayer(o[4], 180, 55, 'B', 'gk');
     this.makePlayer(o[0], 100, 180, 'B', 'field', 'def', 0.3);
@@ -137,10 +139,10 @@ export default class MatchScene extends Phaser.Scene {
     const last = this.makePlayer(o[3], 220, 370, 'B', 'field', 'att', 0.6);
     if (this.mode === 'anciens') this.setupBoss(last);
 
-    this.referee = this.add.image(230, 420, this.cfg.ref).setScale(2);
+    this.referee = fit(this.add.image(230, 420, this.cfg.ref), 2);
     this.referee.facing = new Phaser.Math.Vector2(0, 1);
 
-    this.ball = this.add.image(180, 400, 'ball').setScale(2).setDepth(5);
+    this.ball = fit(this.add.image(180, 400, 'ball'), 2).setDepth(5);
     this.ball.vx = 0;
     this.ball.vy = 0;
     this.carrier = null;
@@ -168,68 +170,123 @@ export default class MatchScene extends Phaser.Scene {
 
   drawPitch() {
     const g = this.add.graphics().setDepth(0);
-    g.fillStyle(C.prefab, 1);
-    g.fillRect(0, 0, W, H);
+    // Abords du terrain
+    g.fillStyle(C.green, 1);
+    g.fillRect(0, -60, W, H + 60);
+    // Bandes de tonte
     for (let i = 0; i < 18; i++) {
-      g.fillStyle(i % 2 ? C.grass : C.grassDark, 1);
+      g.fillStyle(i % 2 ? C.green : C.greenLight, 1);
       g.fillRect(PITCH.left - 8, PITCH.top + i * 40, PITCH.right - PITCH.left + 16, 40);
     }
-    // Boue devant les buts
-    g.fillStyle(C.mud, 0.8);
-    g.fillEllipse(180, PITCH.top + 26, 90, 36);
-    g.fillEllipse(180, PITCH.bottom - 26, 90, 36);
-    g.fillEllipse(110, 420, 50, 22);
-    // Lignes
-    g.lineStyle(2, C.chalk, 0.9);
-    g.strokeRect(PITCH.left, PITCH.top, PITCH.right - PITCH.left, PITCH.bottom - PITCH.top);
-    g.lineBetween(PITCH.left, 400, PITCH.right, 400);
-    g.strokeCircle(180, 400, 42);
-    g.strokeRect(90, PITCH.top, 180, 90);
-    g.strokeRect(90, PITCH.bottom - 90, 180, 90);
-    // Buts
-    g.fillStyle(C.cream, 1);
-    g.fillRect(GOAL.left - 3, PITCH.top - 14, 3, 14);
-    g.fillRect(GOAL.right, PITCH.top - 14, 3, 14);
-    g.fillRect(GOAL.left - 3, PITCH.top - 14, GOAL.right - GOAL.left + 6, 3);
-    g.fillRect(GOAL.left - 3, PITCH.bottom, 3, 14);
-    g.fillRect(GOAL.right, PITCH.bottom, 3, 14);
-    g.fillRect(GOAL.left - 3, PITCH.bottom + 11, GOAL.right - GOAL.left + 6, 3);
-    g.fillStyle(C.cream, 0.25);
-    g.fillRect(GOAL.left, PITCH.top - 11, GOAL.right - GOAL.left, 11);
-    g.fillRect(GOAL.left, PITCH.bottom, GOAL.right - GOAL.left, 11);
+    // Boue devant les buts et au milieu
+    const mud = (x, y, w, h) => {
+      g.fillStyle(C.mud, 0.9);
+      g.fillEllipse(x, y, w, h);
+      g.fillStyle(C.ink, 0.12);
+      g.fillEllipse(x + 4, y + 3, w * 0.6, h * 0.5);
+    };
+    mud(180, PITCH.top + 30, 110, 44);
+    mud(180, PITCH.bottom - 30, 110, 44);
+    mud(118, 424, 60, 24);
+    // Lignes de craie en pointillés irréguliers (40 6 14 9 64 4 24 8), 3 px
+    const DASH = [40, 6, 14, 9, 64, 4, 24, 8];
+    const chalk = (x1, y1, x2, y2) => {
+      const len = Math.hypot(x2 - x1, y2 - y1);
+      let d = 0;
+      let i = 0;
+      g.lineStyle(3, C.paper, 0.95);
+      while (d < len) {
+        const seg = DASH[i % DASH.length];
+        if (i % 2 === 0) {
+          const a = d / len;
+          const b = Math.min(1, (d + seg) / len);
+          g.lineBetween(x1 + (x2 - x1) * a, y1 + (y2 - y1) * a, x1 + (x2 - x1) * b, y1 + (y2 - y1) * b);
+        }
+        d += seg;
+        i++;
+      }
+    };
+    const box = (x, y, w, h) => {
+      chalk(x, y, x + w, y);
+      chalk(x + w, y, x + w, y + h);
+      chalk(x + w, y + h, x, y + h);
+      chalk(x, y + h, x, y);
+    };
+    box(PITCH.left, PITCH.top, PITCH.right - PITCH.left, PITCH.bottom - PITCH.top);
+    chalk(PITCH.left, 400, PITCH.right, 400);
+    box(90, PITCH.top, 180, 90);
+    box(90, PITCH.bottom - 90, 180, 90);
+    // Rond central en pointillés
+    for (let a = 0; a < Math.PI * 2; a += 0.28) {
+      g.lineStyle(3, C.paper, 0.95);
+      g.beginPath();
+      g.arc(180, 400, 42, a, a + 0.18);
+      g.strokePath();
+    }
+    g.fillStyle(C.paper, 1);
+    g.fillCircle(180, 400, 3);
+    // Buts : poteaux blancs, filet, ombre pleine
+    const goal = (y, dir) => {
+      const top = dir < 0 ? y - 16 : y;
+      g.fillStyle(C.ink, 0.3);
+      g.fillRect(GOAL.left + 2, top + 3, GOAL.right - GOAL.left + 4, 16);
+      g.fillStyle(C.white, 0.35);
+      g.fillRect(GOAL.left, top, GOAL.right - GOAL.left, 16);
+      g.lineStyle(1, C.white, 0.6);
+      for (let x = GOAL.left + 6; x < GOAL.right; x += 6) g.lineBetween(x, top, x, top + 16);
+      g.fillStyle(C.white, 1);
+      g.fillRect(GOAL.left - 3, top, 3, 16);
+      g.fillRect(GOAL.right, top, 3, 16);
+      g.fillRect(GOAL.left - 3, dir < 0 ? top : top + 13, GOAL.right - GOAL.left + 6, 3);
+    };
+    goal(PITCH.top, -1);
+    goal(PITCH.bottom, 1);
 
-    // Panneaux de sponsors en haut
-    const sponsors = ['BOUCHERIE MOREL', 'GARAGE DUPUIS', 'LE BALTO'];
-    sponsors.forEach((s, i) => {
-      const x = 8 + i * 118;
-      g.fillStyle([C.red, C.blue, C.yellow][i], 1);
-      g.fillRect(x, 4, 110, 16);
-      txt(this, x + 55, 12, s, 9, i === 2 ? CSS.outline : CSS.cream, { bold: true }).setDepth(1);
+    // Panneaux de sponsors derrière le but du haut
+    const boards = [
+      ['BOUCHERIE MOREL', C.paperDark, CSS.ink],
+      ['LE BALTO', C.red, CSS.paper],
+      ['GARAGE DUPUIS', C.blue, CSS.paper],
+    ];
+    boards.forEach(([label, fill, color], i) => {
+      const x = 4 + i * 119;
+      g.fillStyle(C.ink, 0.3);
+      g.fillRect(x + 2, 2, 115, 18);
+      g.fillStyle(fill, 1);
+      g.fillRect(x, 0, 115, 18);
+      title(this, x + 57, 9, label, 11, color).setDepth(1);
     });
-    // Parking en bas
-    g.fillStyle(0x9a9a9a, 1);
-    g.fillRect(0, H - 22, W, 22);
-    g.fillStyle(C.red, 1);
-    g.fillRect(40, H - 18, 30, 12);
-    g.fillStyle(C.cream, 1);
-    g.fillRect(250, H - 18, 30, 12);
+    // Parking en gravier en bas
+    g.fillStyle(C.paperDark, 1);
+    g.fillRect(0, H - 22, W, 40);
+    for (const [x, col] of [[40, C.red], [120, C.blue], [250, C.white]]) {
+      g.fillStyle(C.ink, 0.3);
+      g.fillRoundedRect(x + 2, H - 16, 40, 16, 4);
+      g.fillStyle(col, 1);
+      g.fillRoundedRect(x, H - 18, 40, 16, 4);
+      g.fillStyle(C.ink, 0.35);
+      g.fillRect(x + 12, H - 16, 16, 12);
+    }
 
-    // Les 12 spectateurs et Kaiser
+    // Les 12 spectateurs (vus de dessus) et Kaiser
     this.crowd = [];
+    const cols = [C.red, C.blue, C.yellow, C.paper, C.navy, C.mud];
     for (let i = 0; i < 12; i++) {
       const side = i % 2 ? 6 : 354;
       const y = 120 + i * 50;
-      g.fillStyle([C.red, C.blue, C.yellow, C.cream][i % 4], 1);
-      g.fillRect(side - 3, y, 6, 8);
+      g.fillStyle(C.ink, 0.3);
+      g.fillCircle(side + 2, y + 2, 6);
+      g.fillStyle(cols[i % cols.length], 1);
+      g.fillCircle(side, y, 6);
       g.fillStyle(C.skinLight, 1);
-      g.fillRect(side - 2, y - 4, 4, 4);
+      g.fillCircle(side, y - 1, 3);
       this.crowd.push({ x: side, y });
     }
-    this.dog = this.add.image(350, 300, 'dog').setScale(2).setDepth(3);
+    this.dog = fit(this.add.image(14, 470, 'dog'), 2).setDepth(3);
   }
 
   makePlayer(key, x, y, team, role, pos = null, lane = 0.5) {
-    const p = this.add.image(x, y, key).setScale(2).setDepth(4);
+    const p = fit(this.add.image(x, y, key), 2).setDepth(4);
     p.team = team;
     p.role = role;
     p.home = { x, y };
@@ -259,31 +316,37 @@ export default class MatchScene extends Phaser.Scene {
 
   createHud() {
     const fix = (o, d = 100) => o.setScrollFactor(0).setDepth(d);
-    fix(this.add.rectangle(0, 0, 360, 40, C.outline, 0.85).setOrigin(0));
-    this.scoreText = fix(txt(this, 10, 13, '', 13, CSS.cream, { ox: 0, bold: true }), 101);
-    this.timeText = fix(txt(this, 10, 30, '', 11, CSS.chalk, { ox: 0 }), 101);
-    this.cardText = fix(txt(this, 250, 13, '', 11, CSS.yellow, { bold: true }), 101);
-    this.objective = fix(txt(this, 180, 31, 'OBJECTIF : GAGNE LE MATCH', 9, CSS.cream, { stroke: CSS.outline }), 101);
-    this.mug = new Mug(this, 334, 20).setScrollFactor(0).setDepth(101);
+    // Barre de score papier de 50 px
+    fix(this.add.rectangle(0, 0, 360, 50, C.paper).setOrigin(0));
+    fix(this.add.rectangle(0, 48, 360, 3, C.ink).setOrigin(0), 101);
+    this.homeText = fix(title(this, 12, 25, this.cfg.home, 17, CSS.blue, { ox: 0 }), 101);
+    this.scoreText = fix(title(this, 150, 25, '', 26, CSS.ink), 101);
+    this.awayText = fix(title(this, 262, 25, this.cfg.away, 17, CSS.ink, { ox: 1 }), 101);
+    fix(this.add.rectangle(316, 25, 44, 26, C.red), 101);
+    this.timeText = fix(title(this, 316, 25, '', 16, CSS.paper), 102);
+    // Objectif officiel sur bandeau noir
+    const obj = fix(txt(this, 16, 66, 'Objectif : gagne le match', 13, CSS.paper, { italic: true, ox: 0 }), 102);
+    fix(this.add.rectangle(10, 66, obj.width + 12, 20, C.ink).setOrigin(0, 0.5), 101);
+    this.cardIcon = fix(this.add.rectangle(obj.width + 36, 66, 11, 16, C.yellow).setStrokeStyle(1, C.ink).setVisible(false), 102);
+    this.mug = new Mug(this, 338, 92).setScrollFactor(0).setDepth(101);
     this.mug.setValue(this.career.legende, false);
     if (this.aura) this.createAuraHud();
-    muteButton(this, 298, 20);
+    muteButton(this, 338, 134);
   }
 
   updateHud() {
     const minute = Math.min(90, Math.floor((this.elapsed / this.cfg.seconds) * 90));
-    this.scoreText.setText(`${this.cfg.home} ${this.score.A} - ${this.score.B} ${this.cfg.away}`);
+    this.scoreText.setText(`${this.score.A}-${this.score.B}`);
     this.timeText.setText(`${minute}'`);
-    const cards = this.stats.red ? 'ROUGE' : this.stats.yellow ? 'JAUNE' : '';
-    this.cardText.setText(cards).setColor(this.stats.red ? CSS.red : CSS.yellow);
+    this.cardIcon.setVisible(this.stats.red || this.stats.yellow > 0).setFillStyle(this.stats.red ? C.red : C.yellow);
     const hasBall = this.carrier === this.user;
-    this.controls.setLabels(hasBall ? 'TIR' : 'TACLE', hasBall ? 'PASSE' : 'CONTESTER');
+    this.controls.setLabels(hasBall ? 'TIR' : 'TACLE', hasBall ? 'PASSE' : 'CONTESTE');
   }
 
-  banner(title, sub) {
-    const bg = this.add.rectangle(180, 250, 360, 70, C.outline, 0.8).setScrollFactor(0).setDepth(250);
-    const t1 = txt(this, 180, 238, title, 22, CSS.yellow, { bold: true }).setScrollFactor(0).setDepth(251);
-    const t2 = txt(this, 180, 266, sub ?? '', 12, CSS.cream).setScrollFactor(0).setDepth(251);
+  banner(head, sub) {
+    const bg = this.add.rectangle(180, 260, 360, 76, C.ink, 0.92).setScrollFactor(0).setDepth(250);
+    const t1 = title(this, 180, 246, head, 24, CSS.paper).setScrollFactor(0).setDepth(251);
+    const t2 = txt(this, 180, 276, sub ?? '', 14, CSS.paper, { italic: true, wrap: 330 }).setScrollFactor(0).setDepth(251);
     this.tweens.add({
       targets: [bg, t1, t2],
       alpha: 0,
@@ -313,7 +376,7 @@ export default class MatchScene extends Phaser.Scene {
   // --------------------------------------------------------------- Boucle
 
   update(time, delta) {
-    if (this.over) return;
+    if (this.over || this.talking) return;
     const dt = Math.min(delta, 50) / 1000;
     this.controls.update(delta);
 
@@ -560,7 +623,7 @@ export default class MatchScene extends Phaser.Scene {
 
   showCard(key) {
     sfx.card(this);
-    const card = this.add.image(this.referee.x + 8, this.referee.y - 26, key).setScale(3).setDepth(160);
+    const card = fit(this.add.image(this.referee.x + 8, this.referee.y - 26, key), 3).setDepth(160);
     this.tweens.add({ targets: card, y: card.y - 10, duration: 250, yoyo: true, hold: 700, onComplete: () => card.destroy() });
   }
 
@@ -633,10 +696,10 @@ export default class MatchScene extends Phaser.Scene {
 
   createAuraHud() {
     const fix = (o, d = 100) => o.setScrollFactor(0).setDepth(d);
-    fix(this.add.rectangle(0, 40, 360, 22, C.outline, 0.7).setOrigin(0));
-    fix(txt(this, 10, 51, 'TOI', 10, CSS.cream, { ox: 0, bold: true }), 101);
-    fix(txt(this, 350, 51, 'JEAN-MI', 10, CSS.yellow, { ox: 1, bold: true }), 101);
-    fix(txt(this, 180, 70, "DUEL D'AURA", 8, CSS.cream, { stroke: CSS.outline }), 101);
+    fix(this.add.rectangle(10, 80, 306, 26, C.ink).setOrigin(0));
+    fix(title(this, 18, 93, 'Toi', 13, CSS.paper, { ox: 0 }), 101);
+    fix(title(this, 308, 93, 'Jean-Mi', 13, CSS.yellow, { ox: 1 }), 101);
+    fix(title(this, 155, 114, "Duel d'aura", 10, CSS.ink), 101);
     this.auraGfx = fix(this.add.graphics(), 101);
     this.drawAura();
   }
@@ -645,15 +708,15 @@ export default class MatchScene extends Phaser.Scene {
     const g = this.auraGfx;
     const { me, him } = this.aura;
     const r = me + him === 0 ? 0.5 : me / (me + him);
+    const x = 50;
+    const w = 196;
     g.clear();
     g.fillStyle(C.yellow, 1);
-    g.fillRect(40, 46, 240, 10);
+    g.fillRect(x, 88, w, 10);
     g.fillStyle(C.blue, 1);
-    g.fillRect(40, 46, 240 * r, 10);
-    g.lineStyle(2, C.cream, 1);
-    g.strokeRect(40, 46, 240, 10);
-    g.fillStyle(C.cream, 1);
-    g.fillRect(40 + 240 * r - 1, 43, 3, 16);
+    g.fillRect(x, 88, w * r, 10);
+    g.fillStyle(C.paper, 1);
+    g.fillRect(x + w * r - 1.5, 84, 3, 18);
   }
 
   updateBoss() {
@@ -1118,7 +1181,7 @@ export default class MatchScene extends Phaser.Scene {
       const def = Phaser.Utils.Array.GetRandom(PICKUPS);
       const x = Math.random() < 0.5 ? 26 : 334;
       const y = Phaser.Math.Clamp(this.user.y + Phaser.Math.Between(-150, 150), PITCH.top + 30, PITCH.bottom - 30);
-      const img = this.add.image(x, y, def.key).setScale(2).setDepth(3);
+      const img = fit(this.add.image(x, y, def.key), 2).setDepth(3);
       this.tweens.add({ targets: img, y: y - 4, yoyo: true, repeat: -1, duration: 400 });
       this.pickups.push({ img, def, until: this.elapsed + 12 });
     }
@@ -1145,7 +1208,7 @@ export default class MatchScene extends Phaser.Scene {
   checkRecruiter() {
     if (this.recruiter || this.career.niveauReel < 40) return;
     const y = Phaser.Math.Clamp(this.user.y, 100, 700);
-    this.recruiter = this.add.image(390, y, 'recruiter').setScale(2).setDepth(3).setFlipX(true);
+    this.recruiter = fit(this.add.image(390, y, 'recruiter'), 2).setDepth(3).setFlipX(true);
     this.tweens.add({ targets: this.recruiter, x: 350, duration: 1500 });
     sfx.ominous(this);
     const note = txt(this, 180, 70, 'Un homme en lunettes de soleil vous regarde.', 10, CSS.cream, { stroke: CSS.outline })
