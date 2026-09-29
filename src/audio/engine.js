@@ -1,6 +1,6 @@
 // Moteur audio partagé : un contexte WebAudio (celui de Phaser), un volume
 // général, un bus pour la musique et un bus pour les bruitages.
-const MUTE_KEY = 'district-legend-muted';
+const MUTE_KEY = 'district-legend-muted-v2'; // v2 : remet le son une fois pour tout le monde
 
 export const audio = {
   ctx: null,
@@ -38,12 +38,25 @@ export const audio = {
       this.muted = false;
     }
     this.applyMute();
+
+    // Téléphones : le son est bloqué tant qu'on n'a pas touché l'écran, et
+    // iOS le recoupe après un appel, un verrouillage ou un changement d'appli.
+    // On le relance à chaque toucher, directement dans l'événement du navigateur.
+    const wake = () => {
+      if (ctx.state !== 'running') ctx.resume().catch(() => {});
+    };
+    for (const e of ['touchstart', 'touchend', 'pointerdown', 'pointerup', 'keydown']) {
+      document.addEventListener(e, wake, { capture: true, passive: true });
+    }
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) wake();
+    });
   },
 
   // À appeler avant de jouer un son : débloque l'audio après le premier toucher.
   ready() {
     if (!this.ctx) return null;
-    if (this.ctx.state === 'suspended') this.ctx.resume();
+    if (this.ctx.state !== 'running') this.ctx.resume().catch(() => {});
     return this.ctx;
   },
 

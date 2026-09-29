@@ -7,11 +7,17 @@ export function muteButton(scene, x, y, dark = false) {
   const fg = dark ? C.paper : C.ink;
   const draw = () => {
     g.clear();
-    g.fillStyle(fg, 1);
+    // Son coupé : pastille rouge bien visible, pour ne pas l'oublier
+    if (audio.muted) {
+      g.fillStyle(C.red, 1);
+      g.fillRoundedRect(x - 14, y - 13, 30, 26, 5);
+    }
+    const ink = audio.muted ? C.paper : fg;
+    g.fillStyle(ink, 1);
     g.fillRect(x - 8, y - 3, 4, 6);
     g.fillTriangle(x - 5, y - 3, x + 1, y - 8, x + 1, y + 8);
     g.fillTriangle(x - 5, y + 3, x - 5, y - 3, x + 1, y + 8);
-    g.lineStyle(2, audio.muted ? C.red : fg, 1);
+    g.lineStyle(2, ink, 1);
     if (audio.muted) {
       g.lineBetween(x + 4, y - 4, x + 10, y + 4);
       g.lineBetween(x + 10, y - 4, x + 4, y + 4);
