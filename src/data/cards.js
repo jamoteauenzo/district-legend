@@ -36,7 +36,7 @@ export const DECKS = {
       },
       {
         who: 'Fred',
-        face: 'mate1',
+        face: 'fred',
         text: 'C\'est ta tournée. C\'est la tradition.',
         left: { label: '« J\'ai oublié ma CB »', stats: { excuses: 1, mauvaiseFoi: 1 }, legende: 10, say: 'Personne n\'y croit. Tout le monde respecte.' },
         right: { label: 'Payer 14 pintes', rel: { vestiaire: 1 }, legende: 20, say: 'Ton compte en banque pleure. Le vestiaire t\'aime.' },
@@ -57,7 +57,7 @@ export const DECKS = {
       },
       {
         who: 'Fred',
-        face: 'mate1',
+        face: 'fred',
         text: 'Il te faut un surnom. Tout le monde en a un ici.',
         left: { label: 'Choisir : « Le Mur »', legende: -5, say: 'Personne ne l\'utilisera jamais.' },
         right: { label: 'Laisser le vestiaire choisir', rel: { vestiaire: 1 }, legende: 15, surnom: true, say: 'Désormais, tu t\'appelles « {surnom} ».' },
@@ -70,7 +70,7 @@ export const DECKS = {
     cards: [
       {
         who: 'Fred',
-        face: 'mate1',
+        face: 'fred',
         text: 'Samedi, 23h. On va en boîte à Grandcour. Match demain 15h.',
         left: { label: 'Dormir', niveau: 5, rel: { vestiaire: -1 }, legende: -10, say: 'Huit heures de sommeil. Le recruteur de R3 apprécie.' },
         right: { label: 'Y aller', legende: 30, say: 'Retour 5h12. Tu as perdu une chaussure.' },
@@ -91,7 +91,7 @@ export const DECKS = {
       },
       {
         who: 'Momo, ton pote',
-        face: 'pote',
+        face: 'momo',
         text: 'Viens à la salle avec moi. L\'abonnement est à 19,99 €.',
         left: { label: '« Mon corps, c\'est mon style »', stats: { bide: 1 }, legende: 15, say: 'Ton bide te remercie.' },
         right: { label: 'S\'inscrire', niveau: 10, legende: -15, say: 'Quelque part, un recruteur de R3 sourit.' },
@@ -105,7 +105,7 @@ export const DECKS = {
       },
       {
         who: 'M. Loiseau, l\'arbitre',
-        face: 'ref',
+        face: 'loiseau',
         text: 'Tiens, le petit de Saint-Clou. Tu te tiendras bien demain ?',
         left: { label: '« Promis, monsieur »', rel: { district: 1 }, legende: -5, say: 'Il te croit. Pauvre homme.' },
         right: { label: '« Ça dépend de vous »', need: { mauvaiseFoi: 4 }, rel: { district: -1 }, legende: 30, say: 'Il sort déjà son carnet.' },
@@ -140,7 +140,7 @@ export const DECKS = {
       },
       {
         who: 'Fred',
-        face: 'mate1',
+        face: 'fred',
         ifNot: 'enCouple',
         text: 'Un gars de R3 veut s\'entraîner avec nous cette semaine.',
         left: { label: 'L\'accueillir', niveau: 5, say: 'Il te montre des exercices. Tu progresses. Dommage.' },

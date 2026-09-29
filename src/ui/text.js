@@ -25,7 +25,9 @@ export function txt(scene, x, y, str, size = 14, color = CSS.ink, opts = {}) {
   const it = opts.italic ? 'italic' : '';
   style.fontStyle = `${it} ${weight}`.trim() || 'normal';
   if (opts.lineSpacing) style.lineSpacing = opts.lineSpacing;
-  const t = scene.add.text(x, y, opts.title ? String(str).toUpperCase() : str, style);
+  // Typographie française : espace insécable avant ? ! : ; » et après «
+  const fr = String(str).replace(/ ([?!:;»])/g, '\u00a0$1').replace(/« /g, '«\u00a0');
+  const t = scene.add.text(x, y, opts.title ? fr.toUpperCase() : fr, style);
   t.setOrigin(opts.ox ?? 0.5, opts.oy ?? 0.5);
   if (opts.title && opts.spacing !== 0) t.setLetterSpacing?.(opts.spacing ?? size * 0.02);
   return t;

@@ -1,12 +1,13 @@
 import Phaser from 'phaser';
 import { state } from '../state.js';
-import { txt, button } from '../ui/text.js';
+import { txt, title, button } from '../ui/text.js';
 import { C, CSS } from '../palette.js';
 import { music } from '../audio/music.js';
 import { muteButton } from '../ui/muteButton.js';
+import { portraitKey } from '../assets.js';
 import { setupCamera } from '../view.js';
 
-// Menu principal façon feuille de match.
+// Menu principal : la une de L'Écho de Grandcour.
 export default class MenuScene extends Phaser.Scene {
   constructor() {
     super('Menu');
@@ -14,56 +15,40 @@ export default class MenuScene extends Phaser.Scene {
 
   create() {
     setupCamera(this);
+    this.cameras.main.setBackgroundColor(C.paper);
     const g = this.add.graphics();
-    // Terrain de nuit en fond
-    for (let i = 0; i < 16; i++) {
-      g.fillStyle(i % 2 ? C.grass : C.grassDark, 0.35);
-      g.fillRect(0, i * 40, 360, 40);
+
+    // Bandeau de une
+    txt(this, 18, 26, "L'ÉCHO DE GRANDCOUR · ÉDITION DU DIMANCHE", 10, CSS.ink, { ox: 0, bold: true });
+    txt(this, 342, 26, 'Page sport', 10, CSS.grey, { ox: 1, italic: true });
+    g.fillStyle(C.ink, 1);
+    g.fillRect(16, 36, 328, 3);
+    title(this, 180, 88, 'DISTRICT', 72, CSS.red);
+    title(this, 180, 160, 'LEGEND', 72, CSS.ink);
+    g.fillRect(16, 204, 328, 2);
+    g.fillRect(16, 209, 328, 1);
+    txt(this, 180, 228, 'Ta carrière pro est derrière toi. Deviens une légende… du district.', 14, CSS.ink, { italic: true, wrap: 320 });
+
+    // Collage : le coach et le président, découpés et collés
+    const collage = [
+      ['coach', 'fier', 18, 262, 170, -4],
+      ['president', 'rire', 172, 270, 170, 3],
+    ];
+    for (const [id, expr, x, y, w, rot] of collage) {
+      if (!this.textures.exists(portraitKey(id, expr))) continue;
+      const img = this.add.image(x, y, portraitKey(id, expr)).setOrigin(0).setDisplaySize(w, w * 1.28).setAngle(rot);
+      this.tweens.add({ targets: img, angle: rot + (rot > 0 ? 1.5 : -1.5), duration: 2200, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
     }
-    // Projecteur (un sur deux ne marche pas)
-    g.fillStyle(C.cream, 0.08);
-    g.fillTriangle(20, 0, 0, 260, 200, 260);
+    // Légende de la photo
+    g.fillStyle(C.ink, 1);
+    g.fillRect(16, 486, 328, 22);
+    txt(this, 24, 497, 'Coach Gérard et le président Roland, dimanche, au stade Marcel-Pinard.', 11, CSS.paper, { ox: 0, italic: true });
 
-    // Feuille de match
-    g.fillStyle(C.cream, 1);
-    g.fillRect(28, 70, 304, 460);
-    g.lineStyle(3, C.outline, 1);
-    g.strokeRect(28, 70, 304, 460);
-    g.lineStyle(1, C.sky, 0.6);
-    for (let y = 200; y < 510; y += 22) g.lineBetween(44, y, 316, y);
+    button(this, 180, 540, 300, 46, 'Nouvelle carrière', () => this.scene.start('CharacterSelect'), { fill: C.red, size: 20 });
+    button(this, 180, 596, 300, 40, 'Continuer', () => this.scene.start('Programme'), { disabled: !state.career, size: 17 });
 
-    txt(this, 180, 96, 'FEUILLE DE MATCH', 11, CSS.grey, { bold: true });
-    txt(this, 180, 132, 'DISTRICT', 44, CSS.red, { bold: true });
-    txt(this, 180, 172, 'LEGEND', 44, CSS.outline, { bold: true });
-    txt(this, 180, 212, 'Saison 2026-2027 · Seniors B', 12, CSS.grey);
-    txt(this, 180, 244, 'Ta carrière pro est derrière toi.', 13, CSS.outline);
-
-    button(this, 180, 320, 240, 48, 'NOUVELLE CARRIÈRE', () => {
-      this.scene.start('CharacterSelect');
-    });
-    button(
-      this,
-      180,
-      384,
-      240,
-      48,
-      'CONTINUER',
-      () => {
-        this.scene.start('Programme');
-      },
-      { disabled: !state.career },
-    );
-
-    txt(this, 180, 470, 'Visa de l\'arbitre :', 11, CSS.grey);
-    txt(this, 180, 492, '~ M. Loiseau ~', 14, CSS.outline);
-
-    txt(this, 180, 612, 'v0.3 · prototype', 10, CSS.grey);
-
-    muteButton(this, 338, 22);
+    txt(this, 180, 628, 'v0.8 · Visa de l\'arbitre : M. Loiseau', 10, CSS.grey, { italic: true });
+    muteButton(this, 338, 60);
     music.play('menu');
-
-    // Kaiser, le chien du terrain
-    const dog = this.add.image(-20, 570, 'dog').setScale(3);
-    this.tweens.add({ targets: dog, x: 400, duration: 9000, repeat: -1, delay: 1500 });
   }
 }

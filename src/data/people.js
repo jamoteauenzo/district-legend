@@ -19,3 +19,17 @@ const NAMES = {
 export function displayName(id) {
   return NAMES[id] ?? getCharacter(id)?.nom ?? id;
 }
+
+// Légende sous le portrait (cartes de décision)
+export const CAPTIONS = {
+  coach: 'Entraîneur, diplôme de 1994',
+  president: 'Roland · il tient la buvette',
+  jeanmi: 'Capitaine depuis 2009',
+  fred: 'Gardien, toujours en retard',
+  loiseau: 'Arbitre bénévole',
+  lea: 'Rencontrée samedi dernier',
+  mere: 'Il y a le gigot',
+  patron: 'Artisan, commence tôt',
+  momo: 'Ton pote de la salle',
+  recruteur: 'Il n\'a pas donné son nom',
+};
